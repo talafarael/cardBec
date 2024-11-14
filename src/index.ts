@@ -2,16 +2,28 @@ import WebSocket from "ws";
 import { v4 as uuidv4 } from "uuid";
 import { parseInitData } from "@telegram-apps/sdk-react";
 import { hash } from "crypto";
+import { cardData } from "./card.data";
+import { error } from "console";
 const wss = new WebSocket.Server({ port: 8080 });
+const messageError = (message: string) => {
+  return { status: "error", message: message };
+};
+export interface ICard {
+  rank: string;
+  suit: string;
+}
 interface IPlayers {
   user: IUSer;
   card: any[];
   ws: WebSocket;
+  state: boolean;
+  startGameState: boolean;
 }
 interface IRoom {
   players: IPlayers[];
   isGameActive: boolean;
   roomId: string;
+  card: ICard[];
 }
 interface IUSer {
   session: string;
@@ -26,7 +38,7 @@ wss.on("connection", (ws: WebSocket) => {
   ws.on("message", (message: string) => {
     const data = JSON.parse(message);
     switch (data.action) {
-      case "join":
+      case "join": {
         //check user to room
         if (!data.roomId) {
           const RoomId = uuidv4();
@@ -49,8 +61,11 @@ wss.on("connection", (ws: WebSocket) => {
             players: [],
             roomId: RoomId,
             isGameActive: false,
+            card: cardData,
           };
           Room.players.push({
+            state: false,
+            startGameState: false,
             user: user,
             card: [],
             ws: ws,
@@ -61,6 +76,7 @@ wss.on("connection", (ws: WebSocket) => {
             action: "join",
             Room: Room,
             roomId: RoomId,
+            you: user,
           };
 
           ws.send(JSON.stringify(res));
@@ -69,7 +85,7 @@ wss.on("connection", (ws: WebSocket) => {
 
         const Room = rooms[data.roomId] as IRoom;
         if (!Room) {
-          ws.send("error");
+          ws.send(JSON.stringify(messageError("room is not dei")));
           break;
         }
         if (Room.players.length == 0) {
@@ -83,6 +99,11 @@ wss.on("connection", (ws: WebSocket) => {
         const playerIndex = Room.players.findIndex(
           (elem: IPlayers) => elem.user.id == user.id
         );
+        if (playerIndex == -1) {
+          ws.send(JSON.stringify(messageError("user is not find")));
+          break;
+        }
+
         (rooms[data.roomId] as IRoom).players[playerIndex].ws = ws;
         (rooms[data.roomId] as IRoom).players[playerIndex].ws = ws;
         const session = uuidv4();
@@ -91,9 +112,44 @@ wss.on("connection", (ws: WebSocket) => {
           action: "join",
           Room: Room,
           roomId: data.roomId,
+          you: user,
         };
         ws.send(JSON.stringify(res));
         break;
+      }
+      case "start": {
+        const parserUser = parseInitData(data.userData);
+        if (!parserUser.user) {
+          break;
+        }
+        const Room = rooms[data.roomId] as IRoom;
+        if (!Room) {
+          ws.send("error");
+          break;
+        }
+        if (Room.players.length == 0) {
+          break;
+        }
+
+        const user = parserUser.user;
+        const playerIndex = Room.players.findIndex(
+          (elem: IPlayers) => elem.user.id == user.id
+        );
+        if (playerIndex == -1) {
+          ws.send(JSON.stringify(messageError("user is not find")));
+          break;
+        }
+        (rooms[data.roomId] as IRoom).players[playerIndex].startGameState = !(
+          rooms[data.roomId] as IRoom
+        ).players[playerIndex].startGameState;
+        let state = true;
+        for (let i = 0; i < (rooms[data.roomId] as IRoom).players.length; i++) {
+          if (!(rooms[data.roomId] as IRoom).players[i].startGameState) {
+            state = false;
+          }
+        }
+        if (state) break;
+      }
     }
   });
 
