@@ -3,8 +3,13 @@ import { v4 as uuidv4 } from "uuid";
 import { parseInitData } from "@telegram-apps/sdk-react";
 import { hash } from "crypto";
 const wss = new WebSocket.Server({ port: 8080 });
+interface IPlayers {
+  user: IUSer;
+  card: any[];
+  ws: WebSocket;
+}
 interface IRoom {
-  players: { user: IUSer; card: any[]; ws: WebSocket }[];
+  players: IPlayers[];
   isGameActive: boolean;
   roomId: string;
 }
@@ -22,6 +27,7 @@ wss.on("connection", (ws: WebSocket) => {
     const data = JSON.parse(message);
     switch (data.action) {
       case "join":
+        //check user to room
         if (!data.roomId) {
           const RoomId = uuidv4();
           const session = uuidv4();
@@ -57,19 +63,36 @@ wss.on("connection", (ws: WebSocket) => {
             roomId: RoomId,
           };
 
-          Room.players[0].ws.send(JSON.stringify(res));
+          ws.send(JSON.stringify(res));
           break;
         }
 
-        // const Room = rooms[data.roomId];
-        // if (!Room) {
-        //   ws.send("error");
-        //   break;
-        // }
-        // if (!Room.players) {
-        //   break;
-        // }
-        // Room.players[0].ws.send("you user");
+        const Room = rooms[data.roomId] as IRoom;
+        if (!Room) {
+          ws.send("error");
+          break;
+        }
+        if (Room.players.length == 0) {
+          break;
+        }
+        const parserUser = parseInitData(data.userData);
+        if (!parserUser.user) {
+          break;
+        }
+        const user = parserUser.user;
+        const playerIndex = Room.players.findIndex(
+          (elem: IPlayers) => elem.user.id == user.id
+        );
+        (rooms[data.roomId] as IRoom).players[playerIndex].ws = ws;
+        (rooms[data.roomId] as IRoom).players[playerIndex].ws = ws;
+        const session = uuidv4();
+        const res = {
+          session: session,
+          action: "join",
+          Room: Room,
+          roomId: data.roomId,
+        };
+        ws.send(JSON.stringify(res));
         break;
     }
   });
