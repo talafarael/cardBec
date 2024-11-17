@@ -5,7 +5,9 @@ import { parseInitData } from "@telegram-apps/sdk-react";
 import { hash } from "crypto";
 import { cardData } from "./card.data";
 import { error } from "console";
-import { RoomJoin, Rooms } from "./Room";
+import { RoomJoin } from "./RoomJoin";
+import { Rooms } from "./Room";
+import { ManagerRoom } from "./ManagerRoom";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -42,10 +44,12 @@ wss.on("connection", (ws: WebSocket) => {
     const data = JSON.parse(message);
     switch (data.action) {
       case "join": {
-        const room = new RoomJoin(rooms, ws);
+        const managerRoom = new ManagerRoom();
+        const room = new RoomJoin(rooms, ws, managerRoom);
+
         room.joinRoom(data);
         // rooms = room.rooms;
-        console.log(rooms)
+        console.log(rooms);
         break;
       }
       case "start": {
