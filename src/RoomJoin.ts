@@ -5,25 +5,30 @@ import { parseInitData } from "@telegram-apps/sdk-react";
 
 import { WebSocket } from "ws";
 import { IManagerRoom, ManagerRoom } from "./ManagerRoom";
+import { IUserTg, UserManager } from "./User";
 export class RoomJoin {
   rooms;
   ws;
   managerRoom;
-  constructor(rooms: IRooms, ws: WebSocket, ManagareRoom: IManagerRoom) {
+  userManager;
+  constructor(
+    rooms: IRooms,
+    ws: WebSocket,
+    ManagareRoom: IManagerRoom,
+    UserManager: UserManager
+  ) {
     this.rooms = rooms;
     this.ws = ws;
     this.managerRoom = ManagareRoom;
+    this.userManager = UserManager;
   }
   joinRoom(data: IData) {
     if (!data.roomId) {
       const RoomId: string = uuidv4();
 
       const session = uuidv4();
-      const parserUser = parseInitData(data.userData);
-      console.log(parserUser)
-      if (!parserUser.user) {
-        return;
-      }
+      const parserUser= this.userManager.userParser(data.userData) as IUserTg ;
+
       const Room: IRoom = this.managerRoom.createRoom(
         parserUser.user.id.toString()
       );
