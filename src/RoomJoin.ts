@@ -5,22 +5,30 @@ import { parseInitData } from "@telegram-apps/sdk-react";
 
 import { WebSocket } from "ws";
 import { IManagerRoom, ManagerRoom } from "./ManagerRoom";
-import { IUserTg, UserManager } from "./User";
+import {
+  IUserManager,
+  IUserTg,
+  UserManager,
+} from "./classWorkWithUser/UserManager";
+import { IUserFindRoom } from "./classWorkWithUser/UserFindRoom";
 export class RoomJoin {
   rooms;
   ws;
   managerRoom;
   userManager;
+  UserFindIndexInRoom;
   constructor(
     rooms: IRooms,
     ws: WebSocket,
     ManagareRoom: IManagerRoom,
-    UserManager: UserManager
+    UserManager: IUserManager,
+    UserFindIndexInRoom: IUserFindRoom
   ) {
     this.rooms = rooms;
     this.ws = ws;
     this.managerRoom = ManagareRoom;
     this.userManager = UserManager;
+    this.UserFindIndexInRoom = UserFindIndexInRoom;
   }
   joinRoom(data: IData) {
     if (!data.roomId) {
@@ -32,7 +40,7 @@ export class RoomJoin {
       const Room: IRoom = this.managerRoom.createRoom(
         parserUser.user.id.toString()
       );
-      const user = this.userManager.userTransformToRoom(parserUser, session);
+      const user = this.userManager.transformUserForRoom(parserUser, session);
 
       Room.players.push({
         state: false,
@@ -62,32 +70,24 @@ export class RoomJoin {
     if (Room.players.length == 0) {
       return;
     }
-    const parserUser = parseInitData(data.userData);
-    if (!parserUser.user) {
-      return;
-    }
-    const user = parserUser.user;
-    const playerIndex = Room.players.findIndex(
-      (elem: IPlayers) => elem.user.id == user.id
+    const parserUser = this.userManager.userParser(data.userData);
+    const playerIndex = this.UserFindIndexInRoom.findPlayerIndexInRoom(
+      Room,
+      parserUser.user.id
     );
+
     const session = uuidv4();
     if (playerIndex != -1) {
       Room.players[playerIndex].ws = this.ws;
       this.rooms.saveRoom(data.roomId, Room);
     } else {
-      const userSecond: IUser = {
-        session: session,
-        hash: parserUser.hash,
-        id: parserUser.user.id,
-        allowsWriteToPm: parserUser.user.allowsWriteToPm,
-        username: parserUser.user.username,
-        firstName: parserUser.user.firstName,
-      };
+      const user = this.userManager.transformUserForRoom(parserUser, session);
+
       // (this.rooms.rooms[data.roomId] as IRoom).players[playerIndex].ws = this.ws;
       Room.players.push({
         state: false,
         startGameState: false,
-        user: userSecond,
+        user: user,
         card: [],
         ws: this.ws,
       });
@@ -98,7 +98,7 @@ export class RoomJoin {
       action: "join",
       Room: Room,
       roomId: data.roomId,
-      you: user,
+      you: parserUser,
     };
     this.ws.send(JSON.stringify(res));
   }

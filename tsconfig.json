@@ -7,8 +7,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "ws"]
+
+    "types": ["node", "ws", "jest"]
   },
-  "include": ["src/**/*.ts"],
+
+  "include": ["src/**/*.ts", "**/*"],
   "exclude": ["node_modules"]
 }
