@@ -5,23 +5,32 @@ import { hash } from "crypto";
 import WebSocket from "ws";
 export interface IUserManager {
   userParser(user: string): IUserTg;
-  ws: WebSocket;
+  userTransformToRoo(userData: IUserTg, session: string): IUser;
 }
 
 export class UserManager implements IUserManager {
-  ws;
   #ws;
   constructor(ws: WebSocket) {
     this.#ws = ws;
-    ws = ws;
   }
   userParser(user: string) {
-    const parserUser = parseInitData(user) as Partial<IUserTg>;
-    if (!parserUser.user) {
+    const userData = parseInitData(user) as Partial<IUserTg>;
+    if (!userData.user) {
       // WSH.
     }
 
-    return parserUser as IUserTg;
+    return userData as IUserTg;
+  }
+  userTransformToRoom(userData: IUserTg, session: string) {
+    const user: IUser = {
+      session: session,
+      hash: userData.hash,
+      id: userData.user.id,
+      allowsWriteToPm: userData.user.allowsWriteToPm,
+      username: userData.user.username,
+      firstName: userData.user.firstName,
+    };
+    return user;
   }
 }
 export interface IUserTg {

@@ -27,19 +27,12 @@ export class RoomJoin {
       const RoomId: string = uuidv4();
 
       const session = uuidv4();
-      const parserUser= this.userManager.userParser(data.userData) as IUserTg ;
+      const parserUser = this.userManager.userParser(data.userData) as IUserTg;
 
       const Room: IRoom = this.managerRoom.createRoom(
         parserUser.user.id.toString()
       );
-      const user: IUser = {
-        session: session,
-        hash: parserUser.hash,
-        id: parserUser.user.id,
-        allowsWriteToPm: parserUser.user.allowsWriteToPm,
-        username: parserUser.user.username,
-        firstName: parserUser.user.firstName,
-      };
+      const user = this.userManager.userTransformToRoom(parserUser, session);
 
       Room.players.push({
         state: false,

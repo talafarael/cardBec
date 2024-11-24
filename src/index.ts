@@ -46,7 +46,7 @@ wss.on("connection", (ws: WebSocket) => {
     switch (data.action) {
       case "join": {
         const managerRoom = new ManagerRoom();
-        const userManager = new UserManager();
+        const userManager = new UserManager(ws);
         const room = new RoomJoin(rooms, ws, managerRoom, userManager);
 
         room.joinRoom(data);
