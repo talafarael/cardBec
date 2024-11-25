@@ -1,4 +1,5 @@
 import { IUser } from "../Room";
+import { IResponseMessage } from "../type/messageSend";
 
 export interface IResponseFactory {
   templateMessage(
@@ -7,7 +8,7 @@ export interface IResponseFactory {
     players: IPlayerPublisher[],
     roomId: string,
     user: IUser
-  ): responseMessage;
+  ): IResponseMessage;
 }
 export class ResponseFactory implements IResponseFactory {
   templateMessage(
@@ -37,13 +38,7 @@ export class ResponseFactory implements IResponseFactory {
   //     players.filter((elem) => elem.id != id);
   //   }
 }
-export interface responseMessage {
-  session: string;
-  action: string;
-  players: IPlayerPublisher[];
-  roomId: string;
-  you: IUser;
-}
+
 export interface IPlayerPublisher {
   id: number;
   cardCount: number;
