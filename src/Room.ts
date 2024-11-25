@@ -34,6 +34,7 @@ export class Rooms implements IRooms {
   private rooms: { [key: string]: IRoom } = {};
 
   getRoom(roomId: string): IRoom | null {
+    console.log(this.rooms)
     return this.rooms[roomId] ?? null;
   }
 

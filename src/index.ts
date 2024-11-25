@@ -11,6 +11,11 @@ import { ManagerRoom } from "./ManagerRoom";
 import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
 import { UserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
 import { UserParser } from "./classWorkWithUser/UserParser/UserParser";
+import { NotifyUserJoined } from "./classMessage/NotifyUserJoined/NotifyUserJoined";
+import { ResponseFactory } from "./classMessage/ResponseFactory";
+import { UserPublisher } from "./classWorkWithUser/UserPublisher/UserPublisher";
+import { MessageRecipientFilter } from "./classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
+import { SendMessage } from "./classMessage/SendMessage/SendMessage";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -51,13 +56,25 @@ wss.on("connection", (ws: WebSocket) => {
         const userManager = new UserManager();
         const UserFindIndexInRoom = new UserFindRoom();
         const userParser = new UserParser();
+        const responseFactory = new ResponseFactory();
+
+        const userPublisher = new UserPublisher(userManager);
+        const messageRecipientFilter = new MessageRecipientFilter();
+        const sendMessage = new SendMessage();
+        const notifyUserJoined = new NotifyUserJoined(
+          responseFactory,
+          userPublisher,
+          messageRecipientFilter,
+          sendMessage
+        );
         const room = new RoomJoin(
           rooms,
           ws,
           managerRoom,
           userManager,
           UserFindIndexInRoom,
-          userParser
+          userParser,
+          notifyUserJoined
         );
 
         room.joinRoom(data);

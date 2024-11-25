@@ -2,15 +2,10 @@ import { WebSocket } from "ws";
 import { IResponseMessage } from "../../type/messageSend";
 
 export interface ISendMessage {
-  JoinMessage(message: IResponseMessage): void;
+  JoinMessage(message: IResponseMessage, ws: WebSocket): void;
 }
-export class SendMessagea implements ISendMessage {
-  #ws;
-  constructor(ws: WebSocket) {
-    this.#ws = ws;
-  }
-
-  JoinMessage(message: IResponseMessage) {
-    this.#ws.send(JSON.stringify(message));
+export class SendMessage implements ISendMessage {
+  JoinMessage(message: IResponseMessage, ws: WebSocket) {
+    ws.send(JSON.stringify(message));
   }
 }

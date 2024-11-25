@@ -1,7 +1,7 @@
-import { WebSocket } from "ws"
+import { WebSocket } from "ws";
 import { IUser } from "../../Room";
 import { IResponseMessage } from "../../type/messageSend";
-import { SendMessagea } from "./SendMessage";
+import { SendMessage } from "./SendMessage";
 
 describe("JoinMessage", () => {
   it("should send a properly formatted message via WebSocket", () => {
@@ -23,8 +23,8 @@ describe("JoinMessage", () => {
       roomId: "",
       you: user,
     };
-    const sendMessage = new SendMessagea(mockWebSocket);
-    sendMessage.JoinMessage(message);
+    const sendMessage = new SendMessage();
+    sendMessage.JoinMessage(message, mockWebSocket);
     expect(mockWebSocket.send).toHaveBeenCalledWith(JSON.stringify(message));
     expect(mockWebSocket.send).toHaveBeenCalledTimes(1);
   });

@@ -14,8 +14,8 @@ export class UserPublisher {
   mapPlayersToPublish(users: IPlayers[]) {
     const userPublish: IPlayerPublisher[] = [];
     users.map((elem) => {
-      
       userPublish.push(this.#userManager.transformedPlayerPublisher(elem));
+      
     });
     return userPublish;
   }

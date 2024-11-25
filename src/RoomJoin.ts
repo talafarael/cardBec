@@ -11,10 +11,15 @@ import {
   UserManager,
 } from "./classWorkWithUser/UserManager/UserManager";
 import { IUserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
-import { IUserParser, UserParser } from "./classWorkWithUser/UserParser/UserParser";
+import {
+  IUserParser,
+  UserParser,
+} from "./classWorkWithUser/UserParser/UserParser";
+import { INotifyUserJoined } from "./classMessage/NotifyUserJoined/NotifyUserJoined";
 export class RoomJoin {
   rooms;
   ws;
+  #notifyUserJoined: INotifyUserJoined;
   managerRoom;
   userManager;
   UserFindIndexInRoom;
@@ -25,7 +30,8 @@ export class RoomJoin {
     ManagareRoom: IManagerRoom,
     UserManager: IUserManager,
     UserFindIndexInRoom: IUserFindRoom,
-    UserParser: IUserParser
+    UserParser: IUserParser,
+    NotifyUserJoined: INotifyUserJoined
   ) {
     this.rooms = rooms;
     this.ws = ws;
@@ -33,11 +39,10 @@ export class RoomJoin {
     this.userManager = UserManager;
     this.UserFindIndexInRoom = UserFindIndexInRoom;
     this.userParser = UserParser;
+    this.#notifyUserJoined = NotifyUserJoined;
   }
   joinRoom(data: IData) {
     if (!data.roomId) {
-      const RoomId: string = uuidv4();
-
       const session = uuidv4();
       const parserUser = this.userParser.userParser(data.userData) as IUserTg;
 
@@ -53,16 +58,8 @@ export class RoomJoin {
         card: [],
         ws: this.ws,
       });
-      this.rooms.saveRoom(RoomId, Room);
-      const res = {
-        session: session,
-        action: "join",
-        Room: Room,
-        roomId: RoomId,
-        you: user,
-      };
-
-      this.ws.send(JSON.stringify(res));
+      this.rooms.saveRoom(Room.roomId, Room);
+      this.#notifyUserJoined.sendJoinNotification(Room);
       return;
     }
 
@@ -74,6 +71,7 @@ export class RoomJoin {
     if (Room.players.length == 0) {
       return;
     }
+
     const parserUser = this.userParser.userParser(data.userData);
     const playerIndex = this.UserFindIndexInRoom.findPlayerIndexInRoom(
       Room,
@@ -97,14 +95,7 @@ export class RoomJoin {
       });
     }
     this.rooms.saveRoom(data.roomId, Room);
-    const res = {
-      session: session,
-      action: "join",
-      Room: Room,
-      roomId: data.roomId,
-      you: parserUser,
-    };
-    this.ws.send(JSON.stringify(res));
+    this.#notifyUserJoined.sendJoinNotification(Room);
   }
   private sendError(message: string) {
     this.ws.send(JSON.stringify({ status: "error", message }));
