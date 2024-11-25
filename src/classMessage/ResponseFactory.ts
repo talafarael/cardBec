@@ -4,7 +4,7 @@ export interface IResponseFactory {
   templateMessage(
     session: string,
     action: string,
-    players: IPublishUser[],
+    players: IPlayerPublisher[],
     roomId: string,
     user: IUser
   ): responseMessage;
@@ -13,7 +13,7 @@ export class ResponseFactory implements IResponseFactory {
   templateMessage(
     session: string,
     action: string,
-    players: IPublishUser[],
+    players: IPlayerPublisher[],
     roomId: string,
     user: IUser
   ) {
@@ -27,27 +27,26 @@ export class ResponseFactory implements IResponseFactory {
     return res;
   }
 
-
- 
-//   ResponseJoin(
-//     session: string,
-//     players: IPublishUser[],
-//     roomId: string,
-//     user: IUser,
-//     id: number
-//   ) {
-//     players.filter((elem) => elem.id != id);
-//   }
+  //   ResponseJoin(
+  //     session: string,
+  //     players: IPublishUser[],
+  //     roomId: string,
+  //     user: IUser,
+  //     id: number
+  //   ) {
+  //     players.filter((elem) => elem.id != id);
+  //   }
 }
 export interface responseMessage {
   session: string;
   action: string;
-  players: IPublishUser[];
+  players: IPlayerPublisher[];
   roomId: string;
   you: IUser;
 }
-export interface IPublishUser {
+export interface IPlayerPublisher {
+  id: number;
   cardCount: number;
   firstName: string | null;
-  id: number;
+  startGame: boolean;
 }

@@ -8,8 +8,9 @@ import { error } from "console";
 import { RoomJoin } from "./RoomJoin";
 import { Rooms } from "./Room";
 import { ManagerRoom } from "./ManagerRoom";
-import { UserManager } from "./classWorkWithUser/UserManager";
-import { UserFindRoom } from "./classWorkWithUser/UserFindRoom";
+import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
+import { UserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
+import { UserParser } from "./classWorkWithUser/UserParser/UserParser";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -49,12 +50,14 @@ wss.on("connection", (ws: WebSocket) => {
         const managerRoom = new ManagerRoom();
         const userManager = new UserManager();
         const UserFindIndexInRoom = new UserFindRoom();
+        const userParser = new UserParser();
         const room = new RoomJoin(
           rooms,
           ws,
           managerRoom,
           userManager,
-          UserFindIndexInRoom
+          UserFindIndexInRoom,
+          userParser
         );
 
         room.joinRoom(data);

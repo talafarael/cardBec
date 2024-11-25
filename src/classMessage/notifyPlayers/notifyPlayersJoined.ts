@@ -1,24 +1,25 @@
-import { IUserManager } from "../../classWorkWithUser/UserManager";
-import { IPlayers } from "../../Room";
+import { IUserManager } from "../../classWorkWithUser/UserManager/UserManager";
+import { IPlayers, IRoom } from "../../Room";
 import { IResponseFactory } from "../ResponseFactory";
 
 export interface INotifyUserJoined {
   responseFactory: IResponseFactory;
   userManager: IUserManager;
-  sendJoinNotification(players: IPlayers[], id: number): void;
+  sendJoinNotification(room: IRoom, id: number): void;
 }
 
-class notifyUserJoined implements INotifyUserJoined {
+export class notifyUserJoined implements INotifyUserJoined {
   responseFactory;
-
+  userManager;
   constructor(ResponseFactory: IResponseFactory, UserManager: IUserManager) {
     this.responseFactory = ResponseFactory;
+    this.userManager = UserManager;
   }
-  sendJoinNotification(players: IPlayers[], id: number) {
-    players.map((elem) => {
-      const user = elem.user;
-      
-      this.responseFactory(user.session, "join");
+  sendJoinNotification(room: IRoom, id: number) {
+    room.players.map((elem) => {
+    
+      const you = elem.user;
+      // this.responseFactory(user.session, "join");
     });
   }
 }

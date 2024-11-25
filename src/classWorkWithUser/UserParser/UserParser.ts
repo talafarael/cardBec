@@ -1,5 +1,5 @@
 import { parseInitData } from "@telegram-apps/sdk-react";
-import { IUserTg } from "./UserManager";
+import { IUserTg } from "../UserManager/UserManager";
 
 export interface IUserParser {
   userParser(user: string): IUserTg;

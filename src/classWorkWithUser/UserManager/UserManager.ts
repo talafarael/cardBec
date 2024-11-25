@@ -1,24 +1,16 @@
 import { parseInitData } from "@telegram-apps/sdk-react";
-import { IPlayers, IUser } from "../Room";
-import { TelegramData } from "../telegramType";
+import { IPlayers, IUser } from "../../Room";
+import { TelegramData } from "../../telegramType";
 import { hash } from "crypto";
 import WebSocket from "ws";
-import { IPublishUser } from "../classMessage/ResponseFactory";
+import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
+
 export interface IUserManager {
-  userParser(user: string): IUserTg;
   transformUserForRoom(userData: IUserTg, session: string): IUser;
-  transformedPlayerPublisher(user: IPlayers): IPublishUser;
+  transformedPlayerPublisher(user: IPlayers): IPlayerPublisher;
 }
 
 export class UserManager implements IUserManager {
-  userParser(user: string) {
-    const userData = parseInitData(user) as Partial<IUserTg>;
-    if (!userData.user) {
-      // WSH.
-    }
-    console.log(userData);
-    return userData as IUserTg;
-  }
   transformUserForRoom(userData: IUserTg, session: string) {
     const user: IUser = {
       session: session,
@@ -31,10 +23,11 @@ export class UserManager implements IUserManager {
     return user;
   }
   transformedPlayerPublisher(user: IPlayers) {
-    const player = {
+    const player: IPlayerPublisher = {
       id: user.user.id,
       cardCount: user.card.length,
       firstName: user.user.firstName,
+      startGame: user.startGameState,
     };
     return player;
   }

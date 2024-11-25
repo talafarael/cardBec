@@ -13,7 +13,7 @@ export interface ICard {
 }
 export interface IPlayers {
   user: IUser;
-  card: any[];
+  card: ICard[];
   ws: WebSocket;
   state: boolean;
   startGameState: boolean;
@@ -42,11 +42,13 @@ export class Rooms implements IRooms {
   }
   // getRoom(roomId: string): IRoom | null {
 
-  
   //   return this.rooms[roomId] ?? null;
   // }
 }
-
+export interface ICard {
+  rank: string;
+  suit: string;
+}
 export interface IData {
   roomId: string | undefined;
   userData: string;

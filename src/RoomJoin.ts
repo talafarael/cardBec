@@ -9,33 +9,37 @@ import {
   IUserManager,
   IUserTg,
   UserManager,
-} from "./classWorkWithUser/UserManager";
-import { IUserFindRoom } from "./classWorkWithUser/UserFindRoom";
+} from "./classWorkWithUser/UserManager/UserManager";
+import { IUserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
+import { IUserParser, UserParser } from "./classWorkWithUser/UserParser/UserParser";
 export class RoomJoin {
   rooms;
   ws;
   managerRoom;
   userManager;
   UserFindIndexInRoom;
+  userParser;
   constructor(
     rooms: IRooms,
     ws: WebSocket,
     ManagareRoom: IManagerRoom,
     UserManager: IUserManager,
-    UserFindIndexInRoom: IUserFindRoom
+    UserFindIndexInRoom: IUserFindRoom,
+    UserParser: IUserParser
   ) {
     this.rooms = rooms;
     this.ws = ws;
     this.managerRoom = ManagareRoom;
     this.userManager = UserManager;
     this.UserFindIndexInRoom = UserFindIndexInRoom;
+    this.userParser = UserParser;
   }
   joinRoom(data: IData) {
     if (!data.roomId) {
       const RoomId: string = uuidv4();
 
       const session = uuidv4();
-      const parserUser = this.userManager.userParser(data.userData) as IUserTg;
+      const parserUser = this.userParser.userParser(data.userData) as IUserTg;
 
       const Room: IRoom = this.managerRoom.createRoom(
         parserUser.user.id.toString()
@@ -70,7 +74,7 @@ export class RoomJoin {
     if (Room.players.length == 0) {
       return;
     }
-    const parserUser = this.userManager.userParser(data.userData);
+    const parserUser = this.userParser.userParser(data.userData);
     const playerIndex = this.UserFindIndexInRoom.findPlayerIndexInRoom(
       Room,
       parserUser.user.id
