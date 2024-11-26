@@ -51,13 +51,7 @@ export class RoomJoin {
       );
       const user = this.userManager.transformUserForRoom(parserUser, session);
 
-      Room.players.push({
-        state: false,
-        startGameState: false,
-        user: user,
-        card: [],
-        ws: this.ws,
-      });
+      Room.players.push(this.userManager.transformedPlayer(user, this.ws));
       this.rooms.saveRoom(Room.roomId, Room);
       this.#notifyUserJoined.sendJoinNotification(Room);
       return;
@@ -86,13 +80,7 @@ export class RoomJoin {
       const user = this.userManager.transformUserForRoom(parserUser, session);
 
       // (this.rooms.rooms[data.roomId] as IRoom).players[playerIndex].ws = this.ws;
-      Room.players.push({
-        state: false,
-        startGameState: false,
-        user: user,
-        card: [],
-        ws: this.ws,
-      });
+      Room.players.push(this.userManager.transformedPlayer(user, this.ws));
     }
     this.rooms.saveRoom(data.roomId, Room);
     this.#notifyUserJoined.sendJoinNotification(Room);

@@ -8,6 +8,7 @@ import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
 export interface IUserManager {
   transformUserForRoom(userData: IUserTg, session: string): IUser;
   transformedPlayerPublisher(user: IPlayers): IPlayerPublisher;
+  transformedPlayer(user: IUser, ws: WebSocket): IPlayers;
 }
 
 export class UserManager implements IUserManager {
@@ -28,6 +29,16 @@ export class UserManager implements IUserManager {
       cardCount: user.card.length,
       firstName: user.user.firstName,
       startGame: user.startGameState,
+    };
+    return player;
+  }
+  transformedPlayer(user: IUser, ws: WebSocket) {
+    const player = {
+      state: false,
+      startGameState: false,
+      user: user,
+      card: [],
+      ws: ws,
     };
     return player;
   }

@@ -34,31 +34,35 @@ describe("transformedPlayerPublisher", () => {
     const wss = new WebSocket.Server({ port: 8080 });
     wss.on("connection", (ws: WebSocket) => {
       try {
-        
-      const player: IPlayers = {
-        user: user,
-        card: [],
-        ws: ws,
-        state: false,
-        startGameState: false,
-      };
+        const player: IPlayers = {
+          user: user,
+          card: [],
+          ws: ws,
+          state: false,
+          startGameState: false,
+        };
 
-      const palyerPublisher: IPlayerPublisher = {
-        id: 1,
-        cardCount: 0,
-        firstName: "Test",
-        startGame: false,
-      };
-      const userManager = new UserManager();
-      expect(userManager.transformedPlayerPublisher(player)).toEqual(
-        palyerPublisher
-      );
-      ws.on("close", () => {
-        console.log("Client disconnected");
-      });
-    } catch (error) {
-      console.log(error);
-  }
+        const palyerPublisher: IPlayerPublisher = {
+          id: 1,
+          cardCount: 0,
+          firstName: "Test",
+          startGame: false,
+        };
+        const userManager = new UserManager();
+        expect(userManager.transformedPlayerPublisher(player)).toEqual(
+          palyerPublisher
+        );
+        ws.on("close", () => {
+          console.log("Client disconnected");
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
+  });
+
+  it("  transformedPlayer", () => {
+    const userManager = new UserManager();
+    
   });
 });
