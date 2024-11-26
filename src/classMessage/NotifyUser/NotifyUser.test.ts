@@ -51,6 +51,8 @@ const testRoom: IRoom = {
   roomId: "1",
   card: cardData,
   owner: "1",
+  trump: null,
+  pass: [],
 };
 
 const userPublish = [
@@ -123,7 +125,9 @@ describe("NotifyUserJoined", () => {
       "join",
       userPublishWithOutYou,
       testRoom.roomId,
-      players[1]
+      players[1],
+      null,
+      []
     );
     expect(mockSendMessage.JoinMessage).toHaveBeenCalledWith(
       res,

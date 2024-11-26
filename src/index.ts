@@ -6,7 +6,7 @@ import { hash } from "crypto";
 import { cardData } from "./card.data";
 import { error } from "console";
 import { RoomJoin } from "./Action/RoomJoin";
-import { Rooms } from "./Room";
+import { ICard, IData, Rooms } from "./Room";
 import { ManagerRoom } from "./ManagerRoom";
 import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
 import { UserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
@@ -18,14 +18,16 @@ import { MessageRecipientFilter } from "./classWorkWithUser/MessageRecipientFilt
 import { SendMessage } from "./classMessage/SendMessage/SendMessage";
 import { UserReadyAction } from "./Action/UserReadyAction/UserReadyAction";
 import { UserChangeStartGame } from "./classWorkWithUser/UserChangeStartGame/UserChangeStartGame";
+import { UserReadinessCheck } from "./classWorkWithUser/UserReadinessCheck/UserReadinessCheck";
+import { MixCards } from "./Card/MixCard/MixCard";
+import { SimpleCardDealer } from "./Card/SimpleCardDealer/SimpleCardDealer";
+import { DistributingCardsToUser } from "./Card/DistributingCardsToUser/DistributingCardsToUser";
+import { StartGame } from "./GameEvent/StartGame/StartGame";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
 };
-export interface ICard {
-  rank: string;
-  suit: string;
-}
+
 interface IPlayers {
   user: IUSer;
   card: any[];
@@ -108,6 +110,7 @@ wss.on("connection", (ws: WebSocket) => {
           notifyUser
         );
         userReadyAction.UserReady(data);
+        StartGameFn(data);
       }
     }
   });
@@ -116,3 +119,31 @@ wss.on("connection", (ws: WebSocket) => {
     console.log("Client disconnected");
   });
 });
+function StartGameFn(data: IData) {
+  const userReadinessCheck = new UserReadinessCheck();
+  const managerRoom = new ManagerRoom();
+  const userManager = new UserManager();
+  const UserFindIndexInRoom = new UserFindRoom();
+  const userParser = new UserParser();
+  const responseFactory = new ResponseFactory();
+  const mixCards = new MixCards();
+  const distributingCardsToUser = new DistributingCardsToUser();
+  const simpleCardDealer = new SimpleCardDealer(distributingCardsToUser);
+  const userPublisher = new UserPublisher(userManager);
+  const messageRecipientFilter = new MessageRecipientFilter();
+  const sendMessage = new SendMessage();
+  const notifyUser = new NotifyUser(
+    responseFactory,
+    userPublisher,
+    messageRecipientFilter,
+    sendMessage
+  );
+  const startGame = new StartGame(
+    userReadinessCheck,
+    rooms,
+    mixCards,
+    simpleCardDealer,
+    notifyUser
+  );
+  startGame.StartGame(data);
+}

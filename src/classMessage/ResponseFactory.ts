@@ -1,4 +1,4 @@
-import { IPlayers, IUser } from "../Room";
+import { ICard, IPlayers, IUser } from "../Room";
 import { IResponseMessage } from "../type/messageSend";
 
 export interface IResponseFactory {
@@ -7,7 +7,9 @@ export interface IResponseFactory {
     action: string,
     players: IPlayerPublisher[],
     roomId: string,
-    user: IPlayers
+    user: IPlayers,
+    trump: ICard | null,
+    pass: ICard[]
   ): IResponseMessage;
 }
 export class ResponseFactory implements IResponseFactory {
@@ -16,7 +18,9 @@ export class ResponseFactory implements IResponseFactory {
     action: string,
     players: IPlayerPublisher[],
     roomId: string,
-    user: IPlayers
+    user: IPlayers,
+    trump: ICard | null,
+    pass: ICard[]
   ) {
     const res = {
       session: session,
@@ -24,6 +28,8 @@ export class ResponseFactory implements IResponseFactory {
       players: players,
       roomId: roomId,
       you: user,
+      trump: trump,
+      pass: pass,
     };
     return res;
   }

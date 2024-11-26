@@ -48,6 +48,8 @@ const testRoom = {
     { rank: "7", suit: "Clubs" },
   ],
   owner: "session1",
+  trump: null,
+  pass: [],
 };
 
 describe("findPlayerIndexInRoom", () => {

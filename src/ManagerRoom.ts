@@ -12,6 +12,8 @@ export class ManagerRoom implements IManagerRoom {
       isGameActive: false,
       card: cardData,
       owner: owner,
+      trump: null,
+      pass: [],
     };
     return Room;
   }

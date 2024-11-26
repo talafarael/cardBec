@@ -24,6 +24,8 @@ export interface IRoom {
   roomId: string;
   card: ICard[];
   owner: string;
+  trump: ICard | null;
+  pass: ICard[];
 }
 export interface IRooms {
   // rooms: { [key: string]: IRoom | {} };
@@ -34,7 +36,7 @@ export class Rooms implements IRooms {
   private rooms: { [key: string]: IRoom } = {};
 
   getRoom(roomId: string): IRoom | null {
-    console.log(this.rooms)
+    console.log(this.rooms);
     return this.rooms[roomId] ?? null;
   }
 

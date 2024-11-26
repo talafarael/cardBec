@@ -29,6 +29,9 @@ describe("JoinMessage", () => {
       players: [],
       roomId: "",
       you: player,
+
+      trump: null,
+      pass: [],
     };
     const sendMessage = new SendMessage();
     sendMessage.JoinMessage(message, mockWebSocket);
