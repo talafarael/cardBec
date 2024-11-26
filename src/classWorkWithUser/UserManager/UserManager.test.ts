@@ -11,6 +11,9 @@ const user: IUser = {
   username: "tst",
   firstName: "Test",
 };
+const mockWebSocket = {
+  send: jest.fn(),
+} as unknown as jest.Mocked<WebSocket>;
 describe("transformUserForRoom", () => {
   it("should be transform to IUser", () => {
     const parserUser: IUserTg = {
@@ -61,8 +64,17 @@ describe("transformedPlayerPublisher", () => {
     });
   });
 
-  it("  transformedPlayer", () => {
+  it("transformedPlayer", () => {
     const userManager = new UserManager();
-    
+    const resultPlayerTransform = {
+      state: false,
+      startGameState: false,
+      user: user,
+      card: [],
+      ws: mockWebSocket,
+    };
+    expect(userManager.transformedPlayer(user, mockWebSocket)).toEqual(
+      resultPlayerTransform
+    );
   });
 });

@@ -3,7 +3,7 @@ import { cardData } from "../../card.data";
 import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
 import { IPlayers, IRoom, IUser } from "../../Room";
 import { IResponseFactory } from "../ResponseFactory";
-import { NotifyUserJoined } from "./NotifyUserJoined";
+import { NotifyUser } from "./NotifyUser";
 import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
 import { ISendMessage } from "../SendMessage/SendMessage";
 afterEach(() => {
@@ -39,7 +39,7 @@ const players: IPlayers[] = [
   {
     user: user2,
     card: [],
-    ws: mockWebSocket ,
+    ws: mockWebSocket,
     state: false,
     startGameState: false,
   },
@@ -52,6 +52,7 @@ const testRoom: IRoom = {
   card: cardData,
   owner: "1",
 };
+
 const userPublish = [
   {
     id: 1,
@@ -79,7 +80,7 @@ const res = {
   action: "join",
   players: userPublishWithOutYou,
   roomId: "1",
-  you: user2,
+  you: players[1],
 };
 describe("NotifyUserJoined", () => {
   it("class must be called", () => {
@@ -102,14 +103,14 @@ describe("NotifyUserJoined", () => {
         return;
       }),
     };
-    const notifyUserJoined = new NotifyUserJoined(
+    const notifyUser = new NotifyUser(
       mockResponseFactory,
       mockUserPublisher,
       mockMessageRecipientFilter,
       mockSendMessage
     );
 
-    notifyUserJoined.sendJoinNotification(testRoom);
+    notifyUser.sendNotification(testRoom, "join");
 
     expect(mockUserPublisher.mapPlayersToPublish).toHaveBeenCalledWith(
       testRoom.players
@@ -122,7 +123,7 @@ describe("NotifyUserJoined", () => {
       "join",
       userPublishWithOutYou,
       testRoom.roomId,
-      user2
+      players[1]
     );
     expect(mockSendMessage.JoinMessage).toHaveBeenCalledWith(
       res,

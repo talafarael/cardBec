@@ -5,11 +5,11 @@ import { IPlayers, IRoom } from "../../Room";
 import { IResponseFactory } from "../ResponseFactory";
 import { ISendMessage } from "../SendMessage/SendMessage";
 
-export interface INotifyUserJoined {
-  sendJoinNotification(room: IRoom): void;
+export interface INotifyUser {
+  sendNotification(room: IRoom, action: string): void;
 }
 
-export class NotifyUserJoined implements INotifyUserJoined {
+export class NotifyUser implements INotifyUser {
   #responseFactory: IResponseFactory;
   #userPablisher: IUserPublisher;
   #messageRecipientFilter: IMessageRecipientFilter;
@@ -25,25 +25,24 @@ export class NotifyUserJoined implements INotifyUserJoined {
     this.#messageRecipientFilter = MessageRecipientFilter;
     this.#sendMessage = SendMessage;
   }
-  sendJoinNotification(room: IRoom) {
+  sendNotification(room: IRoom, action: string) {
     const publishAllPlayerInRoom = this.#userPablisher.mapPlayersToPublish(
       room.players
     );
     room.players.map((elem) => {
-      const you = elem.user;
       const sendPublishUserData =
         this.#messageRecipientFilter.filterMessageToUsersExcept(
           publishAllPlayerInRoom,
-          you.id
+          elem.user.id
         );
       const responseUser = this.#responseFactory.templateMessage(
-        you.session,
-        "join",
+        elem.user.session,
+        action,
         sendPublishUserData,
         room.roomId,
-        you
+        elem
       );
       this.#sendMessage.JoinMessage(responseUser, elem.ws);
-    })
+    });
   }
 }

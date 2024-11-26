@@ -1,25 +1,25 @@
-import { IData, IPlayers, IRoom, IRooms, IUser } from "./Room";
+import { IData, IPlayers, IRoom, IRooms, IUser } from "../Room";
 import { v4 as uuidv4 } from "uuid";
-import { cardData } from "./card.data";
+import { cardData } from "../card.data";
 import { parseInitData } from "@telegram-apps/sdk-react";
 
 import { WebSocket } from "ws";
-import { IManagerRoom, ManagerRoom } from "./ManagerRoom";
+import { IManagerRoom, ManagerRoom } from "../ManagerRoom";
 import {
   IUserManager,
   IUserTg,
   UserManager,
-} from "./classWorkWithUser/UserManager/UserManager";
-import { IUserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
+} from "../classWorkWithUser/UserManager/UserManager";
+import { IUserFindRoom } from "../classWorkWithUser/UserFindRoom/UserFindRoom";
 import {
   IUserParser,
   UserParser,
-} from "./classWorkWithUser/UserParser/UserParser";
-import { INotifyUserJoined } from "./classMessage/NotifyUserJoined/NotifyUserJoined";
+} from "../classWorkWithUser/UserParser/UserParser";
+import { INotifyUser} from "../classMessage/NotifyUser/NotifyUser";
 export class RoomJoin {
   rooms;
   ws;
-  #notifyUserJoined: INotifyUserJoined;
+  #notifyUser: INotifyUser;
   managerRoom;
   userManager;
   UserFindIndexInRoom;
@@ -31,7 +31,7 @@ export class RoomJoin {
     UserManager: IUserManager,
     UserFindIndexInRoom: IUserFindRoom,
     UserParser: IUserParser,
-    NotifyUserJoined: INotifyUserJoined
+    NotifyUser: INotifyUser
   ) {
     this.rooms = rooms;
     this.ws = ws;
@@ -39,7 +39,7 @@ export class RoomJoin {
     this.userManager = UserManager;
     this.UserFindIndexInRoom = UserFindIndexInRoom;
     this.userParser = UserParser;
-    this.#notifyUserJoined = NotifyUserJoined;
+    this.#notifyUser = NotifyUser;
   }
   joinRoom(data: IData) {
     if (!data.roomId) {
@@ -53,7 +53,7 @@ export class RoomJoin {
 
       Room.players.push(this.userManager.transformedPlayer(user, this.ws));
       this.rooms.saveRoom(Room.roomId, Room);
-      this.#notifyUserJoined.sendJoinNotification(Room);
+      this.#notifyUser.sendNotification(Room, "join");
       return;
     }
 
@@ -83,7 +83,7 @@ export class RoomJoin {
       Room.players.push(this.userManager.transformedPlayer(user, this.ws));
     }
     this.rooms.saveRoom(data.roomId, Room);
-    this.#notifyUserJoined.sendJoinNotification(Room);
+    this.#notifyUser.sendNotification(Room, "join");
   }
   private sendError(message: string) {
     this.ws.send(JSON.stringify({ status: "error", message }));

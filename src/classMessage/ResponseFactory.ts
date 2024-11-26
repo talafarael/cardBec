@@ -1,4 +1,4 @@
-import { IUser } from "../Room";
+import { IPlayers, IUser } from "../Room";
 import { IResponseMessage } from "../type/messageSend";
 
 export interface IResponseFactory {
@@ -7,7 +7,7 @@ export interface IResponseFactory {
     action: string,
     players: IPlayerPublisher[],
     roomId: string,
-    user: IUser
+    user: IPlayers
   ): IResponseMessage;
 }
 export class ResponseFactory implements IResponseFactory {
@@ -16,7 +16,7 @@ export class ResponseFactory implements IResponseFactory {
     action: string,
     players: IPlayerPublisher[],
     roomId: string,
-    user: IUser
+    user: IPlayers
   ) {
     const res = {
       session: session,

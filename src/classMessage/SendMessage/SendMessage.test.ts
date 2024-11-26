@@ -1,5 +1,5 @@
 import { WebSocket } from "ws";
-import { IUser } from "../../Room";
+import { IPlayers, IUser } from "../../Room";
 import { IResponseMessage } from "../../type/messageSend";
 import { SendMessage } from "./SendMessage";
 
@@ -16,12 +16,19 @@ describe("JoinMessage", () => {
       username: "tst",
       firstName: "Test",
     };
+    const player: IPlayers = {
+      user: user,
+      card: [],
+      ws: {} as WebSocket,
+      state: false,
+      startGameState: false,
+    };
     const message: IResponseMessage = {
       session: "",
       action: "",
       players: [],
       roomId: "",
-      you: user,
+      you: player,
     };
     const sendMessage = new SendMessage();
     sendMessage.JoinMessage(message, mockWebSocket);

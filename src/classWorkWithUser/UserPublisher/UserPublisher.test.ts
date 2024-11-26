@@ -20,13 +20,11 @@ const userPublish = {
   startGame: false,
 };
 
-
 describe("mapPlayersToPublish", () => {
   it("", () => {
-    const mockUserManager: jest.Mocked<IUserManager> = {
-        transformedPlayerPublisher: jest.fn().mockReturnValue(userPublish),
-        transformUserForRoom: jest.fn(),
-      };
+    const mockUserManager = {
+      transformedPlayerPublisher: jest.fn().mockReturnValue(userPublish),
+    } as unknown as IUserManager;
     const players: IPlayers[] = [
       {
         user: user,
@@ -36,9 +34,9 @@ describe("mapPlayersToPublish", () => {
         startGameState: false,
       },
     ];
-    
+
     const userPublisher = new UserPublisher(mockUserManager);
-    
+
     expect(userPublisher.mapPlayersToPublish(players)).toEqual([userPublish]);
   });
 });

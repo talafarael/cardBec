@@ -5,17 +5,19 @@ import { parseInitData } from "@telegram-apps/sdk-react";
 import { hash } from "crypto";
 import { cardData } from "./card.data";
 import { error } from "console";
-import { RoomJoin } from "./RoomJoin";
+import { RoomJoin } from "./Action/RoomJoin";
 import { Rooms } from "./Room";
 import { ManagerRoom } from "./ManagerRoom";
 import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
 import { UserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
 import { UserParser } from "./classWorkWithUser/UserParser/UserParser";
-import { NotifyUserJoined } from "./classMessage/NotifyUserJoined/NotifyUserJoined";
+import { NotifyUser } from "./classMessage/NotifyUser/NotifyUser";
 import { ResponseFactory } from "./classMessage/ResponseFactory";
 import { UserPublisher } from "./classWorkWithUser/UserPublisher/UserPublisher";
 import { MessageRecipientFilter } from "./classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
 import { SendMessage } from "./classMessage/SendMessage/SendMessage";
+import { UserReadyAction } from "./Action/UserReadyAction/UserReadyAction";
+import { UserChangeStartGame } from "./classWorkWithUser/UserChangeStartGame/UserChangeStartGame";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -61,7 +63,7 @@ wss.on("connection", (ws: WebSocket) => {
         const userPublisher = new UserPublisher(userManager);
         const messageRecipientFilter = new MessageRecipientFilter();
         const sendMessage = new SendMessage();
-        const notifyUserJoined = new NotifyUserJoined(
+        const notifyUser = new NotifyUser(
           responseFactory,
           userPublisher,
           messageRecipientFilter,
@@ -74,7 +76,7 @@ wss.on("connection", (ws: WebSocket) => {
           userManager,
           UserFindIndexInRoom,
           userParser,
-          notifyUserJoined
+          notifyUser
         );
 
         room.joinRoom(data);
@@ -83,36 +85,29 @@ wss.on("connection", (ws: WebSocket) => {
         break;
       }
       case "start": {
-        // const parserUser = parseInitData(data.userData);
-        // if (!parserUser.user) {
-        //   break;
-        // }
-        // const Room = rooms[data.roomId] as IRoom;
-        // if (!Room) {
-        //   ws.send("error");
-        //   break;
-        // }
-        // if (Room.players.length == 0) {
-        //   break;
-        // }
-        // const user = parserUser.user;
-        // const playerIndex = Room.players.findIndex(
-        //   (elem: IPlayers) => elem.user.id == user.id
-        // );
-        // if (playerIndex == -1) {
-        //   ws.send(JSON.stringify(messageError("user is not find")));
-        //   break;
-        // }
-        // (rooms[data.roomId] as IRoom).players[playerIndex].startGameState = !(
-        //   rooms[data.roomId] as IRoom
-        // ).players[playerIndex].startGameState;
-        // let state = true;
-        // for (let i = 0; i < (rooms[data.roomId] as IRoom).players.length; i++) {
-        //   if (!(rooms[data.roomId] as IRoom).players[i].startGameState) {
-        //     state = false;
-        //   }
-        // }
-        // if (state) break;
+        const managerRoom = new ManagerRoom();
+        const userManager = new UserManager();
+        const UserFindIndexInRoom = new UserFindRoom();
+        const userParser = new UserParser();
+        const responseFactory = new ResponseFactory();
+        const userChangeStartGame = new UserChangeStartGame();
+        const userPublisher = new UserPublisher(userManager);
+        const messageRecipientFilter = new MessageRecipientFilter();
+        const sendMessage = new SendMessage();
+        const notifyUser = new NotifyUser(
+          responseFactory,
+          userPublisher,
+          messageRecipientFilter,
+          sendMessage
+        );
+        const userReadyAction = new UserReadyAction(
+          rooms,
+          userParser,
+          UserFindIndexInRoom,
+          userChangeStartGame,
+          notifyUser
+        );
+        userReadyAction.UserReady(data);
       }
     }
   });
