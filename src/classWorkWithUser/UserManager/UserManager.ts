@@ -29,12 +29,13 @@ export class UserManager implements IUserManager {
       cardCount: user.card.length,
       firstName: user.user.firstName,
       startGame: user.startGameState,
+      state: user.state,
     };
     return player;
   }
   transformedPlayer(user: IUser, ws: WebSocket) {
     const player = {
-      state: false,
+      state: '',
       startGameState: false,
       user: user,
       card: [],

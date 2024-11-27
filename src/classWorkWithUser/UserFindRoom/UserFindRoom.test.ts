@@ -18,7 +18,7 @@ const testRoom = {
         { rank: "King", suit: "Spades" },
       ],
       ws: {} as WebSocket,
-      state: true,
+      state: "",
       startGameState: false,
     },
     {
@@ -35,7 +35,7 @@ const testRoom = {
         { rank: "Jack", suit: "Clubs" },
       ],
       ws: {} as WebSocket,
-      state: false,
+      state: "",
       startGameState: true,
     },
   ],

@@ -16,14 +16,14 @@ describe("UserReadinessCheck", () => {
         user: user,
         card: [],
         ws: {} as WebSocket,
-        state: false,
+        state: "",
         startGameState: true,
       },
       {
         user: user,
         card: [],
         ws: {} as WebSocket,
-        state: false,
+        state: "",
         startGameState: true,
       },
     ];
@@ -36,14 +36,14 @@ describe("UserReadinessCheck", () => {
         user: user,
         card: [],
         ws: {} as WebSocket,
-        state: false,
+        state: "",
         startGameState: true,
       },
       {
         user: user,
         card: [],
         ws: {} as WebSocket,
-        state: false,
+        state: "",
         startGameState: false,
       },
     ];

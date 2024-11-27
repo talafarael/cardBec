@@ -21,7 +21,7 @@ describe("DistributingCardsToUser", () => {
       user: user,
       card: [],
       ws: {} as WebSocket,
-      state: false,
+      state: "",
       startGameState: true,
     };
     const distributingCardsToUser = new DistributingCardsToUser();

@@ -33,14 +33,14 @@ const players: IPlayers[] = [
     user: user1,
     card: [],
     ws: mockWebSocket,
-    state: false,
+    state: "",
     startGameState: false,
   },
   {
     user: user2,
     card: [],
     ws: mockWebSocket,
-    state: false,
+    state: "",
     startGameState: false,
   },
 ];

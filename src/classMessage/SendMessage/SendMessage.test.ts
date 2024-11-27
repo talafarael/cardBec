@@ -20,7 +20,7 @@ describe("JoinMessage", () => {
       user: user,
       card: [],
       ws: {} as WebSocket,
-      state: false,
+      state: "",
       startGameState: false,
     };
     const message: IResponseMessage = {

@@ -41,7 +41,7 @@ describe("transformedPlayerPublisher", () => {
           user: user,
           card: [],
           ws: ws,
-          state: false,
+          state: "",
           startGameState: false,
         };
 
@@ -50,6 +50,7 @@ describe("transformedPlayerPublisher", () => {
           cardCount: 0,
           firstName: "Test",
           startGame: false,
+          state: "",
         };
         const userManager = new UserManager();
         expect(userManager.transformedPlayerPublisher(player)).toEqual(
@@ -66,10 +67,10 @@ describe("transformedPlayerPublisher", () => {
 
   it("transformedPlayer", () => {
     const userManager = new UserManager();
-    const resultPlayerTransform = {
-      state: false,
+    const resultPlayerTransform: IPlayers = {
+      state: "",
       startGameState: false,
-      user: user,
+      user: user= ,l
       card: [],
       ws: mockWebSocket,
     };

@@ -15,7 +15,7 @@ export interface IPlayers {
   user: IUser;
   card: ICard[];
   ws: WebSocket;
-  state: boolean;
+  state: string;
   startGameState: boolean;
 }
 export interface IRoom {

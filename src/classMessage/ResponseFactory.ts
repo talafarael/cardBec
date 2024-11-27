@@ -50,4 +50,5 @@ export interface IPlayerPublisher {
   cardCount: number;
   firstName: string | null;
   startGame: boolean;
+  state: string;
 }

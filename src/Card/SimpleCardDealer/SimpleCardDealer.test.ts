@@ -17,7 +17,7 @@ const testRoom = {
       },
       card: [],
       ws: {} as WebSocket,
-      state: true,
+      state: "",
       startGameState: false,
     },
     {
@@ -31,7 +31,7 @@ const testRoom = {
       },
       card: [],
       ws: {} as WebSocket,
-      state: false,
+      state: "",
       startGameState: true,
     },
   ],
