@@ -51,4 +51,5 @@ export interface IPlayerPublisher {
   firstName: string | null;
   startGame: boolean;
   state: string;
+  
 }

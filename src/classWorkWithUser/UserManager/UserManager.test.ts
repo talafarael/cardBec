@@ -70,7 +70,7 @@ describe("transformedPlayerPublisher", () => {
     const resultPlayerTransform: IPlayers = {
       state: "",
       startGameState: false,
-      user: user= ,l
+      user: user,
       card: [],
       ws: mockWebSocket,
     };
