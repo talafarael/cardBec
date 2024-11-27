@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 
 import { DistributingCardsToUser } from "./DistributingCardsToUser";
-import { ICard, IUser } from "../../Room";
+import { ICard, IPlayers, IUser } from "../../Room";
 const user: IUser = {
   session: "1234",
   hash: "c501b71e775f74ce10e377dea85a7ea24ecd640b223ea86dfe453e0eaed2e2b2",
@@ -17,12 +17,13 @@ const cards: ICard[] = [
 ];
 describe("DistributingCardsToUser", () => {
   it("must fill user card", () => {
-    const player = {
+    const player: IPlayers = {
       user: user,
       card: [],
       ws: {} as WebSocket,
       state: "",
       startGameState: true,
+      passState: false,
     };
     const distributingCardsToUser = new DistributingCardsToUser();
     distributingCardsToUser.distributeCards(cards, player);

@@ -22,6 +22,7 @@ describe("JoinMessage", () => {
       ws: {} as WebSocket,
       state: "",
       startGameState: false,
+      passState: false,
     };
     const message: IResponseMessage = {
       session: "",
@@ -29,9 +30,10 @@ describe("JoinMessage", () => {
       players: [],
       roomId: "",
       you: player,
-
+      cardsOnTable: [],
       trump: null,
       pass: [],
+      passState:false,
     };
     const sendMessage = new SendMessage();
     sendMessage.JoinMessage(message, mockWebSocket);

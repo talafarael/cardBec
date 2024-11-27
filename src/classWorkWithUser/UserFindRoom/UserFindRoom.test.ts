@@ -20,6 +20,7 @@ const testRoom = {
       ws: {} as WebSocket,
       state: "",
       startGameState: false,
+      passState: false,
     },
     {
       user: {
@@ -37,6 +38,7 @@ const testRoom = {
       ws: {} as WebSocket,
       state: "",
       startGameState: true,
+      passState: false,
     },
   ],
   isGameActive: true,
@@ -50,6 +52,7 @@ const testRoom = {
   owner: "session1",
   trump: null,
   pass: [],
+  cardsOnTable: [],
 };
 
 describe("findPlayerIndexInRoom", () => {

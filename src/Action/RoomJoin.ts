@@ -15,7 +15,8 @@ import {
   IUserParser,
   UserParser,
 } from "../classWorkWithUser/UserParser/UserParser";
-import { INotifyUser} from "../classMessage/NotifyUser/NotifyUser";
+import { INotifyUser } from "../classMessage/NotifyUser/NotifyUser";
+import { ICheckStateRoom } from "../Room/CheckStateRoom/CheckStateRoom";
 export class RoomJoin {
   rooms;
   ws;
@@ -24,6 +25,7 @@ export class RoomJoin {
   userManager;
   UserFindIndexInRoom;
   userParser;
+  #checkState: ICheckStateRoom;
   constructor(
     rooms: IRooms,
     ws: WebSocket,
@@ -31,7 +33,8 @@ export class RoomJoin {
     UserManager: IUserManager,
     UserFindIndexInRoom: IUserFindRoom,
     UserParser: IUserParser,
-    NotifyUser: INotifyUser
+    NotifyUser: INotifyUser,
+    CheckStateRoom: ICheckStateRoom
   ) {
     this.rooms = rooms;
     this.ws = ws;
@@ -40,6 +43,7 @@ export class RoomJoin {
     this.UserFindIndexInRoom = UserFindIndexInRoom;
     this.userParser = UserParser;
     this.#notifyUser = NotifyUser;
+    this.#checkState = CheckStateRoom;
   }
   joinRoom(data: IData) {
     if (!data.roomId) {
@@ -58,6 +62,7 @@ export class RoomJoin {
     }
 
     let Room = this.rooms.getRoom(data.roomId) as IRoom;
+
     if (!Room) {
       this.ws.send(JSON.stringify(this.sendError("room is not dei")));
       return;
@@ -71,7 +76,9 @@ export class RoomJoin {
       Room,
       parserUser.user.id
     );
-
+    if (this.#checkState.checkStateGame(Room) && playerIndex == -1) {
+      return;
+    }
     const session = uuidv4();
     if (playerIndex != -1) {
       Room.players[playerIndex].ws = this.ws;

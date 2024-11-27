@@ -1,10 +1,10 @@
 import { WebSocket } from "ws";
-import { ICard, IPlayers, IUser } from "../../Room";
+import { ICard, IPlayers, IRoom, IUser } from "../../Room";
 import { SimpleCardDealer } from "./SimpleCardDealer";
 import { IUserManager } from "../../classWorkWithUser/UserManager/UserManager";
 import { IDistributingCardsToUser } from "../DistributingCardsToUser/DistributingCardsToUser";
 
-const testRoom = {
+const testRoom: IRoom = {
   players: [
     {
       user: {
@@ -54,7 +54,8 @@ const testRoom = {
   owner: "session1",
   trump: null,
   pass: [],
-};
+  cardsOnTable: [],
+} as unknown as IRoom;
 describe("SimpleCardDealer", () => {
   it("must change room", () => {
     const mockDistributingCardsToUser: IDistributingCardsToUser = {

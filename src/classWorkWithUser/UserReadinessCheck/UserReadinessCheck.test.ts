@@ -18,6 +18,7 @@ describe("UserReadinessCheck", () => {
         ws: {} as WebSocket,
         state: "",
         startGameState: true,
+        passState: false,
       },
       {
         user: user,
@@ -25,6 +26,7 @@ describe("UserReadinessCheck", () => {
         ws: {} as WebSocket,
         state: "",
         startGameState: true,
+        passState: false,
       },
     ];
     const userReadinessCheck = new UserReadinessCheck();
@@ -38,6 +40,7 @@ describe("UserReadinessCheck", () => {
         ws: {} as WebSocket,
         state: "",
         startGameState: true,
+        passState: false,
       },
       {
         user: user,
@@ -45,6 +48,7 @@ describe("UserReadinessCheck", () => {
         ws: {} as WebSocket,
         state: "",
         startGameState: false,
+        passState: false,
       },
     ];
     const userReadinessCheck = new UserReadinessCheck();

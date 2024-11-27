@@ -23,6 +23,9 @@ import { MixCards } from "./Card/MixCard/MixCard";
 import { SimpleCardDealer } from "./Card/SimpleCardDealer/SimpleCardDealer";
 import { DistributingCardsToUser } from "./Card/DistributingCardsToUser/DistributingCardsToUser";
 import { StartGame } from "./GameEvent/StartGame/StartGame";
+import { RoomStater } from "./Room/RoomStater/RoomStater";
+import { CheckStateRoom } from "./Room/CheckStateRoom/CheckStateRoom";
+import { RoleAssigner } from "./Role/RoleAssigner/RoleAssigner";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -65,6 +68,7 @@ wss.on("connection", (ws: WebSocket) => {
         const userPublisher = new UserPublisher(userManager);
         const messageRecipientFilter = new MessageRecipientFilter();
         const sendMessage = new SendMessage();
+        const checkStateRoom = new CheckStateRoom();
         const notifyUser = new NotifyUser(
           responseFactory,
           userPublisher,
@@ -78,7 +82,8 @@ wss.on("connection", (ws: WebSocket) => {
           userManager,
           UserFindIndexInRoom,
           userParser,
-          notifyUser
+          notifyUser,
+          checkStateRoom
         );
 
         room.joinRoom(data);
@@ -96,6 +101,7 @@ wss.on("connection", (ws: WebSocket) => {
         const userPublisher = new UserPublisher(userManager);
         const messageRecipientFilter = new MessageRecipientFilter();
         const sendMessage = new SendMessage();
+        const checkStateRoom = new CheckStateRoom();
         const notifyUser = new NotifyUser(
           responseFactory,
           userPublisher,
@@ -107,7 +113,8 @@ wss.on("connection", (ws: WebSocket) => {
           userParser,
           UserFindIndexInRoom,
           userChangeStartGame,
-          notifyUser
+          notifyUser,
+          checkStateRoom
         );
         userReadyAction.UserReady(data);
         StartGameFn(data);
@@ -132,18 +139,24 @@ function StartGameFn(data: IData) {
   const userPublisher = new UserPublisher(userManager);
   const messageRecipientFilter = new MessageRecipientFilter();
   const sendMessage = new SendMessage();
+  const roomStater = new RoomStater();
+  const checkStateRoom = new CheckStateRoom();
   const notifyUser = new NotifyUser(
     responseFactory,
     userPublisher,
     messageRecipientFilter,
     sendMessage
   );
+  const roleAssigner = new RoleAssigner();
   const startGame = new StartGame(
     userReadinessCheck,
     rooms,
     mixCards,
     simpleCardDealer,
-    notifyUser
+    notifyUser,
+    roomStater,
+    checkStateRoom,
+    roleAssigner
   );
   startGame.StartGame(data);
 }

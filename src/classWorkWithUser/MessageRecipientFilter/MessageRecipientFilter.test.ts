@@ -8,6 +8,7 @@ const testUsersPublish: IPlayerPublisher[] = [
     firstName: "Test",
     startGame: false,
     state: "",
+    passState: false,
   },
   {
     id: 2,
@@ -15,6 +16,7 @@ const testUsersPublish: IPlayerPublisher[] = [
     firstName: "Test",
     startGame: false,
     state: "",
+    passState: false,
   },
 ];
 
@@ -25,6 +27,7 @@ const resultUsersPublish: IPlayerPublisher[] = [
     firstName: "Test",
     startGame: false,
     state: "",
+    passState: false,
   },
 ];
 describe("filterMessageToUsersExcept", () => {

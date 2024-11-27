@@ -17,6 +17,7 @@ export interface IPlayers {
   ws: WebSocket;
   state: string;
   startGameState: boolean;
+  passState: boolean;
 }
 export interface IRoom {
   players: IPlayers[];
@@ -26,6 +27,7 @@ export interface IRoom {
   owner: string;
   trump: ICard | null;
   pass: ICard[];
+  cardsOnTable: ICard[][];
 }
 export interface IRooms {
   // rooms: { [key: string]: IRoom | {} };
@@ -56,6 +58,7 @@ export interface IData {
   roomId: string | undefined;
   userData: string;
   action: string;
+  card: ICard | null;
 }
 
 // class RoomMAmanger {

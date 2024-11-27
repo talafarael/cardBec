@@ -7,7 +7,8 @@ export interface IResponseMessage {
   players: IPlayerPublisher[];
   roomId: string;
   you: IPlayers;
-
+  cardsOnTable: ICard[][];
   trump: ICard | null;
   pass: ICard[];
+  passState: boolean;
 }

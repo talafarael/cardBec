@@ -17,6 +17,7 @@ const player: IPlayers[] = [
     ws: {} as WebSocket,
     state: "",
     startGameState: false,
+    passState:false,
   },
   {
     user: user,
@@ -24,6 +25,7 @@ const player: IPlayers[] = [
     ws: {} as WebSocket,
     state: "",
     startGameState: false,
+    passState:false,
   },
 ];
 const resultPlayer: IPlayers[] = [
@@ -33,6 +35,7 @@ const resultPlayer: IPlayers[] = [
     ws: {} as WebSocket,
     state: "",
     startGameState: true,
+    passState: false,
   },
   {
     user: user,
@@ -40,6 +43,7 @@ const resultPlayer: IPlayers[] = [
     ws: {} as WebSocket,
     state: "",
     startGameState: false,
+    passState: false,
   },
 ];
 describe("changeState", () => {

@@ -30,8 +30,9 @@ describe("mapPlayersToPublish", () => {
         user: user,
         card: [],
         ws: {} as WebSocket,
-        state: '',
+        state: "",
         startGameState: false,
+        passState: false,
       },
     ];
 

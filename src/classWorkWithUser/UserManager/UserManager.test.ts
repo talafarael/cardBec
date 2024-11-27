@@ -43,6 +43,7 @@ describe("transformedPlayerPublisher", () => {
           ws: ws,
           state: "",
           startGameState: false,
+          passState: false,
         };
 
         const palyerPublisher: IPlayerPublisher = {
@@ -51,6 +52,7 @@ describe("transformedPlayerPublisher", () => {
           firstName: "Test",
           startGame: false,
           state: "",
+          passState: false,
         };
         const userManager = new UserManager();
         expect(userManager.transformedPlayerPublisher(player)).toEqual(
@@ -73,6 +75,7 @@ describe("transformedPlayerPublisher", () => {
       user: user,
       card: [],
       ws: mockWebSocket,
+      passState: false,
     };
     expect(userManager.transformedPlayer(user, mockWebSocket)).toEqual(
       resultPlayerTransform

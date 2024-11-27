@@ -1,32 +1,29 @@
 import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
+import { IUserChakeState } from "../../classWorkWithUser/UserChakeState/UserChakeState";
 import { IUserChangeStartGame } from "../../classWorkWithUser/UserChangeStartGame/UserChangeStartGame";
 import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
-import {
-  IUserManager,
-  IUserTg,
-} from "../../classWorkWithUser/UserManager/UserManager";
+import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
-import { IUserReadinessCheck } from "../../classWorkWithUser/UserReadinessCheck/UserReadinessCheck";
-import { IManagerRoom } from "../../ManagerRoom";
 import { IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
 
-export class UserReadyAction {
+export class UserAttackAction {
   #rooms;
 
   #userParser;
   #userFindRoom;
   #userChangeStartGame;
   #notifyUser;
+  #userChakeState;
   #checkState: ICheckStateRoom;
-  //   #managerRoom;
   constructor(
     rooms: IRooms,
     UserParser: IUserParser,
     UserFindRoom: IUserFindRoom,
     UserChangeStartGame: IUserChangeStartGame,
     NotifyUser: INotifyUser,
-    CheckStateRoom: ICheckStateRoom
+    CheckStateRoom: ICheckStateRoom,
+    UserChakeState: IUserChakeState
     // ManagareRoom: IManagerRoom,
   ) {
     this.#rooms = rooms;
@@ -35,13 +32,13 @@ export class UserReadyAction {
     this.#userChangeStartGame = UserChangeStartGame;
     this.#notifyUser = NotifyUser;
     this.#checkState = CheckStateRoom;
+    this.#userChakeState = UserChakeState;
     // this.#managerRoom = ManagareRoom;
   }
-  UserReady(data: IData) {
-    if (!data.roomId) {
+  UserAttack(data: IData) {
+    if (!data.roomId || !data.card) {
       return;
     }
-
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
     const parserUser = this.#userParser.userParser(data.userData) as IUserTg;
     const indexUser = this.#userFindRoom.findPlayerIndexInRoom(
@@ -57,12 +54,9 @@ export class UserReadyAction {
       );
       return;
     }
-    const playerResult = this.#userChangeStartGame.changeState(
-      Room.players,
-      indexUser
-    );
-    Room.players = playerResult;
-    this.#rooms.saveRoom(data.roomId, Room);
-    this.#notifyUser.sendNotification(Room, "UserReady");
+    const user = Room.players[indexUser];
+    if (!this.#userChakeState.ChakeStateAttack(user)) {
+      return;
+    }
   }
 }

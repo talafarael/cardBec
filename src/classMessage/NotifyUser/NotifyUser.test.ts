@@ -35,6 +35,7 @@ const players: IPlayers[] = [
     ws: mockWebSocket,
     state: "",
     startGameState: false,
+    passState: false,
   },
   {
     user: user2,
@@ -42,6 +43,7 @@ const players: IPlayers[] = [
     ws: mockWebSocket,
     state: "",
     startGameState: false,
+    passState: false,
   },
 ];
 
@@ -53,6 +55,8 @@ const testRoom: IRoom = {
   owner: "1",
   trump: null,
   pass: [],
+  cardsOnTable: [],
+  
 };
 
 const userPublish = [
@@ -127,7 +131,9 @@ describe("NotifyUserJoined", () => {
       testRoom.roomId,
       players[1],
       null,
-      []
+      [],
+      [],
+      false
     );
     expect(mockSendMessage.JoinMessage).toHaveBeenCalledWith(
       res,

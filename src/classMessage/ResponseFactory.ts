@@ -9,7 +9,9 @@ export interface IResponseFactory {
     roomId: string,
     user: IPlayers,
     trump: ICard | null,
-    pass: ICard[]
+    pass: ICard[],
+    cardsOnTable: ICard[][],
+    passState: boolean
   ): IResponseMessage;
 }
 export class ResponseFactory implements IResponseFactory {
@@ -20,7 +22,9 @@ export class ResponseFactory implements IResponseFactory {
     roomId: string,
     user: IPlayers,
     trump: ICard | null,
-    pass: ICard[]
+    pass: ICard[],
+    cardsOnTable: ICard[][],
+    passState: boolean
   ) {
     const res = {
       session: session,
@@ -30,6 +34,8 @@ export class ResponseFactory implements IResponseFactory {
       you: user,
       trump: trump,
       pass: pass,
+      cardsOnTable: cardsOnTable,
+      passState: passState,
     };
     return res;
   }
@@ -51,5 +57,5 @@ export interface IPlayerPublisher {
   firstName: string | null;
   startGame: boolean;
   state: string;
-  
+  passState: boolean;
 }
