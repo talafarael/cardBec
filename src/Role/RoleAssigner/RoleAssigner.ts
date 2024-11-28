@@ -25,7 +25,7 @@ export class RoleAssigner implements IRoleAssigner {
     if (index == 0) {
       indexRole.atack = lengthUser - 1;
     }
-    console.log( indexRole.atack)
+    
     return indexRole;
 
 

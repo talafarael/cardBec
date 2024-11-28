@@ -1,4 +1,4 @@
-import { ICard, IPlayers, IUser } from "../Room";
+import { ICard, ICardInGame, IPlayers, IUser } from "../Room";
 import { IResponseMessage } from "../type/messageSend";
 
 export interface IResponseFactory {
@@ -10,7 +10,7 @@ export interface IResponseFactory {
     user: IPlayers,
     trump: ICard | null,
     pass: ICard[],
-    cardsOnTable: ICard[][],
+    cardsOnTable: ICardInGame[],
     passState: boolean
   ): IResponseMessage;
 }
@@ -23,7 +23,7 @@ export class ResponseFactory implements IResponseFactory {
     user: IPlayers,
     trump: ICard | null,
     pass: ICard[],
-    cardsOnTable: ICard[][],
+    cardsOnTable: ICardInGame[],
     passState: boolean
   ) {
     const res = {

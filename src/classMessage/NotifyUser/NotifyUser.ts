@@ -46,6 +46,7 @@ export class NotifyUser implements INotifyUser {
         room.cardsOnTable,
         elem.passState
       );
+     
       this.#sendMessage.JoinMessage(responseUser, elem.ws);
     });
   }

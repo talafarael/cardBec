@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { parseInitData } from "@telegram-apps/sdk-react";
 import { hash } from "crypto";
 import { cardData } from "./card.data";
-import { error } from "console";
+
 import { RoomJoin } from "./Action/RoomJoin";
 import { ICard, IData, Rooms } from "./Room";
 import { ManagerRoom } from "./ManagerRoom";
@@ -26,6 +26,12 @@ import { StartGame } from "./GameEvent/StartGame/StartGame";
 import { RoomStater } from "./Room/RoomStater/RoomStater";
 import { CheckStateRoom } from "./Room/CheckStateRoom/CheckStateRoom";
 import { RoleAssigner } from "./Role/RoleAssigner/RoleAssigner";
+import { UserAttackAction } from "./Action/UserAttackAction/UserAttackAction";
+import { UserChakeState } from "./classWorkWithUser/UserChakeState/UserChakeState";
+import { CheckCardInUser } from "./Card/CheckCardInUser/CheckCardInUser";
+import { CheckCardOnTable } from "./Card/CheckCardOnTable/CheckCardOnTable";
+import { CardOnTable } from "./Card/CardOnTable/CardOnTable";
+import { UserCardRemove } from "./classWorkWithUser/UserCardRemove/UserCardRemove";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -59,12 +65,12 @@ wss.on("connection", (ws: WebSocket) => {
     const data = JSON.parse(message);
     switch (data.action) {
       case "join": {
+        console.log("Join");
         const managerRoom = new ManagerRoom();
         const userManager = new UserManager();
         const UserFindIndexInRoom = new UserFindRoom();
         const userParser = new UserParser();
         const responseFactory = new ResponseFactory();
-
         const userPublisher = new UserPublisher(userManager);
         const messageRecipientFilter = new MessageRecipientFilter();
         const sendMessage = new SendMessage();
@@ -88,10 +94,11 @@ wss.on("connection", (ws: WebSocket) => {
 
         room.joinRoom(data);
         // rooms = room.rooms;
-        console.log(rooms);
+
         break;
       }
       case "start": {
+        console.log("start");
         const managerRoom = new ManagerRoom();
         const userManager = new UserManager();
         const UserFindIndexInRoom = new UserFindRoom();
@@ -118,6 +125,12 @@ wss.on("connection", (ws: WebSocket) => {
         );
         userReadyAction.UserReady(data);
         StartGameFn(data);
+        break;
+      }
+      case "attack": {
+        console.log("attack");
+        Attack(data);
+        break;
       }
     }
   });
@@ -159,4 +172,42 @@ function StartGameFn(data: IData) {
     roleAssigner
   );
   startGame.StartGame(data);
+}
+function Attack(data: IData) {
+  const managerRoom = new ManagerRoom();
+  const userManager = new UserManager();
+  const UserFindIndexInRoom = new UserFindRoom();
+  const userParser = new UserParser();
+  const responseFactorys = new ResponseFactory();
+  const userChangeStartGame = new UserChangeStartGame();
+  const userPublishers = new UserPublisher(userManager);
+  const messageRecipientFilters = new MessageRecipientFilter();
+  const sendMessages = new SendMessage();
+  const checkStateRoom = new CheckStateRoom();
+  const notifyUser = new NotifyUser(
+    responseFactorys,
+    userPublishers,
+    messageRecipientFilters,
+    sendMessages
+  );
+
+  const userChakeState = new UserChakeState();
+  const checkCardInUser = new CheckCardInUser();
+  const checkCardOnTable = new CheckCardOnTable();
+  const cardOnTable = new CardOnTable();
+  const userCardRemove = new UserCardRemove();
+  const userAttackAction = new UserAttackAction(
+    rooms,
+    userParser,
+    UserFindIndexInRoom,
+    userChangeStartGame,
+    notifyUser,
+    checkStateRoom,
+    userChakeState,
+    checkCardInUser,
+    checkCardOnTable,
+    cardOnTable,
+    userCardRemove
+  );
+  userAttackAction.UserAttack(data);
 }

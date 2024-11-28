@@ -52,9 +52,7 @@ export class UserReadyAction {
       return;
     }
     if (indexUser === -1) {
-      console.log(
-        `Player with ID ${parserUser.user.id} not found in room ${data.roomId}`
-      );
+    
       return;
     }
     const playerResult = this.#userChangeStartGame.changeState(

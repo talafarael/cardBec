@@ -27,7 +27,12 @@ export interface IRoom {
   owner: string;
   trump: ICard | null;
   pass: ICard[];
-  cardsOnTable: ICard[][];
+  cardsOnTable: ICardInGame[];
+}
+
+export interface ICardInGame {
+  attack: ICard;
+  deffit: ICard | null;
 }
 export interface IRooms {
   // rooms: { [key: string]: IRoom | {} };
@@ -38,7 +43,7 @@ export class Rooms implements IRooms {
   private rooms: { [key: string]: IRoom } = {};
 
   getRoom(roomId: string): IRoom | null {
-    console.log(this.rooms);
+    
     return this.rooms[roomId] ?? null;
   }
 

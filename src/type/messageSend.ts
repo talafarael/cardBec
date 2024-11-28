@@ -1,5 +1,5 @@
 import { IPlayerPublisher } from "../classMessage/ResponseFactory";
-import { ICard, IPlayers } from "../Room";
+import { ICard, ICardInGame, IPlayers } from "../Room";
 
 export interface IResponseMessage {
   session: string;
@@ -7,7 +7,7 @@ export interface IResponseMessage {
   players: IPlayerPublisher[];
   roomId: string;
   you: IPlayers;
-  cardsOnTable: ICard[][];
+  cardsOnTable: ICardInGame[];
   trump: ICard | null;
   pass: ICard[];
   passState: boolean;
