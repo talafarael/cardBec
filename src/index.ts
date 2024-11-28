@@ -153,7 +153,8 @@ wss.on("connection", (ws: WebSocket) => {
         break;
       }
       case "pass": {
-        add(data);
+        console.log("pas");
+        pass(data);
         break;
       }
     }
@@ -323,6 +324,7 @@ const add = (data: IData) => {
   userAddCardAction.UserAddCardAction(data);
 };
 function pass(data: IData) {
+  console.log("pass");
   const userManager = new UserManager();
   const UserFindIndexInRoom = new UserFindRoom();
   const userParser = new UserParser();
