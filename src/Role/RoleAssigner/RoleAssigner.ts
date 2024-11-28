@@ -1,7 +1,8 @@
 import { IPlayers, IRoom } from "../../Room";
-
+//need return void its bad
 export interface IRoleAssigner {
   startAssignRole(room: IRoom): void;
+  nextAssignRole(room: IRoom): void;
 }
 export class RoleAssigner implements IRoleAssigner {
   startAssignRole(room: IRoom) {
@@ -10,10 +11,31 @@ export class RoleAssigner implements IRoleAssigner {
     this.#assignAttacker(room, atack);
     this.#assignDefender(room, def);
   }
-  #getRandomPlayerIndexForFirstMove(room: IRoom): number {
-    return Math.floor(Math.random() * room.players.length );
+  nextAssignRole(room: IRoom) {
+    const indexPreviuosAttack = this.#findUserWithAttack(room);
+    const index = this.#nextAssignIndex(
+      room.players.length,
+      indexPreviuosAttack
+    );
+    const { atack, def } = this.#roleDistributor(room.players.length, index);
+    this.#assignAttacker(room, atack);
+    this.#assignDefender(room, def);
   }
-
+  #nextAssignIndex(lengthUser: number, index: number) {
+    if (lengthUser - 1 == index) {
+      return (index = 0);
+    }
+    if (index == 0) {
+      return (index = lengthUser - 1);
+    }
+    return index + 1;
+  }
+  #getRandomPlayerIndexForFirstMove(room: IRoom): number {
+    return Math.floor(Math.random() * room.players.length);
+  }
+  #findUserWithAttack(room: IRoom): number {
+    return room.players.findIndex((elem) => elem.state == "attacking");
+  }
   #roleDistributor(lengthUser: number, index: number) {
     let indexRole = {
       atack: index - 1,
@@ -25,10 +47,8 @@ export class RoleAssigner implements IRoleAssigner {
     if (index == 0) {
       indexRole.atack = lengthUser - 1;
     }
-    
+
     return indexRole;
-
-
   }
   #assignAttacker(room: IRoom, atack: number) {
     room.players[atack].state = "attacking";

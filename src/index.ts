@@ -341,6 +341,7 @@ function pass(data: IData) {
   const comparisonCard = new ComparisonCard();
   const checkRankOnTable = new CheckRankOnTable();
   const userPass = new UserPass();
+  
   const userAddCardAction = new UserPassAction(
     rooms,
     userParser,

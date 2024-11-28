@@ -14,6 +14,7 @@ import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
 import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
 import { IUserPassCheck } from "../../classWorkWithUser/UserPassCheck/UserPassCheck";
+import { IRoleAssigner } from "../../Role/RoleAssigner/RoleAssigner";
 import { IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
 
@@ -31,6 +32,7 @@ export class CheckPassUser {
   #userCardRemove: IUserCardRemove;
   #simpleCardDealer: ISimpleCardDealer;
   #userPassCheck: IUserPassCheck;
+  #roleAssigner: IRoleAssigner;
   constructor(
     rooms: IRooms,
     UserParser: IUserParser,
@@ -44,8 +46,9 @@ export class CheckPassUser {
     CardOnTable: ICardOnTable,
     UserCardRemove: IUserCardRemove,
     UserPassCheck: IUserPassCheck,
-    SimpleCardDealer: ISimpleCardDealer
+    SimpleCardDealer: ISimpleCardDealer,
     // ManagareRoom: IManagerRoom,
+    RoleAssigner: IRoleAssigner
   ) {
     this.#rooms = rooms;
     this.#userParser = UserParser;
@@ -60,6 +63,7 @@ export class CheckPassUser {
     this.#userCardRemove = UserCardRemove;
     this.#userPassCheck = UserPassCheck;
     this.#simpleCardDealer = SimpleCardDealer;
+    this.#roleAssigner = RoleAssigner;
     // this.#managerRoom = ManagareRoom;
   }
   CheckPassUser(data: IData) {
@@ -82,5 +86,9 @@ export class CheckPassUser {
       return;
     }
     this.#simpleCardDealer.startGame(Room);
+    this.#roleAssigner.nextAssignRole(Room);
+    this.#notifyUser.sendNotification(Room, "nextMove");
+
+    this.#rooms.saveRoom(data.roomId, Room);
   }
 }
