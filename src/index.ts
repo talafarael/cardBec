@@ -41,6 +41,8 @@ import { UserAddCardAction } from "./Action/UserAddCardAction/UserAddCardAction"
 import { CheckRankOnTable } from "./Card/CheckRankOnTable/CheckRankOnTable";
 import { UserPass } from "./classWorkWithUser/UserPass/UserPass";
 import { UserPassAction } from "./Action/UserPassAction/UserPassAction";
+import { CheckPassUser } from "./GameEvent/CheckPassUser/CheckPassUser";
+import { UserPassCheck } from "./classWorkWithUser/UserPassCheck/UserPassCheck";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -147,6 +149,10 @@ wss.on("connection", (ws: WebSocket) => {
         break;
       }
       case "add": {
+        add(data);
+        break;
+      }
+      case "pass": {
         add(data);
         break;
       }
@@ -332,7 +338,7 @@ function pass(data: IData) {
     messageRecipientFilters,
     sendMessages
   );
-
+  const distributingCardsToUser = new DistributingCardsToUser();
   const userChakeState = new UserChakeState();
   const checkCardInUser = new CheckCardInUser();
   const checkCardOnTable = new CheckCardOnTable();
@@ -340,8 +346,26 @@ function pass(data: IData) {
   const userCardRemove = new UserCardRemove();
   const comparisonCard = new ComparisonCard();
   const checkRankOnTable = new CheckRankOnTable();
+  const userPassCheck = new UserPassCheck();
   const userPass = new UserPass();
-  
+  const roleAssigner = new RoleAssigner();
+  const simpleCardDealer = new SimpleCardDealer(distributingCardsToUser);
+  const checkPassUser = new CheckPassUser(
+    rooms,
+    userParser,
+    UserFindIndexInRoom,
+    userChangeStartGame,
+    notifyUser,
+    checkStateRoom,
+    userChakeState,
+    checkCardInUser,
+    checkCardOnTable,
+    cardOnTable,
+    userCardRemove,
+    userPassCheck,
+    simpleCardDealer,
+    roleAssigner
+  );
   const userAddCardAction = new UserPassAction(
     rooms,
     userParser,
@@ -357,4 +381,5 @@ function pass(data: IData) {
     userPass
   );
   userAddCardAction.UserPassAttacAction(data);
+  checkPassUser.CheckPassUser(data);
 }
