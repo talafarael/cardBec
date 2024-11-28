@@ -82,7 +82,7 @@ describe("SimpleCardDealer", () => {
     const card: ICard[] = [
       { rank: "10", suit: "Hearts" },
       { rank: "9", suit: "Spades" },
-    ];
+    ] as unknown as ICard[];
     expect(simpleCardDealer.setTrumps(card)).toEqual({
       rank: "10",
       suit: "Hearts",

@@ -10,6 +10,7 @@ export interface IUser {
 export interface ICard {
   rank: string;
   suit: string;
+  level: number;
 }
 export interface IPlayers {
   user: IUser;
@@ -43,7 +44,6 @@ export class Rooms implements IRooms {
   private rooms: { [key: string]: IRoom } = {};
 
   getRoom(roomId: string): IRoom | null {
-    
     return this.rooms[roomId] ?? null;
   }
 

@@ -6,7 +6,7 @@ const cards: ICard[] = [
   { rank: "2", suit: "King of Hearts" },
   { rank: "3", suit: "Queen of Diamonds" },
   { rank: "4", suit: "Jack of Clubs" },
-];
+] as unknown as ICard[];
 const user: IPlayers = {
   card: cards,
 } as unknown as IPlayers;
@@ -17,7 +17,7 @@ describe("CheckCardInUser", () => {
       checkCardInUser.CheckCardInUser(user, {
         rank: "1",
         suit: "Ace of Spades",
-      })
+      } as unknown as ICard)
     ).toBe(0);
   });
   it("should return -1", () => {
@@ -26,7 +26,7 @@ describe("CheckCardInUser", () => {
       checkCardInUser.CheckCardInUser(user, {
         rank: "9",
         suit: "Ace of Spades",
-      })
+      } as unknown as ICard)
     ).toBe(-1);
   });
 });

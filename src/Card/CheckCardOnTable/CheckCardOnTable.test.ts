@@ -11,7 +11,10 @@ describe("CheckCardOnTable", () => {
   });
   it("should be return false (1 card)", () => {
     const checkCardOnTable = new CheckCardOnTable();
-    const cards: ICard = { rank: "1", suit: "Ace of Spades" };
+    const cards: ICard = {
+      rank: "1",
+      suit: "Ace of Spades",
+    } as unknown as ICard;
     const cardsOnTable = [cards] as unknown as ICardInGame[];
 
     expect(checkCardOnTable.checkIfCardIsZero(cardsOnTable)).toBe(false);

@@ -6,7 +6,7 @@ const cards: ICard[] = [
   { rank: "2", suit: "King of Hearts" },
   { rank: "3", suit: "Queen of Diamonds" },
   { rank: "4", suit: "Jack of Clubs" },
-];
+]as unknown as ICard[];
 
 const mixCards = new MixCards();
 

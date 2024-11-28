@@ -14,7 +14,7 @@ const cards: ICard[] = [
   { rank: "6", suit: "hearts" },
   { rank: "7", suit: "hearts" },
   { rank: "8", suit: "hearts" },
-];
+] as unknown as ICard[];
 describe("DistributingCardsToUser", () => {
   it("must fill user card", () => {
     const player: IPlayers = {
@@ -33,6 +33,6 @@ describe("DistributingCardsToUser", () => {
       { rank: "8", suit: "hearts" },
       { rank: "7", suit: "hearts" },
       { rank: "6", suit: "hearts" },
-    ]);
+    ] as unknown as ICard[]);
   });
 });

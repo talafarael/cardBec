@@ -1,6 +1,7 @@
 import { ICardOnTable } from "../../Card/CardOnTable/CardOnTable";
 import { ICheckCardInUser } from "../../Card/CheckCardInUser/CheckCardInUser";
 import { ICheckCardOnTable } from "../../Card/CheckCardOnTable/CheckCardOnTable";
+import { IComparisonCard } from "../../Card/ComparisonCard/ComparisonCard";
 import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
 import { IUserCardRemove } from "../../classWorkWithUser/UserCardRemove/UserCardRemove";
 import { IUserChakeState } from "../../classWorkWithUser/UserChakeState/UserChakeState";
@@ -8,10 +9,13 @@ import { IUserChangeStartGame } from "../../classWorkWithUser/UserChangeStartGam
 import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
 import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
-import { IData, IRoom, IRooms } from "../../Room";
+import { ICard, IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
 
-export class UserAttackAction {
+export interface IDefData extends IData {
+  attacCard: ICard;
+}
+export class UserDeffitAction {
   #rooms;
   #userParser;
   #userFindRoom;
@@ -23,6 +27,7 @@ export class UserAttackAction {
   #checkCardInUser: ICheckCardInUser;
   #cardOnTable: ICardOnTable;
   #userCardRemove: IUserCardRemove;
+  #comparisonCard: IComparisonCard;
   constructor(
     rooms: IRooms,
     UserParser: IUserParser,
@@ -34,7 +39,8 @@ export class UserAttackAction {
     CheckCardInUser: ICheckCardInUser,
     CheckCardOnTable: ICheckCardOnTable,
     CardOnTable: ICardOnTable,
-    UserCardRemove: IUserCardRemove
+    UserCardRemove: IUserCardRemove,
+    ComparisonCard: IComparisonCard
     // ManagareRoom: IManagerRoom,
   ) {
     this.#rooms = rooms;
@@ -48,11 +54,10 @@ export class UserAttackAction {
     this.#checkCardOnTable = CheckCardOnTable;
     this.#cardOnTable = CardOnTable;
     this.#userCardRemove = UserCardRemove;
+    this.#comparisonCard = ComparisonCard;
     // this.#managerRoom = ManagareRoom;
   }
-  UserAttack(data: IData) {
-    
-
+  UserDeffitAction(data: IDefData) {
     if (!data.roomId || !data.card) {
       return;
     }
@@ -62,37 +67,53 @@ export class UserAttackAction {
       Room,
       parserUser.user.id
     );
-    
+    //state room in game
+    console.log(1)
     if (!this.#checkState.checkStateGame(Room)) {
       return;
     }
     if (indexUser === -1) {
       return;
     }
-  
+
     const user = Room.players[indexUser];
-    if (!this.#userChakeState.ChakeStateAttack(user)) {
+    if (!this.#userChakeState.ChakeStateDefending(user)) {
       return;
     }
-   
     const indexCard = this.#checkCardInUser.CheckCardInUser(user, data.card);
     if (indexCard == -1) {
       return;
     }
-    if (!this.#checkCardOnTable.checkIfCardIsZero(Room.cardsOnTable)) {
+    const indexTable = this.#checkCardInUser.CheckCardInAtackTable(
+      Room.cardsOnTable,
+      data.attacCard
+    );
+    console.log(2)
+    if (indexTable == -1) {
       return;
     }
-   
-    Room.cardsOnTable = this.#cardOnTable.PutCardAttack(
+    console.log(4)
+    if (
+      !this.#comparisonCard.ComparisonCard(
+        data.card,
+        data.attacCard,
+        Room.trump as ICard
+      )
+    ) {
+      return;
+    }
+    console.log(3)
+    Room.cardsOnTable = this.#cardOnTable.PutCardDeff(
       data.card,
-      Room.cardsOnTable
+      Room.cardsOnTable,
+      indexTable
     );
     Room.players[indexUser].card = this.#userCardRemove.CardRemove(
       user.card,
       indexCard
     );
     this.#rooms.saveRoom(data.roomId, Room);
-    console.log(5)
-    this.#notifyUser.sendNotification(Room, "attack");
-  }
+    console.log(5);
+    this.#notifyUser.sendNotification(Room, "def");
+   }
 }

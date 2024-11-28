@@ -7,7 +7,10 @@ describe("cardOnTable", () => {
 
     const cardsOnTable = [] as ICardInGame[];
 
-    const cards: ICard = { rank: "1", suit: "Ace of Spades" };
+    const cards: ICard = {
+      rank: "1",
+      suit: "Ace of Spades",
+    } as unknown as ICard;
     cardOnTable.PutCardAttack(cards, cardsOnTable);
     expect(cardsOnTable[0].attack).toEqual(cards);
   });

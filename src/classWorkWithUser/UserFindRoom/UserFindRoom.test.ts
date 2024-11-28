@@ -1,5 +1,5 @@
 import { WebSocket } from "ws";
-import { IRoom } from "../../Room";
+import { ICard, IRoom } from "../../Room";
 import { UserFindRoom } from "./UserFindRoom";
 
 const testRoom = {
@@ -16,7 +16,7 @@ const testRoom = {
       card: [
         { rank: "Ace", suit: "Hearts" },
         { rank: "King", suit: "Spades" },
-      ],
+      ] as unknown as ICard,
       ws: {} as WebSocket,
       state: "",
       startGameState: false,
@@ -34,7 +34,7 @@ const testRoom = {
       card: [
         { rank: "Queen", suit: "Diamonds" },
         { rank: "Jack", suit: "Clubs" },
-      ],
+      ] as unknown as ICard,
       ws: {} as WebSocket,
       state: "",
       startGameState: true,
@@ -48,12 +48,12 @@ const testRoom = {
     { rank: "9", suit: "Spades" },
     { rank: "8", suit: "Diamonds" },
     { rank: "7", suit: "Clubs" },
-  ],
+  ] as unknown as ICard[],
   owner: "session1",
   trump: null,
   pass: [],
   cardsOnTable: [],
-};
+} as unknown as IRoom;
 
 describe("findPlayerIndexInRoom", () => {
   it("I should get index player", () => {

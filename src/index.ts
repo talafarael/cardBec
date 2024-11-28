@@ -32,6 +32,11 @@ import { CheckCardInUser } from "./Card/CheckCardInUser/CheckCardInUser";
 import { CheckCardOnTable } from "./Card/CheckCardOnTable/CheckCardOnTable";
 import { CardOnTable } from "./Card/CardOnTable/CardOnTable";
 import { UserCardRemove } from "./classWorkWithUser/UserCardRemove/UserCardRemove";
+import {
+  IDefData,
+  UserDeffitAction,
+} from "./Action/UserDeffitAction/UserDeffitAction";
+import { ComparisonCard } from "./Card/ComparisonCard/ComparisonCard";
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -132,6 +137,11 @@ wss.on("connection", (ws: WebSocket) => {
         Attack(data);
         break;
       }
+      case "deff": {
+        console.log("deff");
+        Def(data);
+        break;
+      }
     }
   });
 
@@ -210,4 +220,44 @@ function Attack(data: IData) {
     userCardRemove
   );
   userAttackAction.UserAttack(data);
+}
+function Def(data: IDefData) {
+  const managerRoom = new ManagerRoom();
+  const userManager = new UserManager();
+  const UserFindIndexInRoom = new UserFindRoom();
+  const userParser = new UserParser();
+  const responseFactorys = new ResponseFactory();
+  const userChangeStartGame = new UserChangeStartGame();
+  const userPublishers = new UserPublisher(userManager);
+  const messageRecipientFilters = new MessageRecipientFilter();
+  const sendMessages = new SendMessage();
+  const checkStateRoom = new CheckStateRoom();
+  const notifyUser = new NotifyUser(
+    responseFactorys,
+    userPublishers,
+    messageRecipientFilters,
+    sendMessages
+  );
+
+  const userChakeState = new UserChakeState();
+  const checkCardInUser = new CheckCardInUser();
+  const checkCardOnTable = new CheckCardOnTable();
+  const cardOnTable = new CardOnTable();
+  const userCardRemove = new UserCardRemove();
+  const comparisonCard = new ComparisonCard();
+  const userDeffitAction = new UserDeffitAction(
+    rooms,
+    userParser,
+    UserFindIndexInRoom,
+    userChangeStartGame,
+    notifyUser,
+    checkStateRoom,
+    userChakeState,
+    checkCardInUser,
+    checkCardOnTable,
+    cardOnTable,
+    userCardRemove,
+    comparisonCard
+  );
+  userDeffitAction.UserDeffitAction(data);
 }
