@@ -1,7 +1,6 @@
 import { ICardOnTable } from "../../Card/CardOnTable/CardOnTable";
 import { ICheckCardInUser } from "../../Card/CheckCardInUser/CheckCardInUser";
 import { ICheckCardOnTable } from "../../Card/CheckCardOnTable/CheckCardOnTable";
-import { IComparisonCard } from "../../Card/ComparisonCard/ComparisonCard";
 import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
 import { IUserCardRemove } from "../../classWorkWithUser/UserCardRemove/UserCardRemove";
 import { IUserChakeState } from "../../classWorkWithUser/UserChakeState/UserChakeState";
@@ -10,13 +9,10 @@ import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom
 import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
 import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
-import { ICard, IData, IRoom, IRooms } from "../../Room";
+import { IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
 
-export interface IDefData extends IData {
-  attacCard: ICard;
-}
-export class UserDeffitAction {
+export class UserPassAction {
   #rooms;
   #userParser;
   #userFindRoom;
@@ -28,7 +24,6 @@ export class UserDeffitAction {
   #checkCardInUser: ICheckCardInUser;
   #cardOnTable: ICardOnTable;
   #userCardRemove: IUserCardRemove;
-  #comparisonCard: IComparisonCard;
   #userPass: IUserPass;
   constructor(
     rooms: IRooms,
@@ -42,7 +37,6 @@ export class UserDeffitAction {
     CheckCardOnTable: ICheckCardOnTable,
     CardOnTable: ICardOnTable,
     UserCardRemove: IUserCardRemove,
-    ComparisonCard: IComparisonCard,
     UserPass: IUserPass
     // ManagareRoom: IManagerRoom,
   ) {
@@ -57,12 +51,11 @@ export class UserDeffitAction {
     this.#checkCardOnTable = CheckCardOnTable;
     this.#cardOnTable = CardOnTable;
     this.#userCardRemove = UserCardRemove;
-    this.#comparisonCard = ComparisonCard;
     this.#userPass = UserPass;
-   
     // this.#managerRoom = ManagareRoom;
   }
-  UserDeffitAction(data: IDefData) {
+
+  UserPassAttacAction(data: IData) {
     if (!data.roomId || !data.card) {
       return;
     }
@@ -72,54 +65,16 @@ export class UserDeffitAction {
       Room,
       parserUser.user.id
     );
-    //state room in game
-    console.log(1);
     if (!this.#checkState.checkStateGame(Room)) {
       return;
     }
     if (indexUser === -1) {
       return;
     }
-
     const user = Room.players[indexUser];
-    if (!this.#userChakeState.ChakeStateDefending(user)) {
-      return;
-    }
-    const indexCard = this.#checkCardInUser.CheckCardInUser(user, data.card);
-    if (indexCard == -1) {
-      return;
-    }
-    const indexTable = this.#checkCardInUser.CheckCardInAtackTable(
-      Room.cardsOnTable,
-      data.attacCard
-    );
-    console.log(2);
-    if (indexTable == -1) {
-      return;
-    }
-    console.log(4);
-    if (
-      !this.#comparisonCard.ComparisonCard(
-        data.card,
-        data.attacCard,
-        Room.trump as ICard
-      )
-    ) {
-      return;
-    }
-    console.log(3);
-    Room.cardsOnTable = this.#cardOnTable.PutCardDeff(
-      data.card,
-      Room.cardsOnTable,
-      indexTable
-    );
-    Room.players[indexUser].card = this.#userCardRemove.CardRemove(
-      user.card,
-      indexCard
-    );
-    Room.players = this.#userPass.UpdateAllUserPass(Room.players);
+    Room.players[indexUser] = this.#userPass.UserPassTrue(user);
     this.#rooms.saveRoom(data.roomId, Room);
-    console.log(5);
-    this.#notifyUser.sendNotification(Room, "def");
+    
+    this.#notifyUser.sendNotification(Room, "pass");
   }
 }

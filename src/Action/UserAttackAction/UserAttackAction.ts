@@ -8,6 +8,7 @@ import { IUserChangeStartGame } from "../../classWorkWithUser/UserChangeStartGam
 import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
 import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
+import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
 import { IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
 
@@ -23,6 +24,7 @@ export class UserAttackAction {
   #checkCardInUser: ICheckCardInUser;
   #cardOnTable: ICardOnTable;
   #userCardRemove: IUserCardRemove;
+  #userPass: IUserPass;
   constructor(
     rooms: IRooms,
     UserParser: IUserParser,
@@ -34,7 +36,8 @@ export class UserAttackAction {
     CheckCardInUser: ICheckCardInUser,
     CheckCardOnTable: ICheckCardOnTable,
     CardOnTable: ICardOnTable,
-    UserCardRemove: IUserCardRemove
+    UserCardRemove: IUserCardRemove,
+    UserPass: IUserPass
     // ManagareRoom: IManagerRoom,
   ) {
     this.#rooms = rooms;
@@ -48,11 +51,10 @@ export class UserAttackAction {
     this.#checkCardOnTable = CheckCardOnTable;
     this.#cardOnTable = CardOnTable;
     this.#userCardRemove = UserCardRemove;
+    this.#userPass = UserPass;
     // this.#managerRoom = ManagareRoom;
   }
   UserAttack(data: IData) {
-    
-
     if (!data.roomId || !data.card) {
       return;
     }
@@ -62,19 +64,19 @@ export class UserAttackAction {
       Room,
       parserUser.user.id
     );
-    
+
     if (!this.#checkState.checkStateGame(Room)) {
       return;
     }
     if (indexUser === -1) {
       return;
     }
-  
+
     const user = Room.players[indexUser];
     if (!this.#userChakeState.ChakeStateAttack(user)) {
       return;
     }
-   
+
     const indexCard = this.#checkCardInUser.CheckCardInUser(user, data.card);
     if (indexCard == -1) {
       return;
@@ -82,7 +84,7 @@ export class UserAttackAction {
     if (!this.#checkCardOnTable.checkIfCardIsZero(Room.cardsOnTable)) {
       return;
     }
-   
+
     Room.cardsOnTable = this.#cardOnTable.PutCardAttack(
       data.card,
       Room.cardsOnTable
@@ -91,8 +93,9 @@ export class UserAttackAction {
       user.card,
       indexCard
     );
+    Room.players = this.#userPass.UpdateAllUserPass(Room.players);
     this.#rooms.saveRoom(data.roomId, Room);
-    console.log(5)
+    console.log(5);
     this.#notifyUser.sendNotification(Room, "attack");
   }
 }
