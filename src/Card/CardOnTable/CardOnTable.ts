@@ -21,4 +21,7 @@ export class CardOnTable implements ICardOnTable {
      (cardsOnTable[index].deffit = card);
      return cardsOnTable
   }
+  removeCard(CardOnTable:ICardInGame[],pass:ICardInGame[]){
+     
+  }
 }

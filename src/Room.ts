@@ -27,7 +27,7 @@ export interface IRoom {
   card: ICard[];
   owner: string;
   trump: ICard | null;
-  pass: ICard[];
+  pass: ICardInGame[];
   cardsOnTable: ICardInGame[];
 }
 

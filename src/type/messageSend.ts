@@ -9,6 +9,6 @@ export interface IResponseMessage {
   you: IPlayers;
   cardsOnTable: ICardInGame[];
   trump: ICard | null;
-  pass: ICard[];
+  pass: ICardInGame[];
   passState: boolean;
 }

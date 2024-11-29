@@ -9,7 +9,7 @@ export interface IResponseFactory {
     roomId: string,
     user: IPlayers,
     trump: ICard | null,
-    pass: ICard[],
+    pass: ICardInGame[],
     cardsOnTable: ICardInGame[],
     passState: boolean
   ): IResponseMessage;
@@ -22,7 +22,7 @@ export class ResponseFactory implements IResponseFactory {
     roomId: string,
     user: IPlayers,
     trump: ICard | null,
-    pass: ICard[],
+    pass: ICardInGame[],
     cardsOnTable: ICardInGame[],
     passState: boolean
   ) {
