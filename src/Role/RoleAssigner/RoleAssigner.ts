@@ -12,14 +12,17 @@ export class RoleAssigner implements IRoleAssigner {
     this.#assignDefender(room, def);
   }
   nextAssignRole(room: IRoom) {
-    const indexPreviuosAttack = this.#findUserWithAttack(room);
+    const indexPreviuosAttack = this.#findUserWithDef(room);
+
     const index = this.#nextAssignIndex(
       room.players.length,
       indexPreviuosAttack
     );
     const { atack, def } = this.#roleDistributor(room.players.length, index);
+
     this.#assignAttacker(room, atack);
     this.#assignDefender(room, def);
+    console.log(room.players[0]);
   }
   #nextAssignIndex(lengthUser: number, index: number) {
     if (lengthUser - 1 == index) {
@@ -33,8 +36,8 @@ export class RoleAssigner implements IRoleAssigner {
   #getRandomPlayerIndexForFirstMove(room: IRoom): number {
     return Math.floor(Math.random() * room.players.length);
   }
-  #findUserWithAttack(room: IRoom): number {
-    return room.players.findIndex((elem) => elem.state == "attacking");
+  #findUserWithDef(room: IRoom): number {
+    return room.players.findIndex((elem) => elem.state == "defending");
   }
   #roleDistributor(lengthUser: number, index: number) {
     let indexRole = {

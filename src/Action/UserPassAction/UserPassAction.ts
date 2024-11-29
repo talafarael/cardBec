@@ -56,7 +56,8 @@ export class UserPassAction {
   }
 
   UserPassAttacAction(data: IData) {
-    if (!data.roomId || !data.card) {
+    console.log(5);
+    if (!data.roomId) {
       return;
     }
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
@@ -65,16 +66,28 @@ export class UserPassAction {
       Room,
       parserUser.user.id
     );
+    console.log(2);
     if (!this.#checkState.checkStateGame(Room)) {
+      return;
+    }
+    console.log(1);
+    if (this.#checkCardOnTable.checkIfCardIsZero(Room.cardsOnTable)) {
+      return;
+    }
+    if (!this.#checkCardOnTable.checkIfCardMaxMinForAdd(Room.cardsOnTable)) {
       return;
     }
     if (indexUser === -1) {
       return;
     }
+    if(!this.#checkCardOnTable.cehckDefCardOntTable(Room.cardsOnTable)){
+      return
+    }
+    //user check
     const user = Room.players[indexUser];
     Room.players[indexUser] = this.#userPass.UserPassTrue(user);
     this.#rooms.saveRoom(data.roomId, Room);
-    
+    console.log("pass");
     this.#notifyUser.sendNotification(Room, "pass");
   }
 }

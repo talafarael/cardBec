@@ -33,6 +33,7 @@ export class CheckPassUser {
   #simpleCardDealer: ISimpleCardDealer;
   #userPassCheck: IUserPassCheck;
   #roleAssigner: IRoleAssigner;
+  #userPass: IUserPass;
   constructor(
     rooms: IRooms,
     UserParser: IUserParser,
@@ -48,7 +49,8 @@ export class CheckPassUser {
     UserPassCheck: IUserPassCheck,
     SimpleCardDealer: ISimpleCardDealer,
     // ManagareRoom: IManagerRoom,
-    RoleAssigner: IRoleAssigner
+    RoleAssigner: IRoleAssigner,
+    UserPass: IUserPass
   ) {
     this.#rooms = rooms;
     this.#userParser = UserParser;
@@ -64,10 +66,11 @@ export class CheckPassUser {
     this.#userPassCheck = UserPassCheck;
     this.#simpleCardDealer = SimpleCardDealer;
     this.#roleAssigner = RoleAssigner;
+    this.#userPass = UserPass;
     // this.#managerRoom = ManagareRoom;
   }
   CheckPassUser(data: IData) {
-    if (!data.roomId || !data.card) {
+    if (!data.roomId) {
       return;
     }
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
@@ -76,19 +79,22 @@ export class CheckPassUser {
       Room,
       parserUser.user.id
     );
+    console.log(9);
     if (!this.#checkState.checkStateGame(Room)) {
       return;
     }
+    console.log(8);
     if (indexUser === -1) {
       return;
     }
+    console.log(7);
     if (!this.#userPassCheck.UserPassCheck(Room.players)) {
       return;
     }
     this.#simpleCardDealer.startGame(Room);
     this.#roleAssigner.nextAssignRole(Room);
     this.#notifyUser.sendNotification(Room, "nextMove");
-
+    Room.players = this.#userPass.UpdateAllUserPass(Room.players);
     this.#rooms.saveRoom(data.roomId, Room);
   }
 }

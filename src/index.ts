@@ -366,8 +366,10 @@ function pass(data: IData) {
     userCardRemove,
     userPassCheck,
     simpleCardDealer,
-    roleAssigner
+    roleAssigner,
+    userPass
   );
+  
   const userAddCardAction = new UserPassAction(
     rooms,
     userParser,
@@ -382,6 +384,7 @@ function pass(data: IData) {
     userCardRemove,
     userPass
   );
+  console.log("suka")
   userAddCardAction.UserPassAttacAction(data);
   checkPassUser.CheckPassUser(data);
 }
