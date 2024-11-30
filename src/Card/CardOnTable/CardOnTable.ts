@@ -1,4 +1,4 @@
-import { ICard, ICardInGame, IRoom } from "../../Room";
+import { ICard, ICardInGame, IPlayers, IRoom } from "../../Room";
 
 export interface ICardOnTable {
   PutCardAttack(card: ICard, cardsOnTable: ICardInGame[]): ICardInGame[];
@@ -11,6 +11,7 @@ export interface ICardOnTable {
     CardOnTable: ICardInGame[],
     pass: ICardInGame[]
   ): IResponseRemveCard;
+  pickUpAllCard(cardOnTable: ICardInGame[], card: ICard[]): IResponseRemveCard;
 }
 export class CardOnTable implements ICardOnTable {
   PutCardAttack(card: ICard, cardsOnTable: ICardInGame[]) {
@@ -30,10 +31,19 @@ export class CardOnTable implements ICardOnTable {
       pass.push(elem);
     });
     CardOnTable = [];
-    return { CardOnTable, pass };
+    return { cardOnTable: CardOnTable, pass };
+  }
+  pickUpAllCard(cardOnTable: ICardInGame[], card: ICard[]) {
+    cardOnTable.map((elem) => {
+      card.push(elem.attack);
+      if (!elem.deffit) return;
+      card.push(elem.deffit);
+    });
+    cardOnTable=[]
+    return { cardOnTable, card };
   }
 }
-interface IResponseRemveCard {
-  CardOnTable: ICardInGame[];
-  pass: ICardInGame[];
+export interface IResponseRemveCard {
+  cardOnTable: ICardInGame[];
+  [propName: string]: ICardInGame[] | ICard[];
 }

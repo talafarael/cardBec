@@ -1,5 +1,5 @@
-import { ICard, ICardInGame, IRoom } from "../../Room";
-import { CardOnTable } from "./CardOnTable";
+import { ICard, ICardInGame, IPlayers, IRoom } from "../../Room";
+import { CardOnTable, IResponseRemveCard } from "./CardOnTable";
 
 describe("cardOnTable", () => {
   it("should be put card on table", () => {
@@ -22,12 +22,47 @@ describe("remove", () => {
       rank: "1",
       suit: "Ace of Spades",
     } as unknown as ICard;
-    const cardsOnTable = [
+    const cardsOnTable: ICardInGame[] = [
       {
         attack: cards,
         deffit: cards,
       },
     ] as ICardInGame[];
-    
+    const passCarrd: ICardInGame[] = [];
+    const result = {
+      cardOnTable: [],
+      pass: [
+        {
+          attack: cards,
+          deffit: cards,
+        },
+      ],
+    };
+    const removeCard = cardOnTable.removeCard(cardsOnTable, passCarrd);
+    expect(removeCard).toEqual(result);
+  });
+});
+
+describe("pickUpAllCard", () => {
+  it("should transfer card from table to user", () => {
+    const cardOnTable = new CardOnTable();
+    const cards: ICard = {
+      rank: "1",
+      suit: "Ace of Spades",
+    } as unknown as ICard;
+    const cardsOnTable: ICardInGame[] = [
+      {
+        attack: cards,
+        deffit: cards,
+      },
+    ] as ICardInGame[];
+
+    const card: ICard[] = [];
+
+    const result: IResponseRemveCard = {
+      cardOnTable: [],
+      card: [cards, cards],
+    };
+    expect(cardOnTable.pickUpAllCard(cardsOnTable, card)).toEqual(result);
   });
 });

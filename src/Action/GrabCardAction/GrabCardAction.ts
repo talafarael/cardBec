@@ -18,7 +18,7 @@ import { IRoleAssigner } from "../../Role/RoleAssigner/RoleAssigner";
 import { ICard, ICardInGame, IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
 
-export class CheckPassUser {
+export class GrabCardAction {
   #rooms;
   #userParser;
   #userFindRoom;
@@ -69,7 +69,7 @@ export class CheckPassUser {
     this.#userPass = UserPass;
     // this.#managerRoom = ManagareRoom;
   }
-  CheckPassUser(data: IData) {
+  grabAll(data: IData) {
     if (!data.roomId) {
       return;
     }
@@ -79,33 +79,23 @@ export class CheckPassUser {
       Room,
       parserUser.user.id
     );
-
-    if (!this.#checkState.checkStateGame(Room)) {
+    if (this.#checkCardOnTable.checkIfCardIsZero(Room.cardsOnTable)) {
       return;
     }
-    
-      if (indexUser === -1) {
-        return;
-      }
-
-    if (!this.#userPassCheck.UserPassCheck(Room.players)) {
+    const user = Room.players[indexUser];
+    if (!this.#userChakeState.ChakeStateDefending(user)) {
       return;
     }
-    
+
+    ({ cardOnTable: Room.cardsOnTable, card: user.card } =
+      this.#cardOnTable.pickUpAllCard(Room.cardsOnTable, user.card) as {
+        cardOnTable: ICardInGame[];
+        card: ICard[];
+      });
     this.#simpleCardDealer.startGame(Room);
     this.#roleAssigner.nextAssignRole(Room);
-
     Room.players = this.#userPass.UpdateAllUserPass(Room.players);
-    const { cardOnTable, pass } = this.#cardOnTable.removeCard(
-      Room.cardsOnTable,
-      Room.pass
-    ) as {
-      cardOnTable: ICardInGame[];
-      pass: ICardInGame[];
-    };
-    Room.cardsOnTable = cardOnTable;
-    Room.pass = pass;
     this.#rooms.saveRoom(data.roomId, Room);
-    this.#notifyUser.sendNotification(Room, "pass");
+    this.#notifyUser.sendNotification(Room, "nextMove");
   }
 }

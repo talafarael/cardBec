@@ -34,13 +34,11 @@ describe("transformUserForRoom", () => {
 
 describe("transformedPlayerPublisher", () => {
   it("should be transform to IPlayer(PublicUser)", () => {
-    const wss = new WebSocket.Server({ port: 8080 });
-    wss.on("connection", (ws: WebSocket) => {
-      try {
+  
         const player: IPlayers = {
           user: user,
           card: [],
-          ws: ws,
+          ws: {}as WebSocket,
           state: "",
           startGameState: false,
           passState: false,
@@ -58,14 +56,8 @@ describe("transformedPlayerPublisher", () => {
         expect(userManager.transformedPlayerPublisher(player)).toEqual(
           palyerPublisher
         );
-        ws.on("close", () => {
-          console.log("Client disconnected");
-        });
-      } catch (error) {
-        console.log(error);
-      }
+ 
     });
-  });
 
   it("transformedPlayer", () => {
     const userManager = new UserManager();
@@ -81,4 +73,5 @@ describe("transformedPlayerPublisher", () => {
       resultPlayerTransform
     );
   });
-});
+
+  });
