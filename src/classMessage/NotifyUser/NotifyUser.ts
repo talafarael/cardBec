@@ -44,9 +44,10 @@ export class NotifyUser implements INotifyUser {
         room.trump,
         room.pass,
         room.cardsOnTable,
-        elem.passState
+        elem.passState,
+        room.cardsOnTable.length
       );
-     
+
       this.#sendMessage.JoinMessage(responseUser, elem.ws);
     });
   }

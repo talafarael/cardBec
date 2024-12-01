@@ -11,7 +11,8 @@ export interface IResponseFactory {
     trump: ICard | null,
     pass: ICardInGame[],
     cardsOnTable: ICardInGame[],
-    passState: boolean
+    passState: boolean,
+    cardsOnTableCount: number
   ): IResponseMessage;
 }
 export class ResponseFactory implements IResponseFactory {
@@ -24,7 +25,8 @@ export class ResponseFactory implements IResponseFactory {
     trump: ICard | null,
     pass: ICardInGame[],
     cardsOnTable: ICardInGame[],
-    passState: boolean
+    passState: boolean,
+    cardsOnTableCount: number
   ) {
     const res = {
       session: session,
@@ -36,6 +38,7 @@ export class ResponseFactory implements IResponseFactory {
       pass: pass,
       cardsOnTable: cardsOnTable,
       passState: passState,
+      cardsOnTableCount:cardsOnTableCount,
     };
     return res;
   }

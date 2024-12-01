@@ -2,10 +2,11 @@ import { WebSocket } from "ws";
 import { cardData } from "../../card.data";
 import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
 import { IPlayers, IRoom, IUser } from "../../Room";
-import { IResponseFactory } from "../ResponseFactory";
+import { IPlayerPublisher, IResponseFactory } from "../ResponseFactory";
 import { NotifyUser } from "./NotifyUser";
 import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
 import { ISendMessage } from "../SendMessage/SendMessage";
+import { IResponseMessage } from "../../type/messageSend";
 afterEach(() => {
   jest.clearAllMocks();
 });
@@ -56,7 +57,6 @@ const testRoom: IRoom = {
   trump: null,
   pass: [],
   cardsOnTable: [],
-  
 };
 
 const userPublish = [
@@ -73,20 +73,26 @@ const userPublish = [
     startGame: false,
   },
 ];
-const userPublishWithOutYou = [
+const userPublishWithOutYou: IPlayerPublisher[] = [
   {
     id: 1,
     cardCount: 0,
     firstName: "Test",
     startGame: false,
   },
-];
-const res = {
+] as unknown as IPlayerPublisher[];
+const res: IResponseMessage = {
   session: "1234",
   action: "join",
   players: userPublishWithOutYou,
   roomId: "1",
   you: players[1],
+  trump: null,
+  pass: [],
+
+  cardsOnTable:[],
+    passState: false,
+  cardsOnTableCount: 0,
 };
 describe("NotifyUserJoined", () => {
   it("class must be called", () => {
@@ -133,7 +139,8 @@ describe("NotifyUserJoined", () => {
       null,
       [],
       [],
-      false
+      false,
+      0
     );
     expect(mockSendMessage.JoinMessage).toHaveBeenCalledWith(
       res,

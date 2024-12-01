@@ -34,6 +34,7 @@ describe("JoinMessage", () => {
       trump: null,
       pass: [],
       passState:false,
+      cardsOnTableCount:0
     };
     const sendMessage = new SendMessage();
     sendMessage.JoinMessage(message, mockWebSocket);

@@ -11,4 +11,5 @@ export interface IResponseMessage {
   trump: ICard | null;
   pass: ICardInGame[];
   passState: boolean;
+  cardsOnTableCount: number;
 }
