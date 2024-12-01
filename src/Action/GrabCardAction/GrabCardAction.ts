@@ -22,31 +22,30 @@ export class GrabCardAction {
   #rooms;
   #userParser;
   #userFindRoom;
-  #userChangeStartGame;
+
   #notifyUser;
   #userChakeState;
-  #checkState: ICheckStateRoom;
+
   #checkCardOnTable: ICheckCardOnTable;
-  #checkCardInUser: ICheckCardInUser;
+
   #cardOnTable: ICardOnTable;
-  #userCardRemove: IUserCardRemove;
+
   #simpleCardDealer: ISimpleCardDealer;
-  #userPassCheck: IUserPassCheck;
+
   #roleAssigner: IRoleAssigner;
   #userPass: IUserPass;
   constructor(
     rooms: IRooms,
     UserParser: IUserParser,
     UserFindRoom: IUserFindRoom,
-    UserChangeStartGame: IUserChangeStartGame,
+
     NotifyUser: INotifyUser,
-    CheckStateRoom: ICheckStateRoom,
+
     UserChakeState: IUserChakeState,
-    CheckCardInUser: ICheckCardInUser,
+
     CheckCardOnTable: ICheckCardOnTable,
     CardOnTable: ICardOnTable,
-    UserCardRemove: IUserCardRemove,
-    UserPassCheck: IUserPassCheck,
+
     SimpleCardDealer: ISimpleCardDealer,
     // ManagareRoom: IManagerRoom,
     RoleAssigner: IRoleAssigner,
@@ -55,15 +54,14 @@ export class GrabCardAction {
     this.#rooms = rooms;
     this.#userParser = UserParser;
     this.#userFindRoom = UserFindRoom;
-    this.#userChangeStartGame = UserChangeStartGame;
+
     this.#notifyUser = NotifyUser;
-    this.#checkState = CheckStateRoom;
+
     this.#userChakeState = UserChakeState;
-    this.#checkCardInUser = CheckCardInUser;
+
     this.#checkCardOnTable = CheckCardOnTable;
     this.#cardOnTable = CardOnTable;
-    this.#userCardRemove = UserCardRemove;
-    this.#userPassCheck = UserPassCheck;
+
     this.#simpleCardDealer = SimpleCardDealer;
     this.#roleAssigner = RoleAssigner;
     this.#userPass = UserPass;

@@ -204,11 +204,11 @@ function Grad(data: IData) {
   const UserFindIndexInRoom = new UserFindRoom();
   const userParser = new UserParser();
   const responseFactorys = new ResponseFactory();
-  const userChangeStartGame = new UserChangeStartGame();
+
   const userPublishers = new UserPublisher(userManager);
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
-  const checkStateRoom = new CheckStateRoom();
+ 
   const notifyUser = new NotifyUser(
     responseFactorys,
     userPublishers,
@@ -217,13 +217,10 @@ function Grad(data: IData) {
   );
   const distributingCardsToUser = new DistributingCardsToUser();
   const userChakeState = new UserChakeState();
-  const checkCardInUser = new CheckCardInUser();
+
   const checkCardOnTable = new CheckCardOnTable();
   const cardOnTable = new CardOnTable();
-  const userCardRemove = new UserCardRemove();
-  const comparisonCard = new ComparisonCard();
-  const checkRankOnTable = new CheckRankOnTable();
-  const userPassCheck = new UserPassCheck();
+
   const userPass = new UserPass();
   const roleAssigner = new RoleAssigner();
   const simpleCardDealer = new SimpleCardDealer(distributingCardsToUser);
@@ -231,16 +228,15 @@ function Grad(data: IData) {
     rooms,
     userParser,
     UserFindIndexInRoom,
-    userChangeStartGame,
     notifyUser,
-    checkStateRoom,
     userChakeState,
-    checkCardInUser,
     checkCardOnTable,
     cardOnTable,
-    userCardRemove,
+    simpleCardDealer,
+    roleAssigner,
     userPass
   );
+  userAddCardAction.grabAll(data);
 }
 function Attack(data: IData) {
   const managerRoom = new ManagerRoom();
