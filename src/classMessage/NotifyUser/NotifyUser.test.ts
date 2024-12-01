@@ -57,6 +57,7 @@ const testRoom: IRoom = {
   trump: null,
   pass: [],
   cardsOnTable: [],
+  GrabState: false,
 };
 
 const userPublish = [
@@ -90,8 +91,8 @@ const res: IResponseMessage = {
   trump: null,
   pass: [],
 
-  cardsOnTable:[],
-    passState: false,
+  cardsOnTable: [],
+  passState: false,
   cardsOnTableCount: 0,
 };
 describe("NotifyUserJoined", () => {

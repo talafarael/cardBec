@@ -3,7 +3,6 @@ import { IRoom } from "./Room";
 import { v4 as uuidv4 } from "uuid";
 export interface IManagerRoom {
   createRoom(owner: string): IRoom;
- 
 }
 export class ManagerRoom implements IManagerRoom {
   createRoom(owner: string) {
@@ -16,8 +15,8 @@ export class ManagerRoom implements IManagerRoom {
       trump: null,
       pass: [],
       cardsOnTable: [],
+      GrabState: false,
     };
     return Room;
   }
-
 }

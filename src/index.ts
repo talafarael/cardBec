@@ -158,6 +158,11 @@ wss.on("connection", (ws: WebSocket) => {
         pass(data);
         break;
       }
+      case "grab": {
+        console.log("grab")
+        Grad(data);
+        break;
+      }
     }
   });
 
@@ -208,7 +213,7 @@ function Grad(data: IData) {
   const userPublishers = new UserPublisher(userManager);
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
- 
+
   const notifyUser = new NotifyUser(
     responseFactorys,
     userPublishers,

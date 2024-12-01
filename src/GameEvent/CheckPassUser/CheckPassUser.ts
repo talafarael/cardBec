@@ -94,7 +94,7 @@ export class CheckPassUser {
     
     this.#simpleCardDealer.startGame(Room);
     this.#roleAssigner.nextAssignRole(Room);
-
+    
     Room.players = this.#userPass.UpdateAllUserPass(Room.players);
     const { cardOnTable, pass } = this.#cardOnTable.removeCard(
       Room.cardsOnTable,

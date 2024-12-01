@@ -77,10 +77,13 @@ export class GrabCardAction {
       Room,
       parserUser.user.id
     );
+    console.log(1)
     if (this.#checkCardOnTable.checkIfCardIsZero(Room.cardsOnTable)) {
       return;
     }
     const user = Room.players[indexUser];
+    
+   
     if (!this.#userChakeState.ChakeStateDefending(user)) {
       return;
     }
@@ -91,9 +94,9 @@ export class GrabCardAction {
         card: ICard[];
       });
     this.#simpleCardDealer.startGame(Room);
-    this.#roleAssigner.nextAssignRole(Room);
+
     Room.players = this.#userPass.UpdateAllUserPass(Room.players);
     this.#rooms.saveRoom(data.roomId, Room);
-    this.#notifyUser.sendNotification(Room, "nextMove");
+    this.#notifyUser.sendNotification(Room, "grab");
   }
 }
