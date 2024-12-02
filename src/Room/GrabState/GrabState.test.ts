@@ -6,7 +6,7 @@ const roomGrabFalse: IRoom = {
 } as unknown as IRoom;
 
 const roomGrabTrue: IRoom = {
-  GrabState: false,
+  GrabState: true,
 } as unknown as IRoom;
 describe("checkGrabState", () => {
   it("should return false", () => {
