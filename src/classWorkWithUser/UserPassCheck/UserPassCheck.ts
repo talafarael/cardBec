@@ -7,7 +7,7 @@ export interface IUserPassCheck {
 export class UserPassCheck {
   UserPassCheck(users: IPlayers[]) {
     let statePass = true;
-    users.map((elem) => {
+    users.forEach((elem) => {
       if (!elem.passState) {
         statePass = false;
       }

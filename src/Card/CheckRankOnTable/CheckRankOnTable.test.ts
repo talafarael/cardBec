@@ -1,5 +1,5 @@
 import { ICard, ICardInGame } from "../../Room";
-import { CheckRankOnTable } from "./CheckRankOnTable";
+import CheckRankOnTable from "./CheckRankOnTable";
 const table: ICardInGame[] = [
   {
     attack: { rank: "6", suit: "hearts", level: 6 },

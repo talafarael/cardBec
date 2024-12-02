@@ -1,73 +1,63 @@
 import { ICardOnTable } from "../../Card/CardOnTable/CardOnTable";
 import { ICheckCardInUser } from "../../Card/CheckCardInUser/CheckCardInUser";
-import { ICheckCardOnTable } from "../../Card/CheckCardOnTable/CheckCardOnTable";
+import ICheckCardOnTable from "../../Card/CheckCardOnTable/ICheckCardOnTable";
 import { ICheckRankOnTable } from "../../Card/CheckRankOnTable/CheckRankOnTable";
-import { IComparisonCard } from "../../Card/ComparisonCard/ComparisonCard";
 import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
 import { IUserCardRemove } from "../../classWorkWithUser/UserCardRemove/UserCardRemove";
 import { IUserChakeState } from "../../classWorkWithUser/UserChakeState/UserChakeState";
-import { IUserChangeStartGame } from "../../classWorkWithUser/UserChangeStartGame/UserChangeStartGame";
 import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
 import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
 import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
-import { ICard, IData, IRoom, IRooms } from "../../Room";
+import { IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
-
-export class UserAddCardAction {
-  #rooms;
-  #userParser;
-  #userFindRoom;
-  #userChangeStartGame;
-  #notifyUser;
-  #userChakeState;
-  #checkState: ICheckStateRoom;
-  #checkCardOnTable: ICheckCardOnTable;
-  #checkCardInUser: ICheckCardInUser;
-  #cardOnTable: ICardOnTable;
-  #userCardRemove: IUserCardRemove;
-  #comparisonCard: IComparisonCard;
-  #checkRankOnTable: ICheckRankOnTable;
-  #userPass: IUserPass
-  constructor(
-    rooms: IRooms,
-    UserParser: IUserParser,
-    UserFindRoom: IUserFindRoom,
-    UserChangeStartGame: IUserChangeStartGame,
-    NotifyUser: INotifyUser,
-    CheckStateRoom: ICheckStateRoom,
-    UserChakeState: IUserChakeState,
-    CheckCardInUser: ICheckCardInUser,
-    CheckCardOnTable: ICheckCardOnTable,
-    CardOnTable: ICardOnTable,
-    UserCardRemove: IUserCardRemove,
-    ComparisonCard: IComparisonCard,
-    CheckRankOnTable: ICheckRankOnTable,
-    UserPass: IUserPass
-    // ManagareRoom: IManagerRoom,
-  ) {
-    this.#rooms = rooms;
-    this.#userParser = UserParser;
-    this.#userFindRoom = UserFindRoom;
-    this.#userChangeStartGame = UserChangeStartGame;
-    this.#notifyUser = NotifyUser;
-    this.#checkState = CheckStateRoom;
-    this.#userChakeState = UserChakeState;
-    this.#checkCardInUser = CheckCardInUser;
-    this.#checkCardOnTable = CheckCardOnTable;
-    this.#cardOnTable = CardOnTable;
-    this.#userCardRemove = UserCardRemove;
-    this.#comparisonCard = ComparisonCard;
-    this.#checkRankOnTable = CheckRankOnTable;
-    this.#userPass = UserPass;
-    // this.#managerRoom = ManagareRoom;
+export interface IUserAddCardActionConfig {
+  rooms: IRooms;
+  userParser: IUserParser;
+  userFindRoom: IUserFindRoom;
+  notifyUser: INotifyUser;
+  checkStateRoom: ICheckStateRoom;
+  userChakeState: IUserChakeState;
+  checkCardInUser: ICheckCardInUser;
+  checkCardOnTable: ICheckCardOnTable;
+  cardOnTable: ICardOnTable;
+  userCardRemove: IUserCardRemove;
+  checkRankOnTable: ICheckRankOnTable;
+  userPass: IUserPass;
+}
+class UserAddCardAction {
+  readonly #rooms;
+  readonly #userParser;
+  readonly #userFindRoom;
+  readonly #notifyUser;
+  readonly #userChakeState;
+  readonly #checkState: ICheckStateRoom;
+  readonly #checkCardOnTable: ICheckCardOnTable;
+  readonly #checkCardInUser: ICheckCardInUser;
+  readonly #cardOnTable: ICardOnTable;
+  readonly #userCardRemove: IUserCardRemove;
+  readonly #checkRankOnTable: ICheckRankOnTable;
+  readonly #userPass: IUserPass;
+  constructor(config: IUserAddCardActionConfig) {
+    this.#rooms = config.rooms;
+    this.#userParser = config.userParser;
+    this.#userFindRoom = config.userFindRoom;
+    this.#notifyUser = config.notifyUser;
+    this.#checkState = config.checkStateRoom;
+    this.#userChakeState = config.userChakeState;
+    this.#checkCardInUser = config.checkCardInUser;
+    this.#checkCardOnTable = config.checkCardOnTable;
+    this.#cardOnTable = config.cardOnTable;
+    this.#userCardRemove = config.userCardRemove;
+    this.#checkRankOnTable = config.checkRankOnTable;
+    this.#userPass = config.userPass;
   }
   UserAddCardAction(data: IData) {
     if (!data.roomId || !data.card) {
       return;
     }
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
-    const parserUser = this.#userParser.userParser(data.userData) as IUserTg;
+    const parserUser: IUserTg = this.#userParser.userParser(data.userData);
     const indexUser = this.#userFindRoom.findPlayerIndexInRoom(
       Room,
       parserUser.user.id
@@ -111,3 +101,4 @@ export class UserAddCardAction {
     this.#notifyUser.sendNotification(Room, "attack");
   }
 }
+export default UserAddCardAction;

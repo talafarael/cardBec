@@ -1,10 +1,8 @@
 import { ICard, ICardInGame, IPlayers } from "../../Room";
+import ICheckCardInUser from "./IChekCardInUser";
 
-export interface ICheckCardInUser {
-  CheckCardInUser(user: IPlayers, card: ICard): number;
-  CheckCardInAtackTable(cardsOnTable: ICardInGame[], card: ICard): number;
-}
-export class CheckCardInUser implements ICheckCardInUser {
+
+class CheckCardInUser implements ICheckCardInUser {
   CheckCardInUser(user: IPlayers, card: ICard) {
     const index = user.card.findIndex(
       (elem) => elem.rank === card.rank && elem.suit === card.suit
@@ -18,3 +16,4 @@ export class CheckCardInUser implements ICheckCardInUser {
     return index;
   }
 }
+export default CheckCardInUser;

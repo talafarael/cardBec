@@ -1,9 +1,7 @@
 import { ICard } from "../../Room";
+import IMixCard from "./IMixCard";
 
-export interface IMixCards {
-  Mix(cards: ICard[]): ICard[];
-}
-export class MixCards {
+class MixCard implements IMixCard {
   Mix(cards: ICard[]) {
     const shuffled = [...cards];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -16,3 +14,4 @@ export class MixCards {
     return shuffled;
   }
 }
+export default MixCard;

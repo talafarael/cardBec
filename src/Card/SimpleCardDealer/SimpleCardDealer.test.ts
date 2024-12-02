@@ -1,8 +1,7 @@
 import { WebSocket } from "ws";
-import { ICard, IPlayers, IRoom, IUser } from "../../Room";
-import { SimpleCardDealer } from "./SimpleCardDealer";
-import { IUserManager } from "../../classWorkWithUser/UserManager/UserManager";
-import { IDistributingCardsToUser } from "../DistributingCardsToUser/DistributingCardsToUser";
+import { ICard, IRoom } from "../../Room";
+import IDistributingCardsToUser from "../DistributingCardsToUser/IDistributingCardsToUser";
+import SimpleCardDealer from "./SimpleCardDealer";
 
 const testRoom: IRoom = {
   players: [

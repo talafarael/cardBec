@@ -1,5 +1,6 @@
 import { ICard, ICardInGame } from "../../Room";
-import { CheckCardOnTable } from "./CheckCardOnTable";
+import CheckCardOnTable from "./CheckCardOnTable";
+
 
 describe("zero", () => {
   it("should be return ture (0 card)", () => {

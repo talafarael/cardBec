@@ -1,19 +1,8 @@
-import { ICard, ICardInGame, IPlayers, IRoom } from "../../Room";
+import { ICard, ICardInGame } from "../../Room";
+import ICardOnTable from "./ICardOnTable";
 
-export interface ICardOnTable {
-  PutCardAttack(card: ICard, cardsOnTable: ICardInGame[]): ICardInGame[];
-  PutCardDeff(
-    card: ICard,
-    cardsOnTable: ICardInGame[],
-    index: number
-  ): ICardInGame[];
-  removeCard(
-    CardOnTable: ICardInGame[],
-    pass: ICardInGame[]
-  ): IResponseRemveCard;
-  pickUpAllCard(cardOnTable: ICardInGame[], card: ICard[]): IResponseRemveCard;
-}
-export class CardOnTable implements ICardOnTable {
+
+class CardOnTable implements ICardOnTable{
   PutCardAttack(card: ICard, cardsOnTable: ICardInGame[]) {
     cardsOnTable.push({
       attack: card,
@@ -27,19 +16,19 @@ export class CardOnTable implements ICardOnTable {
     return cardsOnTable;
   }
   removeCard(CardOnTable: ICardInGame[], pass: ICardInGame[]) {
-    CardOnTable.map((elem) => {
+    CardOnTable.forEach((elem) => {
       pass.push(elem);
     });
     CardOnTable = [];
     return { cardOnTable: CardOnTable, pass };
   }
   pickUpAllCard(cardOnTable: ICardInGame[], card: ICard[]) {
-    cardOnTable.map((elem) => {
+    cardOnTable.forEach((elem) => {
       card.push(elem.attack);
       if (!elem.deffit) return;
       card.push(elem.deffit);
     });
-    cardOnTable=[]
+    cardOnTable = [];
     return { cardOnTable, card };
   }
 }
@@ -47,3 +36,4 @@ export interface IResponseRemveCard {
   cardOnTable: ICardInGame[];
   [propName: string]: ICardInGame[] | ICard[];
 }
+export default CardOnTable;

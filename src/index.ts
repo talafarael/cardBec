@@ -1,11 +1,6 @@
-import WebSocket, { Server /* etc */ } from "ws";
+import WebSocket from "ws";
 
-import { v4 as uuidv4 } from "uuid";
-import { parseInitData } from "@telegram-apps/sdk-react";
-import { hash } from "crypto";
-import { cardData } from "./card.data";
 
-import { RoomJoin } from "./Action/RoomJoin";
 import { ICard, IData, Rooms } from "./Room";
 import { ManagerRoom } from "./ManagerRoom";
 import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
@@ -16,7 +11,6 @@ import { ResponseFactory } from "./classMessage/ResponseFactory";
 import { UserPublisher } from "./classWorkWithUser/UserPublisher/UserPublisher";
 import { MessageRecipientFilter } from "./classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
 import { SendMessage } from "./classMessage/SendMessage/SendMessage";
-import { UserReadyAction } from "./Action/UserReadyAction/UserReadyAction";
 import { UserChangeStartGame } from "./classWorkWithUser/UserChangeStartGame/UserChangeStartGame";
 import { UserReadinessCheck } from "./classWorkWithUser/UserReadinessCheck/UserReadinessCheck";
 import { MixCards } from "./Card/MixCard/MixCard";
@@ -26,7 +20,6 @@ import { StartGame } from "./GameEvent/StartGame/StartGame";
 import { RoomStater } from "./Room/RoomStater/RoomStater";
 import { CheckStateRoom } from "./Room/CheckStateRoom/CheckStateRoom";
 import { RoleAssigner } from "./Role/RoleAssigner/RoleAssigner";
-import { UserAttackAction } from "./Action/UserAttackAction/UserAttackAction";
 import { UserChakeState } from "./classWorkWithUser/UserChakeState/UserChakeState";
 import { CheckCardInUser } from "./Card/CheckCardInUser/CheckCardInUser";
 import { CheckCardOnTable } from "./Card/CheckCardOnTable/CheckCardOnTable";
@@ -37,13 +30,13 @@ import {
   UserDeffitAction,
 } from "./Action/UserDeffitAction/UserDeffitAction";
 import { ComparisonCard } from "./Card/ComparisonCard/ComparisonCard";
-import { UserAddCardAction } from "./Action/UserAddCardAction/UserAddCardAction";
 import { CheckRankOnTable } from "./Card/CheckRankOnTable/CheckRankOnTable";
 import { UserPass } from "./classWorkWithUser/UserPass/UserPass";
-import { UserPassAction } from "./Action/UserPassAction/UserPassAction";
 import { CheckPassUser } from "./GameEvent/CheckPassUser/CheckPassUser";
 import { UserPassCheck } from "./classWorkWithUser/UserPassCheck/UserPassCheck";
-import { GrabCardAction } from "./Action/GrabCardAction/GrabCardAction";
+import { GrabCardAction, RoomJoin, UserAddCardAction, UserAttackAction, UserPassAction, UserReadyAction } from "./Action";
+
+
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
@@ -80,29 +73,31 @@ wss.on("connection", (ws: WebSocket) => {
         console.log("Join");
         const managerRoom = new ManagerRoom();
         const userManager = new UserManager();
-        const UserFindIndexInRoom = new UserFindRoom();
+        const userFindIndexInRoom = new UserFindRoom();
         const userParser = new UserParser();
         const responseFactory = new ResponseFactory();
         const userPublisher = new UserPublisher(userManager);
         const messageRecipientFilter = new MessageRecipientFilter();
         const sendMessage = new SendMessage();
         const checkStateRoom = new CheckStateRoom();
+
         const notifyUser = new NotifyUser(
           responseFactory,
           userPublisher,
           messageRecipientFilter,
           sendMessage
         );
-        const room = new RoomJoin(
+
+        const room = new RoomJoin({
           rooms,
           ws,
           managerRoom,
           userManager,
-          UserFindIndexInRoom,
+          userFindIndexInRoom,
           userParser,
           notifyUser,
-          checkStateRoom
-        );
+          checkStateRoom,
+        });
 
         room.joinRoom(data);
         // rooms = room.rooms;
@@ -111,7 +106,6 @@ wss.on("connection", (ws: WebSocket) => {
       }
       case "start": {
         console.log("start");
-        const managerRoom = new ManagerRoom();
         const userManager = new UserManager();
         const UserFindIndexInRoom = new UserFindRoom();
         const userParser = new UserParser();
@@ -159,7 +153,7 @@ wss.on("connection", (ws: WebSocket) => {
         break;
       }
       case "grab": {
-        console.log("grab")
+        console.log("grab");
         Grad(data);
         break;
       }
@@ -171,201 +165,130 @@ wss.on("connection", (ws: WebSocket) => {
   });
 });
 function StartGameFn(data: IData) {
-  const userReadinessCheck = new UserReadinessCheck();
-  const managerRoom = new ManagerRoom();
-  const userManager = new UserManager();
-  const UserFindIndexInRoom = new UserFindRoom();
-  const userParser = new UserParser();
-  const responseFactory = new ResponseFactory();
-  const mixCards = new MixCards();
-  const distributingCardsToUser = new DistributingCardsToUser();
-  const simpleCardDealer = new SimpleCardDealer(distributingCardsToUser);
-  const userPublisher = new UserPublisher(userManager);
-  const messageRecipientFilter = new MessageRecipientFilter();
-  const sendMessage = new SendMessage();
-  const roomStater = new RoomStater();
-  const checkStateRoom = new CheckStateRoom();
-  const notifyUser = new NotifyUser(
-    responseFactory,
-    userPublisher,
-    messageRecipientFilter,
-    sendMessage
-  );
-  const roleAssigner = new RoleAssigner();
-  const startGame = new StartGame(
-    userReadinessCheck,
+  const startGame = new StartGame({
+    userReadinessCheck: new UserReadinessCheck(),
     rooms,
-    mixCards,
-    simpleCardDealer,
-    notifyUser,
-    roomStater,
-    checkStateRoom,
-    roleAssigner
-  );
+    mixCards: new MixCards(),
+    simpleCardDealer: new SimpleCardDealer(new DistributingCardsToUser()),
+    notifyUser: new NotifyUser(
+      new ResponseFactory(),
+      new UserPublisher(new UserManager()),
+      new MessageRecipientFilter(),
+      new SendMessage()
+    ),
+    roomStater: new RoomStater(),
+    checkStateRoom: new CheckStateRoom(),
+    roleAssigner: new RoleAssigner(),
+  });
   startGame.StartGame(data);
 }
 function Grad(data: IData) {
   const userManager = new UserManager();
-  const UserFindIndexInRoom = new UserFindRoom();
-  const userParser = new UserParser();
   const responseFactorys = new ResponseFactory();
-
   const userPublishers = new UserPublisher(userManager);
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
-
-  const notifyUser = new NotifyUser(
-    responseFactorys,
-    userPublishers,
-    messageRecipientFilters,
-    sendMessages
-  );
   const distributingCardsToUser = new DistributingCardsToUser();
-  const userChakeState = new UserChakeState();
 
-  const checkCardOnTable = new CheckCardOnTable();
-  const cardOnTable = new CardOnTable();
-
-  const userPass = new UserPass();
-  const roleAssigner = new RoleAssigner();
-  const simpleCardDealer = new SimpleCardDealer(distributingCardsToUser);
-  const userAddCardAction = new GrabCardAction(
-    rooms,
-    userParser,
-    UserFindIndexInRoom,
-    notifyUser,
-    userChakeState,
-    checkCardOnTable,
-    cardOnTable,
-    simpleCardDealer,
-    roleAssigner,
-    userPass
-  );
+  const userAddCardAction = new GrabCardAction({
+    rooms: new Rooms(),
+    userParser: new UserParser(),
+    userFindRoom: new UserFindRoom(),
+    notifyUser: new NotifyUser(
+      responseFactorys,
+      userPublishers,
+      messageRecipientFilters,
+      sendMessages
+    ),
+    userChakeState: new UserChakeState(),
+    checkCardOnTable: new CheckCardOnTable(),
+    cardOnTable: new CardOnTable(),
+    simpleCardDealer: new SimpleCardDealer(distributingCardsToUser),
+    userPass: new UserPass(),
+  });
   userAddCardAction.grabAll(data);
 }
 function Attack(data: IData) {
-  const managerRoom = new ManagerRoom();
   const userManager = new UserManager();
-  const UserFindIndexInRoom = new UserFindRoom();
-  const userParser = new UserParser();
   const responseFactorys = new ResponseFactory();
-  const userChangeStartGame = new UserChangeStartGame();
+
   const userPublishers = new UserPublisher(userManager);
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
-  const checkStateRoom = new CheckStateRoom();
-  const notifyUser = new NotifyUser(
-    responseFactorys,
-    userPublishers,
-    messageRecipientFilters,
-    sendMessages
-  );
 
-  const userChakeState = new UserChakeState();
-  const checkCardInUser = new CheckCardInUser();
-  const checkCardOnTable = new CheckCardOnTable();
-  const cardOnTable = new CardOnTable();
-  const userCardRemove = new UserCardRemove();
-  const userPass = new UserPass();
-  const userAttackAction = new UserAttackAction(
-    rooms,
-    userParser,
-    UserFindIndexInRoom,
-    userChangeStartGame,
-    notifyUser,
-    checkStateRoom,
-    userChakeState,
-    checkCardInUser,
-    checkCardOnTable,
-    cardOnTable,
-    userCardRemove,
-    userPass
-  );
+  const userAttackAction = new UserAttackAction({
+    rooms: new Rooms(),
+    userParser: new UserParser(),
+    userFindRoom: new UserFindRoom(),
+    notifyUser: new NotifyUser(
+      responseFactorys,
+      userPublishers,
+      messageRecipientFilters,
+      sendMessages
+    ),
+    checkStateRoom: new CheckStateRoom(),
+    userChakeState: new UserChakeState(),
+    checkCardInUser: new CheckCardInUser(),
+    checkCardOnTable: new CheckCardOnTable(),
+    cardOnTable: new CardOnTable(),
+    userCardRemove: new UserCardRemove(),
+    userPass: new UserPass(),
+  });
   userAttackAction.UserAttack(data);
 }
 function Def(data: IDefData) {
-  const managerRoom = new ManagerRoom();
   const userManager = new UserManager();
-  const UserFindIndexInRoom = new UserFindRoom();
-  const userParser = new UserParser();
   const responseFactorys = new ResponseFactory();
-  const userChangeStartGame = new UserChangeStartGame();
   const userPublishers = new UserPublisher(userManager);
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
-  const checkStateRoom = new CheckStateRoom();
-  const notifyUser = new NotifyUser(
-    responseFactorys,
-    userPublishers,
-    messageRecipientFilters,
-    sendMessages
-  );
 
-  const userChakeState = new UserChakeState();
-  const checkCardInUser = new CheckCardInUser();
-  const checkCardOnTable = new CheckCardOnTable();
-  const cardOnTable = new CardOnTable();
-  const userCardRemove = new UserCardRemove();
-  const comparisonCard = new ComparisonCard();
-  const userPass = new UserPass();
-  const userDeffitAction = new UserDeffitAction(
-    rooms,
-    userParser,
-    UserFindIndexInRoom,
-    userChangeStartGame,
-    notifyUser,
-    checkStateRoom,
-    userChakeState,
-    checkCardInUser,
-    checkCardOnTable,
-    cardOnTable,
-    userCardRemove,
-    comparisonCard,
-    userPass
-  );
+  const userDeffitAction = new UserDeffitAction({
+    rooms: new Rooms(),
+    userParser: new UserParser(),
+    userFindRoom: new UserFindRoom(),
+    notifyUser: new NotifyUser(
+      responseFactorys,
+      userPublishers,
+      messageRecipientFilters,
+      sendMessages
+    ),
+    checkStateRoom: new CheckStateRoom(),
+    userChakeState: new UserChakeState(),
+    checkCardInUser: new CheckCardInUser(),
+    cardOnTable: new CardOnTable(),
+    userCardRemove: new UserCardRemove(),
+    comparisonCard: new ComparisonCard(),
+    userPass: new UserPass(),
+  });
   userDeffitAction.UserDeffitAction(data);
 }
 const add = (data: IData) => {
   const userManager = new UserManager();
-  const UserFindIndexInRoom = new UserFindRoom();
-  const userParser = new UserParser();
   const responseFactorys = new ResponseFactory();
-  const userChangeStartGame = new UserChangeStartGame();
   const userPublishers = new UserPublisher(userManager);
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
-  const checkStateRoom = new CheckStateRoom();
-  const notifyUser = new NotifyUser(
-    responseFactorys,
-    userPublishers,
-    messageRecipientFilters,
-    sendMessages
-  );
 
-  const userChakeState = new UserChakeState();
-  const checkCardInUser = new CheckCardInUser();
-  const checkCardOnTable = new CheckCardOnTable();
-  const cardOnTable = new CardOnTable();
-  const userCardRemove = new UserCardRemove();
-  const comparisonCard = new ComparisonCard();
-  const checkRankOnTable = new CheckRankOnTable();
-  const userPass = new UserPass();
-  const userAddCardAction = new UserAddCardAction(
-    rooms,
-    userParser,
-    UserFindIndexInRoom,
-    userChangeStartGame,
-    notifyUser,
-    checkStateRoom,
-    userChakeState,
-    checkCardInUser,
-    checkCardOnTable,
-    cardOnTable,
-    userCardRemove,
-    comparisonCard,
-    checkRankOnTable,
-    userPass
-  );
+  const userAddCardAction = new UserAddCardAction({
+    rooms: new Rooms(),
+    userParser: new UserParser(),
+    userFindRoom: new UserFindRoom(),
+    notifyUser: new NotifyUser(
+      responseFactorys,
+      userPublishers,
+      messageRecipientFilters,
+      sendMessages
+    ),
+    checkStateRoom: new CheckStateRoom(),
+    userChakeState: new UserChakeState(),
+    checkCardInUser: new CheckCardInUser(),
+    checkCardOnTable: new CheckCardOnTable(),
+    cardOnTable: new CardOnTable(),
+    userCardRemove: new UserCardRemove(),
+    checkRankOnTable: new CheckRankOnTable(),
+    userPass: new UserPass(),
+  });
   userAddCardAction.UserAddCardAction(data);
 };
 function pass(data: IData) {
@@ -374,7 +297,7 @@ function pass(data: IData) {
   const UserFindIndexInRoom = new UserFindRoom();
   const userParser = new UserParser();
   const responseFactorys = new ResponseFactory();
-  const userChangeStartGame = new UserChangeStartGame();
+
   const userPublishers = new UserPublisher(userManager);
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
@@ -386,47 +309,36 @@ function pass(data: IData) {
     sendMessages
   );
   const distributingCardsToUser = new DistributingCardsToUser();
-  const userChakeState = new UserChakeState();
-  const checkCardInUser = new CheckCardInUser();
+
   const checkCardOnTable = new CheckCardOnTable();
-  const cardOnTable = new CardOnTable();
-  const userCardRemove = new UserCardRemove();
-  const comparisonCard = new ComparisonCard();
-  const checkRankOnTable = new CheckRankOnTable();
-  const userPassCheck = new UserPassCheck();
+
   const userPass = new UserPass();
-  const roleAssigner = new RoleAssigner();
-  const simpleCardDealer = new SimpleCardDealer(distributingCardsToUser);
-  const checkPassUser = new CheckPassUser(
-    rooms,
-    userParser,
-    UserFindIndexInRoom,
-    userChangeStartGame,
-    notifyUser,
-    checkStateRoom,
-    userChakeState,
-    checkCardInUser,
-    checkCardOnTable,
-    cardOnTable,
-    userCardRemove,
-    userPassCheck,
-    simpleCardDealer,
-    roleAssigner,
-    userPass
-  );
+
+  const checkPassUser = new CheckPassUser({
+    rooms: new Rooms(),
+    userParser: new UserParser(),
+    userFindRoom: new UserFindRoom(),
+    notifyUser: new NotifyUser(
+      responseFactorys,
+      userPublishers,
+      messageRecipientFilters,
+      sendMessages
+    ),
+    checkStateRoom: new CheckStateRoom(),
+    cardOnTable: new CardOnTable(),
+    userPassCheck: new UserPassCheck(),
+    simpleCardDealer: new SimpleCardDealer(distributingCardsToUser),
+    roleAssigner: new RoleAssigner(),
+    userPass: new UserPass(),
+  });
 
   const userAddCardAction = new UserPassAction(
     rooms,
     userParser,
     UserFindIndexInRoom,
-    userChangeStartGame,
     notifyUser,
     checkStateRoom,
-    userChakeState,
-    checkCardInUser,
     checkCardOnTable,
-    cardOnTable,
-    userCardRemove,
     userPass
   );
   console.log("suka");

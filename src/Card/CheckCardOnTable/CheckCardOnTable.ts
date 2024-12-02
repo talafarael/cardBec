@@ -1,11 +1,7 @@
 import { ICardInGame } from "../../Room";
+import ICheckCardOnTable from "./ICheckCardOnTable";
 
-export interface ICheckCardOnTable {
-  checkIfCardIsZero(cardTable: ICardInGame[]): boolean;
-  checkIfCardMaxMinForAdd(cardTable: ICardInGame[]): boolean;
-  cehckDefCardOntTable(cardTable: ICardInGame[]): boolean;
-}
-export class CheckCardOnTable {
+class CheckCardOnTable implements ICheckCardOnTable {
   checkIfCardIsZero(cardTable: ICardInGame[]) {
     if (cardTable.length == 0) {
       return true;
@@ -20,7 +16,7 @@ export class CheckCardOnTable {
   }
   cehckDefCardOntTable(cardTable: ICardInGame[]) {
     let state = true;
-    cardTable.map((elem) => {
+    cardTable.forEach((elem) => {
       if (!elem.deffit) {
         state = false;
       }
@@ -28,3 +24,4 @@ export class CheckCardOnTable {
     return state;
   }
 }
+export default  CheckCardOnTable ;

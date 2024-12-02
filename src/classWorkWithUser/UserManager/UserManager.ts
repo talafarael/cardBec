@@ -1,7 +1,4 @@
-import { parseInitData } from "@telegram-apps/sdk-react";
 import { IPlayers, IUser } from "../../Room";
-import { TelegramData } from "../../telegramType";
-import { hash } from "crypto";
 import WebSocket from "ws";
 import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
 

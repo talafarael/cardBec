@@ -1,65 +1,60 @@
 import { ICardOnTable } from "../../Card/CardOnTable/CardOnTable";
 import { ICheckCardInUser } from "../../Card/CheckCardInUser/CheckCardInUser";
-import { ICheckCardOnTable } from "../../Card/CheckCardOnTable/CheckCardOnTable";
+import ICheckCardOnTable from "../../Card/CheckCardOnTable/ICheckCardOnTable";
 import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
 import { IUserCardRemove } from "../../classWorkWithUser/UserCardRemove/UserCardRemove";
 import { IUserChakeState } from "../../classWorkWithUser/UserChakeState/UserChakeState";
-import { IUserChangeStartGame } from "../../classWorkWithUser/UserChangeStartGame/UserChangeStartGame";
 import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
 import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
 import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
 import { IData, IRoom, IRooms } from "../../Room";
 import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
+export interface IUserAttackActionConfig {
+  rooms: IRooms;
+  userParser: IUserParser;
+  userFindRoom: IUserFindRoom;
+  notifyUser: INotifyUser;
+  checkStateRoom: ICheckStateRoom;
+  userChakeState: IUserChakeState;
+  checkCardInUser: ICheckCardInUser;
+  checkCardOnTable: ICheckCardOnTable
+  cardOnTable: ICardOnTable;
+  userCardRemove: IUserCardRemove;
+  userPass: IUserPass;
+}
 
-export class UserAttackAction {
-  #rooms;
-  #userParser;
-  #userFindRoom;
-  #userChangeStartGame;
-  #notifyUser;
-  #userChakeState;
-  #checkState: ICheckStateRoom;
-  #checkCardOnTable: ICheckCardOnTable;
-  #checkCardInUser: ICheckCardInUser;
-  #cardOnTable: ICardOnTable;
-  #userCardRemove: IUserCardRemove;
-  #userPass: IUserPass;
-  constructor(
-    rooms: IRooms,
-    UserParser: IUserParser,
-    UserFindRoom: IUserFindRoom,
-    UserChangeStartGame: IUserChangeStartGame,
-    NotifyUser: INotifyUser,
-    CheckStateRoom: ICheckStateRoom,
-    UserChakeState: IUserChakeState,
-    CheckCardInUser: ICheckCardInUser,
-    CheckCardOnTable: ICheckCardOnTable,
-    CardOnTable: ICardOnTable,
-    UserCardRemove: IUserCardRemove,
-    UserPass: IUserPass
-    // ManagareRoom: IManagerRoom,
-  ) {
-    this.#rooms = rooms;
-    this.#userParser = UserParser;
-    this.#userFindRoom = UserFindRoom;
-    this.#userChangeStartGame = UserChangeStartGame;
-    this.#notifyUser = NotifyUser;
-    this.#checkState = CheckStateRoom;
-    this.#userChakeState = UserChakeState;
-    this.#checkCardInUser = CheckCardInUser;
-    this.#checkCardOnTable = CheckCardOnTable;
-    this.#cardOnTable = CardOnTable;
-    this.#userCardRemove = UserCardRemove;
-    this.#userPass = UserPass;
-    // this.#managerRoom = ManagareRoom;
+class UserAttackAction {
+  readonly #rooms;
+  readonly #userParser;
+  readonly #userFindRoom;
+  readonly #notifyUser;
+  readonly #userChakeState;
+  readonly #checkState: ICheckStateRoom;
+  readonly #checkCardOnTable: ICheckCardOnTable;
+  readonly #checkCardInUser: ICheckCardInUser;
+  readonly #cardOnTable: ICardOnTable;
+  readonly #userCardRemove: IUserCardRemove;
+  readonly #userPass: IUserPass;
+  constructor(config: IUserAttackActionConfig) {
+    this.#rooms = config.rooms;
+    this.#userParser = config.userParser;
+    this.#userFindRoom = config.userFindRoom;
+    this.#notifyUser = config.notifyUser;
+    this.#checkState = config.checkStateRoom;
+    this.#userChakeState = config.userChakeState;
+    this.#checkCardInUser = config.checkCardInUser;
+    this.#checkCardOnTable = config.checkCardOnTable;
+    this.#cardOnTable = config.cardOnTable;
+    this.#userCardRemove = config.userCardRemove;
+    this.#userPass = config.userPass;
   }
   UserAttack(data: IData) {
     if (!data.roomId || !data.card) {
       return;
     }
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
-    const parserUser = this.#userParser.userParser(data.userData) as IUserTg;
+    const parserUser: IUserTg = this.#userParser.userParser(data.userData);
     const indexUser = this.#userFindRoom.findPlayerIndexInRoom(
       Room,
       parserUser.user.id
@@ -99,3 +94,4 @@ export class UserAttackAction {
     this.#notifyUser.sendNotification(Room, "attack");
   }
 }
+export default UserAttackAction;

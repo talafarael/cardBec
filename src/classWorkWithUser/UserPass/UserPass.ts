@@ -1,4 +1,4 @@
-import { IPlayers, IUser } from "../../Room";
+import { IPlayers } from "../../Room";
 
 export interface IUserPass {
   UserPassTrue(user: IPlayers): IPlayers;
@@ -11,7 +11,7 @@ export class UserPass implements IUserPass {
   }
 
   UpdateAllUserPass(users: IPlayers[]) {
-    users.map((elem) => {
+    users.forEach((elem) => {
       this.#UserPassFalse(elem);
     });
     return users;

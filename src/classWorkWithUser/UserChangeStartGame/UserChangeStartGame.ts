@@ -1,4 +1,4 @@
-import { IPlayers, IRoom, IUser } from "../../Room";
+import { IPlayers } from "../../Room";
 
 export interface IUserChangeStartGame {
   changeState(player: IPlayers[], indexUser: number): IPlayers[];

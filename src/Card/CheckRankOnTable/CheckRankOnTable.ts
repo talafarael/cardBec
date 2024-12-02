@@ -1,12 +1,13 @@
 import { ICard, ICardInGame } from "../../Room";
+import ICheckRankOnTable from "./ICheckRankOnTable";
 
-export interface ICheckRankOnTable {
-  CheckRankOnTable(table: ICardInGame[], card: ICard): boolean;
-}
-export class CheckRankOnTable implements ICheckRankOnTable {
+
+
+
+class CheckRankOnTable implements ICheckRankOnTable {
   CheckRankOnTable(table: ICardInGame[], card: ICard) {
     let stateFindRank = false;
-    table.map((elem) => {
+    table.forEach((elem) => {
       if (elem.attack.rank == card.rank || elem.deffit?.rank == card.rank) {
         stateFindRank = true;
       }
@@ -14,3 +15,4 @@ export class CheckRankOnTable implements ICheckRankOnTable {
     return stateFindRank;
   }
 }
+export default CheckRankOnTable;

@@ -1,44 +1,34 @@
-import { ICard, ICardInGame, IPlayers, IUser } from "../Room";
+import { ICard, ICardInGame, IPlayers } from "../Room";
 import { IResponseMessage } from "../type/messageSend";
 
 export interface IResponseFactory {
-  templateMessage(
-    session: string,
-    action: string,
-    players: IPlayerPublisher[],
-    roomId: string,
-    user: IPlayers,
-    trump: ICard | null,
-    pass: ICardInGame[],
-    cardsOnTable: ICardInGame[],
-    passState: boolean,
-    cardsOnTableCount: number
-  ): IResponseMessage;
+  templateMessage(data: ITemplateMessage): IResponseMessage;
+}
+interface ITemplateMessage {
+  session: string;
+  action: string;
+  players: IPlayerPublisher[];
+  roomId: string;
+  user: IPlayers;
+  trump: ICard | null;
+  pass: ICardInGame[];
+  cardsOnTable: ICardInGame[];
+  passState: boolean;
+  cardsOnTableCount: number;
 }
 export class ResponseFactory implements IResponseFactory {
-  templateMessage(
-    session: string,
-    action: string,
-    players: IPlayerPublisher[],
-    roomId: string,
-    user: IPlayers,
-    trump: ICard | null,
-    pass: ICardInGame[],
-    cardsOnTable: ICardInGame[],
-    passState: boolean,
-    cardsOnTableCount: number
-  ) {
-    const res = {
-      session: session,
-      action: action,
-      players: players,
-      roomId: roomId,
-      you: user,
-      trump: trump,
-      pass: pass,
-      cardsOnTable: cardsOnTable,
-      passState: passState,
-      cardsOnTableCount:cardsOnTableCount,
+  templateMessage(data: ITemplateMessage) {
+    const res: IResponseMessage = {
+      session: data.session,
+      action: data.action,
+      players: data.players,
+      roomId: data.roomId,
+      you: data.user,
+      trump: data.trump,
+      pass: data.pass,
+      cardsOnTable: data.cardsOnTable,
+      passState: data.passState,
+      cardsOnTableCount: data.cardsOnTableCount,
     };
     return res;
   }

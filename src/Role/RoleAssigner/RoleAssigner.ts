@@ -1,4 +1,4 @@
-import { IPlayers, IRoom } from "../../Room";
+import {  IRoom } from "../../Room";
 //need return void its bad
 export interface IRoleAssigner {
   startAssignRole(room: IRoom): void;
@@ -26,10 +26,10 @@ export class RoleAssigner implements IRoleAssigner {
   }
   #nextAssignIndex(lengthUser: number, index: number) {
     if (lengthUser - 1 == index) {
-      return (index = 0);
+      return 0;
     }
     if (index == 0) {
-      return (index = lengthUser - 1);
+      return lengthUser - 1;
     }
     return index + 1;
   }

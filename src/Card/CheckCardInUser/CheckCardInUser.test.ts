@@ -1,5 +1,5 @@
 import { ICard, IPlayers } from "../../Room";
-import { CheckCardInUser } from "./CheckCardInUser";
+import CheckCardInUser from "./CheckCardInUser";
 
 const cards: ICard[] = [
   { rank: "1", suit: "Ace of Spades" },

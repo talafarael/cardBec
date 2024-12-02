@@ -1,9 +1,7 @@
 import { ICard } from "../../Room";
+import IComparisonCard from "./IComparisonCard";
 
-export interface IComparisonCard {
-  ComparisonCard(cardDif: ICard, cardAttack: ICard, trump: ICard): boolean;
-}
-export class ComparisonCard implements IComparisonCard {
+class ComparisonCard implements IComparisonCard {
   ComparisonCard(cardDif: ICard, cardAttack: ICard, trump: ICard) {
     if (cardDif.suit != cardAttack.suit && cardDif.suit != trump.suit) {
       return false;
@@ -17,3 +15,5 @@ export class ComparisonCard implements IComparisonCard {
     return false;
   }
 }
+
+export default ComparisonCard;

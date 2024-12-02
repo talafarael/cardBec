@@ -1,5 +1,5 @@
-import { ICard, ICardInGame, IPlayers, IRoom } from "../../Room";
-import { CardOnTable, IResponseRemveCard } from "./CardOnTable";
+import { ICard, ICardInGame } from "../../Room";
+import CardOnTable, { IResponseRemveCard } from "./CardOnTable";
 
 describe("cardOnTable", () => {
   it("should be put card on table", () => {

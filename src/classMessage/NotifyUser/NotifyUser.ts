@@ -1,7 +1,6 @@
 import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
-import { IUserManager } from "../../classWorkWithUser/UserManager/UserManager";
 import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
-import { IPlayers, IRoom } from "../../Room";
+import { IRoom } from "../../Room";
 import { IResponseFactory } from "../ResponseFactory";
 import { ISendMessage } from "../SendMessage/SendMessage";
 
@@ -10,10 +9,10 @@ export interface INotifyUser {
 }
 
 export class NotifyUser implements INotifyUser {
-  #responseFactory: IResponseFactory;
-  #userPablisher: IUserPublisher;
-  #messageRecipientFilter: IMessageRecipientFilter;
-  #sendMessage: ISendMessage;
+  readonly #responseFactory: IResponseFactory;
+  readonly #userPablisher: IUserPublisher;
+  readonly #messageRecipientFilter: IMessageRecipientFilter;
+  readonly #sendMessage: ISendMessage;
   constructor(
     ResponseFactory: IResponseFactory,
     UserPublisher: IUserPublisher,
@@ -29,25 +28,24 @@ export class NotifyUser implements INotifyUser {
     const publishAllPlayerInRoom = this.#userPablisher.mapPlayersToPublish(
       room.players
     );
-    room.players.map((elem) => {
+    room.players.forEach((elem) => {
       const sendPublishUserData =
         this.#messageRecipientFilter.filterMessageToUsersExcept(
           publishAllPlayerInRoom,
           elem.user.id
         );
-      const responseUser = this.#responseFactory.templateMessage(
-        elem.user.session,
-        action,
-        sendPublishUserData,
-        room.roomId,
-        elem,
-        room.trump,
-        room.pass,
-        room.cardsOnTable,
-        elem.passState,
-        room.cardsOnTable.length
-      );
-
+      const responseUser = this.#responseFactory.templateMessage({
+        session: elem.user.session,
+        action: action,
+        players: sendPublishUserData,
+        roomId: room.roomId,
+        user: elem,
+        trump: room.trump,
+        pass: room.pass,
+        cardsOnTable: room.cardsOnTable,
+        passState: elem.passState,
+        cardsOnTableCount: room.cardsOnTable.length,
+      });
       this.#sendMessage.JoinMessage(responseUser, elem.ws);
     });
   }

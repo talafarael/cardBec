@@ -1,6 +1,5 @@
 import { ICard } from "../../Room";
-import { MixCards } from "./MixCard";
-
+import MixCard from "./MixCard";
 const cards: ICard[] = [
   { rank: "1", suit: "Ace of Spades" },
   { rank: "2", suit: "King of Hearts" },
@@ -8,7 +7,7 @@ const cards: ICard[] = [
   { rank: "4", suit: "Jack of Clubs" },
 ]as unknown as ICard[];
 
-const mixCards = new MixCards();
+const mixCards = new MixCard();
 
 describe("MixCards", () => {
   it("should shuffle the cards array", () => {

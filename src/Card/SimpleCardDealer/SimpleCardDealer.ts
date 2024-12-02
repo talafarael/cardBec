@@ -1,13 +1,12 @@
-
 import { ICard, IRoom } from "../../Room";
-import { IDistributingCardsToUser } from "../DistributingCardsToUser/DistributingCardsToUser";
+import IDistributingCardsToUser from "../DistributingCardsToUser/IDistributingCardsToUser";
 
-export interface ISimpleCardDealer {
-  startGame(room: IRoom): void;
-  setTrumps(card: ICard[]):ICard;
-}
-export class SimpleCardDealer {
-  #distributingCardsToUser: IDistributingCardsToUser;
+
+
+
+
+ class SimpleCardDealer {
+  readonly #distributingCardsToUser: IDistributingCardsToUser;
   constructor(DistributingCardsToUser: IDistributingCardsToUser) {
     this.#distributingCardsToUser = DistributingCardsToUser;
   }
@@ -20,3 +19,4 @@ export class SimpleCardDealer {
     return card[0];
   }
 }
+export default SimpleCardDealer;

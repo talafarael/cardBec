@@ -7,7 +7,7 @@ export interface IUserReadinessCheck {
 export class UserReadinessCheck implements IUserReadinessCheck {
   UserReadinessCheck(users: IPlayers[]) {
     let stateGame = true;
-    users.map((elem) => {
+    users.forEach((elem) => {
       if (!elem.startGameState) {
         stateGame = false;
       }
