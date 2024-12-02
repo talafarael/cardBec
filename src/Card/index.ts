@@ -11,4 +11,4 @@ export { default as IDistributingCardsToUser } from "./DistributingCardsToUser/I
 export { default as MixCards } from "./MixCard/MixCard";
 export { default as IMixCards } from "./MixCard/IMixCard";
 export {default as  SimpleCardDealel}  from "./SimpleCardDealer/SimpleCardDealer"
-export {default as  ISimpleCardDealel}  from "./SimpleCardDealer/ISimpleCardDealer"
+export {default as  ISimpleCardDealel}  from "./SimpleCardDealer/ISimpleCardDealer" 

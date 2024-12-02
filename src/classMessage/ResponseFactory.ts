@@ -1,5 +1,6 @@
+
 import { ICard, ICardInGame, IPlayers } from "../Room";
-import { IResponseMessage } from "../type/messageSend";
+import { IPlayerPublisher } from "../type";
 
 export interface IResponseFactory {
   templateMessage(data: ITemplateMessage): IResponseMessage;
@@ -42,13 +43,4 @@ export class ResponseFactory implements IResponseFactory {
   //   ) {
   //     players.filter((elem) => elem.id != id);
   //   }
-}
-
-export interface IPlayerPublisher {
-  id: number;
-  cardCount: number;
-  firstName: string | null;
-  startGame: boolean;
-  state: string;
-  passState: boolean;
 }

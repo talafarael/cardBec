@@ -1,8 +1,7 @@
 import { WebSocket } from "ws";
 import { IPlayers, IUser } from "../../Room";
-import { IResponseMessage } from "../../type/messageSend";
-import { SendMessage } from "./SendMessage";
-
+import { IResponseMessage } from "../../Type/messageSend";
+import SendMessage from "./SendMessage";
 describe("JoinMessage", () => {
   it("should send a properly formatted message via WebSocket", () => {
     const mockWebSocket = {
@@ -33,8 +32,8 @@ describe("JoinMessage", () => {
       cardsOnTable: [],
       trump: null,
       pass: [],
-      passState:false,
-      cardsOnTableCount:0
+      passState: false,
+      cardsOnTableCount: 0,
     };
     const sendMessage = new SendMessage();
     sendMessage.JoinMessage(message, mockWebSocket);

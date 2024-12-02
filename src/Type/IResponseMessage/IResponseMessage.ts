@@ -1,7 +1,7 @@
-import { IPlayerPublisher } from "../classMessage/ResponseFactory";
-import { ICard, ICardInGame, IPlayers } from "../Room";
+import { ICard, ICardInGame, IPlayers } from "../../Room";
+import IPlayerPublisher from "../IPlayerPublisher/IPlayerPublisher";
 
-export interface IResponseMessage {
+interface IResponseMessage {
   session: string;
   action: string;
   players: IPlayerPublisher[];
@@ -13,3 +13,4 @@ export interface IResponseMessage {
   passState: boolean;
   cardsOnTableCount: number;
 }
+export default IResponseMessage;

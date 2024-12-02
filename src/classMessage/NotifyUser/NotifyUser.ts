@@ -2,13 +2,11 @@ import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipien
 import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
 import { IRoom } from "../../Room";
 import { IResponseFactory } from "../ResponseFactory";
-import { ISendMessage } from "../SendMessage/SendMessage";
+import ISendMessage from "../SendMessage/ISendMessage";
 
-export interface INotifyUser {
-  sendNotification(room: IRoom, action: string): void;
-}
+import INotifyUser from "./INotifyUser";
 
-export class NotifyUser implements INotifyUser {
+class NotifyUser implements INotifyUser {
   readonly #responseFactory: IResponseFactory;
   readonly #userPablisher: IUserPublisher;
   readonly #messageRecipientFilter: IMessageRecipientFilter;
@@ -50,3 +48,4 @@ export class NotifyUser implements INotifyUser {
     });
   }
 }
+export default NotifyUser;

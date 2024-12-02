@@ -22,9 +22,7 @@ import { CheckStateRoom } from "./Room/CheckStateRoom/CheckStateRoom";
 import { RoleAssigner } from "./Role/RoleAssigner/RoleAssigner";
 import { UserChakeState } from "./classWorkWithUser/UserChakeState/UserChakeState";
 import { CheckCardInUser } from "./Card/CheckCardInUser/CheckCardInUser";
-import { CheckCardOnTable } from "./Card/CheckCardOnTable/CheckCardOnTable";
-import { CardOnTable } from "./Card/CardOnTable/CardOnTable";
-import { UserCardRemove } from "./classWorkWithUser/UserCardRemove/UserCardRemove";
+
 import {
   IDefData,
   UserDeffitAction,
@@ -34,7 +32,11 @@ import { CheckRankOnTable } from "./Card/CheckRankOnTable/CheckRankOnTable";
 import { UserPass } from "./classWorkWithUser/UserPass/UserPass";
 import { CheckPassUser } from "./GameEvent/CheckPassUser/CheckPassUser";
 import { UserPassCheck } from "./classWorkWithUser/UserPassCheck/UserPassCheck";
-import { GrabCardAction, RoomJoin, UserAddCardAction, UserAttackAction, UserPassAction, UserReadyAction } from "./Action";
+import { RoomJoin, UserReadyAction } from "./Action";
+import { CardOnTable, CheckCardOnTable } from "./Card";
+
+
+
 
 
 const wss = new WebSocket.Server({ port: 8080 });

@@ -3,10 +3,11 @@ import { cardData } from "../../card.data";
 import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
 import { IPlayers, IRoom, IUser } from "../../Room";
 import { IPlayerPublisher, IResponseFactory } from "../ResponseFactory";
-import { NotifyUser } from "./NotifyUser";
 import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
-import { ISendMessage } from "../SendMessage/SendMessage";
-import { IResponseMessage } from "../../type/messageSend";
+import { IResponseMessage } from "../../Type/messageSend";
+import NotifyUser from "./NotifyUser";
+import { ISendMessage } from "../index";
+
 afterEach(() => {
   jest.clearAllMocks();
 });
