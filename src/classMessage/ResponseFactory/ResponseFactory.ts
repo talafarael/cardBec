@@ -1,27 +1,8 @@
+import IResponseMessage from "../../Type/IResponseMessage/IResponseMessage";
+import { ITemplateMessage } from "../../Type/ITemplateMessage/ITemplateMessage";
+import IResponseFactory from "./IResponseFactory";
 
-import { ICard, ICardInGame, IPlayers } from "../Room";
-import { IPlayerPublisher } from "../Type";
-
-
-import IResponseMessage from "../Type/IResponseMessage/IResponseMessage";
-
-
-export interface IResponseFactory {
-  templateMessage(data: ITemplateMessage): IResponseMessage;
-}
-interface ITemplateMessage {
-  session: string;
-  action: string;
-  players: IPlayerPublisher[];
-  roomId: string;
-  user: IPlayers;
-  trump: ICard | null;
-  pass: ICardInGame[];
-  cardsOnTable: ICardInGame[];
-  passState: boolean;
-  cardsOnTableCount: number;
-}
-export class ResponseFactory implements IResponseFactory {
+class ResponseFactory implements IResponseFactory {
   templateMessage(data: ITemplateMessage) {
     const res: IResponseMessage = {
       session: data.session,
@@ -48,3 +29,4 @@ export class ResponseFactory implements IResponseFactory {
   //     players.filter((elem) => elem.id != id);
   //   }
 }
+export default ResponseFactory;

@@ -1,14 +1,10 @@
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
+import IPlayerPublisher from "../../Type/IPlayerPublisher/IPlayerPublisher";
+import { IMessageRecipientFilter } from "./IMessageRecipientFilter";
 
-export interface IMessageRecipientFilter {
-  filterMessageToUsersExcept(
-    userPublish: IPlayerPublisher[],
-    id: number
-  ): IPlayerPublisher[];
-}
-export class MessageRecipientFilter implements IMessageRecipientFilter {
+class MessageRecipientFilter implements IMessageRecipientFilter {
   filterMessageToUsersExcept(userPublish: IPlayerPublisher[], id: number) {
     const filterUserPublish = userPublish.filter((elem) => elem.id != id);
     return filterUserPublish;
   }
 }
+export default MessageRecipientFilter;

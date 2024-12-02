@@ -6,7 +6,7 @@ import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
 import { UserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
 import { UserParser } from "./classWorkWithUser/UserParser/UserParser";
 import { NotifyUser } from "./classMessage/NotifyUser/NotifyUser";
-import { ResponseFactory } from "./classMessage/ResponseFactory";
+import { ResponseFactory } from "./classMessage/ResponseFactory/ResponseFactory";
 import { UserPublisher } from "./classWorkWithUser/UserPublisher/UserPublisher";
 import { MessageRecipientFilter } from "./classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
 import { SendMessage } from "./classMessage/SendMessage/SendMessage";

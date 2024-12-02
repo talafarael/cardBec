@@ -1,4 +1,4 @@
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
+import { IPlayerPublisher } from "../../classMessage/ResponseFactory/ResponseFactory";
 import { IPlayers } from "../../Room";
 import { IUserManager } from "../UserManager/UserManager";
 

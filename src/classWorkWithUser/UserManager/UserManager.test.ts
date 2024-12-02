@@ -1,7 +1,7 @@
 import { WebSocket, WebSocketServer } from "ws";
 import { IPlayers, IUser } from "../../Room";
 import { IUserTg, UserManager } from "./UserManager";
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
+import { IPlayerPublisher } from "../../classMessage/ResponseFactory/ResponseFactory";
 
 const user: IUser = {
   session: "1234",

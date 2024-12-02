@@ -1,5 +1,5 @@
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
-import { MessageRecipientFilter } from "./MessageRecipientFilter";
+import IPlayerPublisher from "../../Type/IPlayerPublisher/IPlayerPublisher";
+import MessageRecipientFilter from "./MessageRecipientFilter";
 
 const testUsersPublish: IPlayerPublisher[] = [
   {

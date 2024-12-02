@@ -1,11 +1,10 @@
 import { ICard } from "../../Room";
+import IUserCardRemove from "./IUserCardRemove";
 
-export interface IUserCardRemove {
-  CardRemove(card: ICard[], index: number): ICard[];
-}
-export class UserCardRemove {
+class UserCardRemove implements IUserCardRemove {
   CardRemove(card: ICard[], index: number) {
     card.splice(index, 1);
     return card;
   }
 }
+export default UserCardRemove;

@@ -1,7 +1,7 @@
 import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
 import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
 import { IRoom } from "../../Room";
-import { IResponseFactory } from "../ResponseFactory";
+import { IResponseFactory } from "../ResponseFactory/ResponseFactory";
 import ISendMessage from "../SendMessage/ISendMessage";
 
 import INotifyUser from "./INotifyUser";

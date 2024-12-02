@@ -2,7 +2,7 @@ import { WebSocket } from "ws";
 import { cardData } from "../../card.data";
 import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
 import { IPlayers, IRoom, IUser } from "../../Room";
-import { IPlayerPublisher, IResponseFactory } from "../ResponseFactory";
+import { IPlayerPublisher, IResponseFactory } from "../ResponseFactory/ResponseFactory";
 import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
 import { IResponseMessage } from "../../Type/messageSend";
 import NotifyUser from "./NotifyUser";

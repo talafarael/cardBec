@@ -1,11 +1,7 @@
 import { IPlayers } from "../../Room";
+import IUserChakeState from "./IUserChakeState";
 
-export interface IUserChakeState {
-  ChakeStateAttack(user: IPlayers): boolean;
-  ChakeStateDefending(user: IPlayers): boolean;
-}
-
-export class UserChakeState implements IUserChakeState {
+class UserChakeState implements IUserChakeState {
   ChakeStateAttack(user: IPlayers) {
     if (user.state == "attacking") {
       return true;
@@ -20,3 +16,4 @@ export class UserChakeState implements IUserChakeState {
   }
   //   "defending"
 }
+export default UserChakeState;

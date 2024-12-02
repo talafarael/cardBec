@@ -1,5 +1,5 @@
 import { IPlayers } from "../../Room";
-import { UserChakeState } from "./UserChakeState";
+import UserChakeState from "./UserChakeState";
 
 describe("UserChakeState attack", () => {
   it("should be retrun true", () => {

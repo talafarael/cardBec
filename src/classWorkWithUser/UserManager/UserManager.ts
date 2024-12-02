@@ -1,6 +1,6 @@
 import { IPlayers, IUser } from "../../Room";
 import WebSocket from "ws";
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory";
+import { IPlayerPublisher } from "../../classMessage/ResponseFactory/ResponseFactory";
 
 export interface IUserManager {
   transformUserForRoom(userData: IUserTg, session: string): IUser;
