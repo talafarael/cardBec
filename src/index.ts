@@ -1,6 +1,5 @@
 import WebSocket from "ws";
 
-
 import { ICard, IData, Rooms } from "./Room";
 import { ManagerRoom } from "./ManagerRoom";
 import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
@@ -34,9 +33,7 @@ import { CheckPassUser } from "./GameEvent/CheckPassUser/CheckPassUser";
 import { UserPassCheck } from "./classWorkWithUser/UserPassCheck/UserPassCheck";
 import { RoomJoin, UserReadyAction } from "./Action";
 import { CardOnTable, CheckCardOnTable } from "./Card";
-
-
-
+import type { IPlayerPublisher } from "./Type";
 
 
 const wss = new WebSocket.Server({ port: 8080 });

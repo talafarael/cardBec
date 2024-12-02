@@ -1,6 +1,10 @@
 
 import { ICard, ICardInGame, IPlayers } from "../Room";
-import { IPlayerPublisher } from "../type";
+import { IPlayerPublisher } from "../Type";
+
+
+import IResponseMessage from "../Type/IResponseMessage/IResponseMessage";
+
 
 export interface IResponseFactory {
   templateMessage(data: ITemplateMessage): IResponseMessage;

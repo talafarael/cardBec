@@ -1,2 +1,2 @@
-export { default as IPlayerPublisher } from "./IPlayerPublisher/IPlayerPublisher";
-export { default as IResponseMessage } from "./IResponseMessage/IResponseMessage";
+export  { default as IPlayerPublisher } from "./IPlayerPublisher/IPlayerPublisher";
+export type { default as IResponseMessage } from "./IResponseMessage/IResponseMessage";

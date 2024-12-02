@@ -1,4 +1,4 @@
-export default interface IPlayerPublisher {
+interface IPlayerPublisher {
   id: number;
   cardCount: number;
   firstName: string | null;
@@ -6,3 +6,4 @@ export default interface IPlayerPublisher {
   state: string;
   passState: boolean;
 }
+export type { IPlayerPublisher as default };
