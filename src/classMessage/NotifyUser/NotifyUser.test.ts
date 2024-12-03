@@ -1,12 +1,15 @@
 import { WebSocket } from "ws";
+import { IMessageRecipientFilter, IUserPublisher } from "src/classWorkWithUser";
 import { cardData } from "../../card.data";
-import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
-import { IPlayers, IRoom, IUser } from "../../Room";
-import { IPlayerPublisher, IResponseFactory } from "../ResponseFactory/ResponseFactory";
-import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
-import { IResponseMessage } from "../../Type/messageSend";
 import NotifyUser from "./NotifyUser";
-import { ISendMessage } from "../index";
+import { IResponseFactory, ISendMessage } from "../index";
+import {
+  IPlayerPublisher,
+  IPlayers,
+  IResponseMessage,
+  IRoom,
+  IUser,
+} from "src/Type";
 
 afterEach(() => {
   jest.clearAllMocks();

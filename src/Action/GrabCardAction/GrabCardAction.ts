@@ -1,14 +1,16 @@
-import { ICardOnTable } from "../../Card/CardOnTable/CardOnTable";
-import { ICheckCardOnTable } from "../../Card/CheckCardOnTable/CheckCardOnTable";
-import { ISimpleCardDealer } from "../../Card/SimpleCardDealer/SimpleCardDealer";
-import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
-import { IUserChakeState } from "../../classWorkWithUser/UserChakeState/UserChakeState";
-import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
-import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
-import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
-import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
+import ICardOnTable from "src/Card/CardOnTable/ICardOnTable";
+import ICheckCardOnTable from "src/Card/CheckCardOnTable/ICheckCardOnTable";
+import ISimpleCardDealer from "src/Card/SimpleCardDealer/ISimpleCardDealer";
+import { INotifyUser } from "src/classMessage";
+import {
+  IUserChakeState,
+  IUserFindRoom,
+  IUserPass,
+} from "src/classWorkWithUser";
+import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
+import { IRooms } from "src/Room";
+import { ICard, ICardInGame, IData, IRoom, IUserTg} from "src/Type";
 
-import { ICard, ICardInGame, IData, IRoom, IRooms } from "../../Room";
 export interface IGrabCardActionConfig {
   rooms: IRooms;
   userParser: IUserParser;
@@ -21,7 +23,7 @@ export interface IGrabCardActionConfig {
   userPass: IUserPass;
 }
 
- class GrabCardAction {
+class GrabCardAction {
   readonly #rooms: IRooms;
   readonly #userParser: IUserParser;
   readonly #userFindRoom: IUserFindRoom;

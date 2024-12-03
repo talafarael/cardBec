@@ -1,4 +1,4 @@
-import { ICardInGame } from "../../Room";
+import { ICardInGame } from "src/Type";
 import ICheckCardOnTable from "./ICheckCardOnTable";
 
 class CheckCardOnTable implements ICheckCardOnTable {
@@ -24,4 +24,4 @@ class CheckCardOnTable implements ICheckCardOnTable {
     return state;
   }
 }
-export default  CheckCardOnTable ;
+export default CheckCardOnTable;

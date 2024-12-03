@@ -1,6 +1,6 @@
-import IRoom from "../IRoom/IRoom";
+// import IRoom from "../IRoom/IRoom";
 
-interface IRooms {
-  [key: string]: IRoom;
-}
-export default IRooms;
+// interface IRooms {
+//   [key: string]: IRoom;
+// }
+// export default IRooms;

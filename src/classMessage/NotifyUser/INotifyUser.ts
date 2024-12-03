@@ -1,4 +1,4 @@
-import { IRoom } from "../../Room";
+import { IRoom } from "src/Type";
 
 interface INotifyUser {
   sendNotification(room: IRoom, action: string): void;

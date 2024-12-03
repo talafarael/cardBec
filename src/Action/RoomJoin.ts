@@ -1,16 +1,12 @@
-import { IData, IRoom, IRooms } from "../Room";
-import { v4 as uuidv4 } from "uuid";
-
+import { INotifyUser } from "src/classMessage";
+import { IUserFindRoom, IUserManager } from "src/classWorkWithUser";
+import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
+import { IManagerRoom } from "src/ManagerRoom";
+import { IRooms } from "src/Room";
+import { ICheckStateRoom } from "src/Room/CheckStateRoom/CheckStateRoom";
+import { IData, IRoom, IUserTg } from "src/Type";
 import { WebSocket } from "ws";
-import { IManagerRoom } from "../ManagerRoom";
-import {
-  IUserManager,
-  IUserTg,
-} from "../classWorkWithUser/UserManager/UserManager";
-import { IUserFindRoom } from "../classWorkWithUser/UserFindRoom/UserFindRoom";
-import { IUserParser } from "../classWorkWithUser/UserParser/UserParser";
-import { INotifyUser } from "../classMessage/NotifyUser/NotifyUser";
-import { ICheckStateRoom } from "../Room/CheckStateRoom/CheckStateRoom";
+import { v4 as uuidv4 } from "uuid";
 
 export interface IRoomJoinConfig {
   rooms: IRooms;

@@ -1,4 +1,4 @@
-import { ICard, IPlayers } from "../../Room";
+import { ICard, IPlayers } from "src/Type";
 import CheckCardInUser from "./CheckCardInUser";
 
 const cards: ICard[] = [

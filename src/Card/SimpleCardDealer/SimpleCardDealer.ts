@@ -1,11 +1,8 @@
-import { ICard, IRoom } from "../../Room";
+import { ICard, IRoom } from "src/Type";
+import ISimpleCardDealer from "./ISimpleCardDealer";
 import IDistributingCardsToUser from "../DistributingCardsToUser/IDistributingCardsToUser";
 
-
-
-
-
- class SimpleCardDealer {
+class SimpleCardDealer implements ISimpleCardDealer {
   readonly #distributingCardsToUser: IDistributingCardsToUser;
   constructor(DistributingCardsToUser: IDistributingCardsToUser) {
     this.#distributingCardsToUser = DistributingCardsToUser;

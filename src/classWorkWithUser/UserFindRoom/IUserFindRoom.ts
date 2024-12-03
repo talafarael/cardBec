@@ -1,5 +1,6 @@
 import { IRoom } from "src/Type";
 
-export interface IUserFindRoom {
+interface IUserFindRoom {
   findPlayerIndexInRoom(Room: IRoom, id: number): number;
 }
+export default IUserFindRoom;

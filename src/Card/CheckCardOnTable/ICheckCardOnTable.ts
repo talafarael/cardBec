@@ -1,4 +1,4 @@
-import { ICardInGame } from "../../Room";
+import { ICardInGame } from "src/Type";
 
 interface ICheckCardOnTable {
   checkIfCardIsZero(cardTable: ICardInGame[]): boolean;

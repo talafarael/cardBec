@@ -1,4 +1,4 @@
-import { ICard, ICardInGame, IPlayers } from "../../Room";
+import { ICard, ICardInGame, IPlayers } from "src/Type";
 
 interface ICheckCardInUser {
   CheckCardInUser(user: IPlayers, card: ICard): number;

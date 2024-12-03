@@ -1,4 +1,4 @@
-import { ICard, ICardInGame } from "../../Room";
+import { ICard, ICardInGame } from "src/Type";
 
 interface ICheckRankOnTable {
   CheckRankOnTable(table: ICardInGame[], card: ICard): boolean;

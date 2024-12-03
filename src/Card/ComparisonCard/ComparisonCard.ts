@@ -1,4 +1,4 @@
-import { ICard } from "../../Room";
+import { ICard } from "src/Type";
 import IComparisonCard from "./IComparisonCard";
 
 class ComparisonCard implements IComparisonCard {

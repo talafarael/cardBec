@@ -1,5 +1,5 @@
 import { IPlayers, IRoom } from "src/Type";
-import { IUserFindRoom } from "./IUserFindRoom";
+import IUserFindRoom from "./IUserFindRoom";
 
 class UserFindRoom implements IUserFindRoom {
   findPlayerIndexInRoom(Room: IRoom, id: number) {

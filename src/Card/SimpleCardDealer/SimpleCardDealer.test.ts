@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
-import { ICard, IRoom } from "../../Room";
 import IDistributingCardsToUser from "../DistributingCardsToUser/IDistributingCardsToUser";
 import SimpleCardDealer from "./SimpleCardDealer";
+import { ICard, IRoom } from "src/Type";
 
 const testRoom: IRoom = {
   players: [

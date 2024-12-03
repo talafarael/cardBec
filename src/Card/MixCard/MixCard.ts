@@ -1,4 +1,4 @@
-import { ICard } from "../../Room";
+import { ICard } from "src/Type";
 import IMixCard from "./IMixCard";
 
 class MixCard implements IMixCard {

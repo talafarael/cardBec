@@ -1,10 +1,8 @@
-import { IMessageRecipientFilter } from "../../classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
-import { IUserPublisher } from "../../classWorkWithUser/UserPublisher/UserPublisher";
-import { IRoom } from "../../Room";
-import { IResponseFactory } from "../ResponseFactory/ResponseFactory";
+import { IMessageRecipientFilter, IUserPublisher } from "src/classWorkWithUser";
+import IResponseFactory from "../ResponseFactory/IResponseFactory";
 import ISendMessage from "../SendMessage/ISendMessage";
-
 import INotifyUser from "./INotifyUser";
+import { IRoom } from "src/Type";
 
 class NotifyUser implements INotifyUser {
   readonly #responseFactory: IResponseFactory;

@@ -1,6 +1,6 @@
-import { ComparisonCard } from "./ComparisonCard";
+import ComparisonCard from "./ComparisonCard";
 
-describe("ComparisonCard", () => {
+describe("ComparsionCard", () => {
   it("should be retrun true", () => {
     const comparisonCard = new ComparisonCard();
     const cardAttack = { rank: "J", suit: "spades", level: 11 };

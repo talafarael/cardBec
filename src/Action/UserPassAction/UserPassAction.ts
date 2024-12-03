@@ -1,11 +1,10 @@
-import { ICheckCardOnTable } from "../../Card/CheckCardOnTable/CheckCardOnTable";
-import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
-import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
-import { IUserTg } from "../../classWorkWithUser/UserManager/UserManager";
-import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
-import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
-import { IData, IRoom, IRooms } from "../../Room";
-import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
+import ICheckCardOnTable from "src/Card/CheckCardOnTable/ICheckCardOnTable";
+import { INotifyUser } from "src/classMessage";
+import { IUserFindRoom, IUserPass } from "src/classWorkWithUser";
+import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
+import { IRooms } from "src/Room";
+import { ICheckStateRoom } from "src/Room/CheckStateRoom/CheckStateRoom";
+import { IData, IRoom, IUserTg } from "src/Type";
 
 class UserPassAction {
   readonly #rooms;

@@ -1,39 +1,19 @@
 import WebSocket from "ws";
-
-import { ICard, IData, Rooms } from "./Room";
+import { Rooms } from "./Room";
+import { MessageRecipientFilter, UserCardRemove, UserChakeState, UserChangeStartGame, UserFindRoom, UserManager, UserParser, UserPass, UserPassCheck, UserPublisher, UserReadinessCheck } from "./classWorkWithUser";
 import { ManagerRoom } from "./ManagerRoom";
-import { UserManager } from "./classWorkWithUser/UserManager/UserManager";
-import { UserFindRoom } from "./classWorkWithUser/UserFindRoom/UserFindRoom";
-import { UserParser } from "./classWorkWithUser/UserParser/UserParser";
-import { NotifyUser } from "./classMessage/NotifyUser/NotifyUser";
-import { ResponseFactory } from "./classMessage/ResponseFactory/ResponseFactory";
-import { UserPublisher } from "./classWorkWithUser/UserPublisher/UserPublisher";
-import { MessageRecipientFilter } from "./classWorkWithUser/MessageRecipientFilter/MessageRecipientFilter";
-import { SendMessage } from "./classMessage/SendMessage/SendMessage";
-import { UserChangeStartGame } from "./classWorkWithUser/UserChangeStartGame/UserChangeStartGame";
-import { UserReadinessCheck } from "./classWorkWithUser/UserReadinessCheck/UserReadinessCheck";
-import { MixCards } from "./Card/MixCard/MixCard";
-import { SimpleCardDealer } from "./Card/SimpleCardDealer/SimpleCardDealer";
-import { DistributingCardsToUser } from "./Card/DistributingCardsToUser/DistributingCardsToUser";
-import { StartGame } from "./GameEvent/StartGame/StartGame";
-import { RoomStater } from "./Room/RoomStater/RoomStater";
+import { NotifyUser, ResponseFactory, SendMessage } from "./classMessage";
 import { CheckStateRoom } from "./Room/CheckStateRoom/CheckStateRoom";
+import { GrabCardAction, RoomJoin, UserAddCardAction, UserAttackAction, UserPassAction, UserReadyAction } from "./Action";
+import { IData } from "./Type";
+import { StartGame } from "./GameEvent/StartGame/StartGame";
+import { CardOnTable, CheckCardInUser, CheckCardOnTable, CheckRankOnTable, ComparisonCard, DistributingCardsToUser, MixCards } from "./Card";
+import SimpleCardDealer from "./Card/SimpleCardDealer/SimpleCardDealer";
+import { RoomStater } from "./Room/RoomStater/RoomStater";
 import { RoleAssigner } from "./Role/RoleAssigner/RoleAssigner";
-import { UserChakeState } from "./classWorkWithUser/UserChakeState/UserChakeState";
-import { CheckCardInUser } from "./Card/CheckCardInUser/CheckCardInUser";
-
-import {
-  IDefData,
-  UserDeffitAction,
-} from "./Action/UserDeffitAction/UserDeffitAction";
-import { ComparisonCard } from "./Card/ComparisonCard/ComparisonCard";
-import { CheckRankOnTable } from "./Card/CheckRankOnTable/CheckRankOnTable";
-import { UserPass } from "./classWorkWithUser/UserPass/UserPass";
+import { IDefData, UserDeffitAction } from "./Action/UserDeffitAction/UserDeffitAction";
 import { CheckPassUser } from "./GameEvent/CheckPassUser/CheckPassUser";
-import { UserPassCheck } from "./classWorkWithUser/UserPassCheck/UserPassCheck";
-import { RoomJoin, UserReadyAction } from "./Action";
-import { CardOnTable, CheckCardOnTable } from "./Card";
-import { IPlayerPublisher } from "./Type";
+
 
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {

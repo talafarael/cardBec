@@ -1,4 +1,5 @@
-import { IPlayers } from "../../Room";
+import { IPlayers } from "src/Type";
+
 export interface ITurnDecider {
   determineFirstPlayer(players: IPlayers[]): IPlayers[];
 }

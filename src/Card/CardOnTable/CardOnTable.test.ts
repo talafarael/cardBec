@@ -1,4 +1,4 @@
-import { ICard, ICardInGame } from "../../Room";
+import { ICard, ICardInGame } from "src/Type";
 import CardOnTable, { IResponseRemveCard } from "./CardOnTable";
 
 describe("cardOnTable", () => {

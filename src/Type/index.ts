@@ -7,7 +7,7 @@ export { default as IData } from "./UserType/IData/IData";
 
 //RoomType
 export { default as IRoom } from "./RoomType/IRoom/IRoom";
-export { default as IRooms } from "./RoomType/IRooms/IRooms";
+// export { default as IRooms } from "./RoomType/IRooms/IRooms";
 
 //CardType
 export { default as ICard } from "./CardType/ICard/ICard";
