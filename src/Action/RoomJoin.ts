@@ -2,11 +2,12 @@ import { INotifyUser } from "src/classMessage";
 import { IUserFindRoom, IUserManager } from "src/classWorkWithUser";
 import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
 import { IManagerRoom } from "src/ManagerRoom";
-import { IRooms } from "src/Room";
-import { ICheckStateRoom } from "src/Room/CheckStateRoom/CheckStateRoom";
+
 import { IData, IRoom, IUserTg } from "src/Type";
 import { WebSocket } from "ws";
 import { v4 as uuidv4 } from "uuid";
+import { IRooms } from "src/Room/Room/Room";
+import { ICheckStateRoom } from "src/Room/CheckStateRoom/ICheckStateRoom";
 
 export interface IRoomJoinConfig {
   rooms: IRooms;

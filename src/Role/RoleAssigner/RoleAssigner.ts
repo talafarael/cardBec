@@ -1,4 +1,5 @@
-import {  IRoom } from "../../Room";
+import { IRoom } from "src/Type";
+
 //need return void its bad
 export interface IRoleAssigner {
   startAssignRole(room: IRoom): void;

@@ -1,6 +1,6 @@
 import { cardData } from "./card.data";
-import { IRoom } from "./Room";
 import { v4 as uuidv4 } from "uuid";
+import { IRoom } from "./Type";
 export interface IManagerRoom {
   createRoom(owner: string): IRoom;
 }

@@ -1,5 +1,5 @@
-import { IPlayers, IRoom } from "../../Room";
-import { CheckStateRoom } from "./CheckStateRoom";
+import { IPlayers, IRoom } from "src/Type";
+import CheckStateRoom from "./CheckStateRoom";
 
 describe("CheckStateGame", () => {
   it("should be retrun true", () => {
@@ -39,7 +39,7 @@ describe("CheckStateGame", () => {
 
     const room: IRoom = {
       isGameActive: true,
-      players: [ player],
+      players: [player],
     } as unknown as IRoom;
     expect(checkStateRoom.checkUserCount(room)).toBe(false);
   });

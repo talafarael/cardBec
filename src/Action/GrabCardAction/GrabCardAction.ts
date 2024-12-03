@@ -8,8 +8,8 @@ import {
   IUserPass,
 } from "src/classWorkWithUser";
 import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
-import { IRooms } from "src/Room";
-import { ICard, ICardInGame, IData, IRoom, IUserTg} from "src/Type";
+import { IRooms } from "src/Room/Room/Room";
+import { ICard, ICardInGame, IData, IRoom, IUserTg } from "src/Type";
 
 export interface IGrabCardActionConfig {
   rooms: IRooms;

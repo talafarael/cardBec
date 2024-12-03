@@ -1,12 +1,7 @@
-import { IRoom } from "../../Room";
+import { IRoom } from "src/Type";
+import IGrabState from "./IGrabState";
 
-export interface IGrabState {
-  checkGrabState(room: IRoom): boolean;
-  changeGrabStateFalse(room: IRoom): IRoom;
-  changeGrabStateTrue(room: IRoom): IRoom;
-}
-
-export class GrabState implements IGrabState {
+class GrabState implements IGrabState {
   checkGrabState(room: IRoom) {
     return room.GrabState;
   }
@@ -19,3 +14,4 @@ export class GrabState implements IGrabState {
     return room;
   }
 }
+export default GrabState;

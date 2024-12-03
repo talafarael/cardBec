@@ -9,8 +9,9 @@ import {
   IUserPass,
 } from "src/classWorkWithUser";
 import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
-import { IRooms } from "src/Room";
-import { ICheckStateRoom } from "src/Room/CheckStateRoom/CheckStateRoom";
+import { ICheckStateRoom } from "src/Room/CheckStateRoom/ICheckStateRoom";
+import { IRooms } from "src/Room/Room/Room";
+
 import { IData, IRoom, IUserTg } from "src/Type";
 export interface IUserAddCardActionConfig {
   rooms: IRooms;

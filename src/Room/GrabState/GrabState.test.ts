@@ -1,15 +1,13 @@
-import { IRoom } from "../../Room";
-import { GrabState } from "./GrabState";
-
-
+import { IRoom } from "src/Type";
+import GrabState from "./GrabState";
 
 describe("checkGrabState", () => {
   it("should return false", () => {
     const grabState = new GrabState();
-    
-const roomGrabFalse: IRoom = {
-    GrabState: false,
-  } as unknown as IRoom;
+
+    const roomGrabFalse: IRoom = {
+      GrabState: false,
+    } as unknown as IRoom;
     expect(grabState.checkGrabState(roomGrabFalse)).toBe(false);
   });
 });
@@ -17,12 +15,12 @@ const roomGrabFalse: IRoom = {
 describe("cheng to true", () => {
   it("should return true", () => {
     const roomGrabFalse: IRoom = {
-        GrabState: false,
-      } as unknown as IRoom;
-      
-      const roomGrabTrue: IRoom = {
-        GrabState: true,
-      } as unknown as IRoom;
+      GrabState: false,
+    } as unknown as IRoom;
+
+    const roomGrabTrue: IRoom = {
+      GrabState: true,
+    } as unknown as IRoom;
     const grabState = new GrabState();
     expect(grabState.changeGrabStateTrue(roomGrabFalse)).toEqual(roomGrabTrue);
   });
@@ -31,14 +29,14 @@ describe("cheng to true", () => {
 describe("cheng to false", () => {
   it("should return false", () => {
     const roomGrabFalse: IRoom = {
-        GrabState: false,
-      } as unknown as IRoom;
-      
-      const roomGrabTrue: IRoom = {
-        GrabState: true,
-      } as unknown as IRoom;
+      GrabState: false,
+    } as unknown as IRoom;
+
+    const roomGrabTrue: IRoom = {
+      GrabState: true,
+    } as unknown as IRoom;
     const grabState = new GrabState();
-    
+
     expect(grabState.changeGrabStateFalse(roomGrabTrue)).toEqual(roomGrabFalse);
   });
 });

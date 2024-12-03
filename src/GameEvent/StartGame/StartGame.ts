@@ -1,12 +1,12 @@
-import { IMixCards } from "../../Card/MixCard/MixCard";
-import { ISimpleCardDealer } from "../../Card/SimpleCardDealer/SimpleCardDealer";
-import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
-
-import { IUserReadinessCheck } from "../../classWorkWithUser/UserReadinessCheck/UserReadinessCheck";
+import { IUserReadinessCheck } from "src/classWorkWithUser";
 import { IRoleAssigner } from "../../Role/RoleAssigner/RoleAssigner";
-import { IData, IRoom, IRooms } from "../../Room";
-import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
 import { IRoomStater } from "../../Room/RoomStater/RoomStater";
+import { IMixCards } from "src/Card";
+import ISimpleCardDealer from "src/Card/SimpleCardDealer/ISimpleCardDealer";
+import { INotifyUser } from "src/classMessage";
+import { IData, IRoom } from "src/Type";
+import { ICheckStateRoom } from "src/Room/CheckStateRoom/ICheckStateRoom";
+import { IRooms } from "src/Room/Room/Room";
 
 export interface IStartGameConfig {
   userReadinessCheck: IUserReadinessCheck;
@@ -19,7 +19,7 @@ export interface IStartGameConfig {
   roleAssigner: IRoleAssigner;
 }
 export interface IStartGame {}
-export class StartGame implements IStartGame {
+class StartGame implements IStartGame {
   readonly #userReadinessCheck: IUserReadinessCheck;
   readonly #rooms: IRooms;
   readonly #notifyUser: INotifyUser;
@@ -63,3 +63,4 @@ export class StartGame implements IStartGame {
     this.#rooms.saveRoom(data.roomId, Room);
   }
 }
+export default StartGame;

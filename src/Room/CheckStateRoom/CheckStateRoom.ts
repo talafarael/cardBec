@@ -1,10 +1,7 @@
-import { IRoom } from "../../Room";
+import { IRoom } from "src/Type";
+import { ICheckStateRoom } from "./ICheckStateRoom";
 
-export interface ICheckStateRoom {
-  checkStateGame(room: IRoom): boolean;
-  checkUserCount(room: IRoom): boolean;
-}
-export class CheckStateRoom implements ICheckStateRoom {
+class CheckStateRoom implements ICheckStateRoom {
   checkStateGame(room: IRoom) {
     if (room.isGameActive) {
       return true;
@@ -18,3 +15,4 @@ export class CheckStateRoom implements ICheckStateRoom {
     return true;
   }
 }
+export default CheckStateRoom;

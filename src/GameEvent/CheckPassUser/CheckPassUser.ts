@@ -1,13 +1,16 @@
-import { ICardOnTable } from "../../Card/CardOnTable/CardOnTable";
-import { ISimpleCardDealer } from "../../Card/SimpleCardDealer/SimpleCardDealer";
-import { INotifyUser } from "../../classMessage/NotifyUser/NotifyUser";
-import { IUserFindRoom } from "../../classWorkWithUser/UserFindRoom/UserFindRoom";
-import { IUserParser } from "../../classWorkWithUser/UserParser/UserParser";
-import { IUserPass } from "../../classWorkWithUser/UserPass/UserPass";
-import { IUserPassCheck } from "../../classWorkWithUser/UserPassCheck/UserPassCheck";
-import { IRoleAssigner } from "../../Role/RoleAssigner/RoleAssigner";
-import { ICardInGame, IData, IRoom, IRooms } from "../../Room";
-import { ICheckStateRoom } from "../../Room/CheckStateRoom/CheckStateRoom";
+import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
+import {
+  IUserFindRoom,
+  IUserPass,
+  IUserPassCheck,
+} from "src/classWorkWithUser";
+import { INotifyUser } from "src/classMessage";
+import ICardOnTable from "src/Card/CardOnTable/ICardOnTable";
+import ISimpleCardDealer from "src/Card/SimpleCardDealer/ISimpleCardDealer";
+import { IRoleAssigner } from "src/Role/RoleAssigner/RoleAssigner";
+import { ICardInGame, IData, IRoom } from "src/Type";
+import { ICheckStateRoom } from "src/Room/CheckStateRoom/ICheckStateRoom";
+import { IRooms } from "src/Room/Room/Room";
 
 export interface ICheckPassUserConfig {
   rooms: IRooms;
@@ -22,7 +25,7 @@ export interface ICheckPassUserConfig {
   userPass: IUserPass;
 }
 
-export class CheckPassUser {
+class CheckPassUser {
   readonly #rooms;
   readonly #userParser;
   readonly #userFindRoom;
@@ -87,3 +90,4 @@ export class CheckPassUser {
     this.#notifyUser.sendNotification(Room, "pass");
   }
 }
+export default CheckPassUser;

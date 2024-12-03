@@ -1,10 +1,11 @@
-import { IRoom } from "../../Room";
+import { IRoom } from "src/Type";
 
 export interface IRoomStater {
   roomStart(room: IRoom): void;
 }
-export class RoomStater implements IRoomStater {
+class RoomStater implements IRoomStater {
   roomStart(room: IRoom) {
     room.isGameActive = true;
   }
 }
+export default RoomStater;

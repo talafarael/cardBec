@@ -1,11 +1,11 @@
-import { WebSocket } from "ws";
+import { IRoom } from "src/Type";
 
 export interface IRooms {
   // rooms: { [key: string]: IRoom | {} };
   saveRoom(roomId: string, room: IRoom): void;
   getRoom(id: string): IRoom | null;
 }
-export class Rooms implements IRooms {
+class Rooms implements IRooms {
   private rooms: { [key: string]: IRoom } = {};
 
   getRoom(roomId: string): IRoom | null {
@@ -14,14 +14,13 @@ export class Rooms implements IRooms {
 
   saveRoom(roomId: string, room: IRoom): void {
     this.rooms[roomId] = room;
+    console.log(roomId);
   }
   // getRoom(roomId: string): IRoom | null {
 
   //   return this.rooms[roomId] ?? null;
   // }
 }
-
-
 
 // class RoomMAmanger {
 //   private rooms: { [key: string]: IRoom };
@@ -40,3 +39,4 @@ export class Rooms implements IRooms {
 //     });
 //   }
 // }
+export default Rooms;

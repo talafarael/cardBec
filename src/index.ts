@@ -1,19 +1,46 @@
 import WebSocket from "ws";
-import { Rooms } from "./Room";
-import { MessageRecipientFilter, UserCardRemove, UserChakeState, UserChangeStartGame, UserFindRoom, UserManager, UserParser, UserPass, UserPassCheck, UserPublisher, UserReadinessCheck } from "./classWorkWithUser";
+
+import {
+  MessageRecipientFilter,
+  UserCardRemove,
+  UserChakeState,
+  UserChangeStartGame,
+  UserFindRoom,
+  UserManager,
+  UserParser,
+  UserPass,
+  UserPassCheck,
+  UserPublisher,
+  UserReadinessCheck,
+} from "./classWorkWithUser";
 import { ManagerRoom } from "./ManagerRoom";
 import { NotifyUser, ResponseFactory, SendMessage } from "./classMessage";
-import { CheckStateRoom } from "./Room/CheckStateRoom/CheckStateRoom";
-import { GrabCardAction, RoomJoin, UserAddCardAction, UserAttackAction, UserPassAction, UserReadyAction } from "./Action";
+import {
+  GrabCardAction,
+  RoomJoin,
+  UserAddCardAction,
+  UserAttackAction,
+  UserPassAction,
+  UserReadyAction,
+} from "./Action";
 import { IData } from "./Type";
-import { StartGame } from "./GameEvent/StartGame/StartGame";
-import { CardOnTable, CheckCardInUser, CheckCardOnTable, CheckRankOnTable, ComparisonCard, DistributingCardsToUser, MixCards } from "./Card";
+import {
+  CardOnTable,
+  CheckCardInUser,
+  CheckCardOnTable,
+  CheckRankOnTable,
+  ComparisonCard,
+  DistributingCardsToUser,
+  MixCards,
+} from "./Card";
 import SimpleCardDealer from "./Card/SimpleCardDealer/SimpleCardDealer";
-import { RoomStater } from "./Room/RoomStater/RoomStater";
 import { RoleAssigner } from "./Role/RoleAssigner/RoleAssigner";
-import { IDefData, UserDeffitAction } from "./Action/UserDeffitAction/UserDeffitAction";
-import { CheckPassUser } from "./GameEvent/CheckPassUser/CheckPassUser";
-
+import {
+  IDefData,
+  UserDeffitAction,
+} from "./Action/UserDeffitAction/UserDeffitAction";
+import { CheckPassUser, StartGame } from "./GameEvent";
+import { CheckStateRoom, Rooms, RoomStater} from "./Room";
 
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
@@ -57,7 +84,6 @@ wss.on("connection", (ws: WebSocket) => {
         });
 
         room.joinRoom(data);
-        // rooms = room.rooms;
 
         break;
       }
@@ -147,7 +173,7 @@ function Grad(data: IData) {
   const sendMessages = new SendMessage();
   const distributingCardsToUser = new DistributingCardsToUser();
   const userAddCardAction = new GrabCardAction({
-    rooms: new Rooms(),
+    rooms: rooms,
     userParser: new UserParser(),
     userFindRoom: new UserFindRoom(),
     notifyUser: new NotifyUser(
@@ -173,7 +199,7 @@ function Attack(data: IData) {
   const sendMessages = new SendMessage();
 
   const userAttackAction = new UserAttackAction({
-    rooms: new Rooms(),
+    rooms: rooms,
     userParser: new UserParser(),
     userFindRoom: new UserFindRoom(),
     notifyUser: new NotifyUser(
@@ -200,7 +226,7 @@ function Def(data: IDefData) {
   const sendMessages = new SendMessage();
 
   const userDeffitAction = new UserDeffitAction({
-    rooms: new Rooms(),
+    rooms: rooms,
     userParser: new UserParser(),
     userFindRoom: new UserFindRoom(),
     notifyUser: new NotifyUser(
@@ -227,7 +253,7 @@ const add = (data: IData) => {
   const sendMessages = new SendMessage();
 
   const userAddCardAction = new UserAddCardAction({
-    rooms: new Rooms(),
+    rooms: rooms,
     userParser: new UserParser(),
     userFindRoom: new UserFindRoom(),
     notifyUser: new NotifyUser(
@@ -271,7 +297,7 @@ function pass(data: IData) {
   const userPass = new UserPass();
 
   const checkPassUser = new CheckPassUser({
-    rooms: new Rooms(),
+    rooms: rooms,
     userParser: new UserParser(),
     userFindRoom: new UserFindRoom(),
     notifyUser: new NotifyUser(

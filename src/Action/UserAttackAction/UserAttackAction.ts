@@ -9,8 +9,8 @@ import {
   IUserPass,
 } from "src/classWorkWithUser";
 import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
-import { IRooms } from "src/Room";
-import { ICheckStateRoom } from "src/Room/CheckStateRoom/CheckStateRoom";
+import { ICheckStateRoom } from "src/Room/CheckStateRoom/ICheckStateRoom";
+import { IRooms } from "src/Room/Room/Room";
 import { IData, IRoom, IUserTg } from "src/Type";
 export interface IUserAttackActionConfig {
   rooms: IRooms;
@@ -55,7 +55,12 @@ class UserAttackAction {
     if (!data.roomId || !data.card) {
       return;
     }
+    console.log(data.roomId);
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
+    if (!Room) {
+      console.log("aa");
+      return;
+    }
     const parserUser: IUserTg = this.#userParser.userParser(data.userData);
     const indexUser = this.#userFindRoom.findPlayerIndexInRoom(
       Room,
