@@ -1,5 +1,4 @@
 import WebSocket from "ws";
-
 import {
   MessageRecipientFilter,
   UserCardRemove,
