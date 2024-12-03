@@ -1,12 +1,10 @@
-import { IPlayers } from "../../Room";
+import { IPlayers } from "src/Type";
+import IUserChangeStartGame from "./IUserChangeStartGame";
 
-export interface IUserChangeStartGame {
-  changeState(player: IPlayers[], indexUser: number): IPlayers[];
-}
-
-export class UserChangeStartGame implements IUserChangeStartGame {
+class UserChangeStartGame implements IUserChangeStartGame {
   changeState(player: IPlayers[], indexUser: number) {
     player[indexUser].startGameState = !player[indexUser].startGameState;
     return player;
   }
 }
+export default UserChangeStartGame;

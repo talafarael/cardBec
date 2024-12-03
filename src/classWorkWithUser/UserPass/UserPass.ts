@@ -1,10 +1,7 @@
-import { IPlayers } from "../../Room";
+import { IPlayers } from "src/Type";
+import IUserPass from "./IUserPass";
 
-export interface IUserPass {
-  UserPassTrue(user: IPlayers): IPlayers;
-  UpdateAllUserPass(users: IPlayers[]): IPlayers[];
-}
-export class UserPass implements IUserPass {
+class UserPass implements IUserPass {
   UserPassTrue(user: IPlayers) {
     user.passState = true;
     return user;
@@ -20,3 +17,4 @@ export class UserPass implements IUserPass {
     user.passState = false;
   }
 }
+export default UserPass;

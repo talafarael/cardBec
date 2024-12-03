@@ -1,4 +1,4 @@
-import IPlayerPublisher from "../../Type/IPlayerPublisher/IPlayerPublisher";
+import IPlayerPublisher from "../../Type/UserType/IPlayerPublisher/IPlayerPublisher";
 
 export interface IMessageRecipientFilter {
   filterMessageToUsersExcept(

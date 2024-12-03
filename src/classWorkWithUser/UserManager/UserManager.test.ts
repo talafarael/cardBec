@@ -1,7 +1,6 @@
-import { WebSocket, WebSocketServer } from "ws";
-import { IPlayers, IUser } from "../../Room";
-import { IUserTg, UserManager } from "./UserManager";
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory/ResponseFactory";
+import { WebSocket } from "ws";
+import { IPlayerPublisher, IPlayers, IUser, IUserTg } from "src/Type";
+import UserManager from "./UserManager";
 
 const user: IUser = {
   session: "1234",
@@ -34,30 +33,28 @@ describe("transformUserForRoom", () => {
 
 describe("transformedPlayerPublisher", () => {
   it("should be transform to IPlayer(PublicUser)", () => {
-  
-        const player: IPlayers = {
-          user: user,
-          card: [],
-          ws: {}as WebSocket,
-          state: "",
-          startGameState: false,
-          passState: false,
-        };
+    const player: IPlayers = {
+      user: user,
+      card: [],
+      ws: {} as WebSocket,
+      state: "",
+      startGameState: false,
+      passState: false,
+    };
 
-        const palyerPublisher: IPlayerPublisher = {
-          id: 1,
-          cardCount: 0,
-          firstName: "Test",
-          startGame: false,
-          state: "",
-          passState: false,
-        };
-        const userManager = new UserManager();
-        expect(userManager.transformedPlayerPublisher(player)).toEqual(
-          palyerPublisher
-        );
- 
-    });
+    const palyerPublisher: IPlayerPublisher = {
+      id: 1,
+      cardCount: 0,
+      firstName: "Test",
+      startGame: false,
+      state: "",
+      passState: false,
+    };
+    const userManager = new UserManager();
+    expect(userManager.transformedPlayerPublisher(player)).toEqual(
+      palyerPublisher
+    );
+  });
 
   it("transformedPlayer", () => {
     const userManager = new UserManager();
@@ -73,5 +70,4 @@ describe("transformedPlayerPublisher", () => {
       resultPlayerTransform
     );
   });
-
-  });
+});

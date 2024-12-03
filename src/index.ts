@@ -33,35 +33,13 @@ import { CheckPassUser } from "./GameEvent/CheckPassUser/CheckPassUser";
 import { UserPassCheck } from "./classWorkWithUser/UserPassCheck/UserPassCheck";
 import { RoomJoin, UserReadyAction } from "./Action";
 import { CardOnTable, CheckCardOnTable } from "./Card";
-import type { IPlayerPublisher } from "./Type";
-
+import { IPlayerPublisher } from "./Type";
 
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
 };
 
-interface IPlayers {
-  user: IUSer;
-  card: any[];
-  ws: WebSocket;
-  state: boolean;
-  startGameState: boolean;
-}
-interface IRoom {
-  players: IPlayers[];
-  isGameActive: boolean;
-  roomId: string;
-  card: ICard[];
-}
-interface IUSer {
-  session: string;
-  hash: string;
-  allowsWriteToPm: boolean | null | undefined;
-  firstName: string | null;
-  id: number;
-  username: string | null | undefined;
-}
 // const roo-ms: { [key: string]: IRoom | {} } = {};
 let rooms = new Rooms();
 wss.on("connection", (ws: WebSocket) => {
@@ -188,7 +166,6 @@ function Grad(data: IData) {
   const messageRecipientFilters = new MessageRecipientFilter();
   const sendMessages = new SendMessage();
   const distributingCardsToUser = new DistributingCardsToUser();
-
   const userAddCardAction = new GrabCardAction({
     rooms: new Rooms(),
     userParser: new UserParser(),

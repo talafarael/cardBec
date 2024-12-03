@@ -1,7 +1,5 @@
-import { ICard, ICardInGame, IPlayers } from "../../Room";
-import IPlayerPublisher from "../IPlayerPublisher/IPlayerPublisher";
-
- type IResponseMessage ={
+import { IPlayerPublisher, IPlayers, ICardInGame, ICard } from "src/Type";
+type IResponseMessage = {
   session: string;
   action: string;
   players: IPlayerPublisher[];
@@ -12,6 +10,6 @@ import IPlayerPublisher from "../IPlayerPublisher/IPlayerPublisher";
   pass: ICardInGame[];
   passState: boolean;
   cardsOnTableCount: number;
-}
+};
 
 export default IResponseMessage;

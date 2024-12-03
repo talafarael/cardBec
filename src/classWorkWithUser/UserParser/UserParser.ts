@@ -1,16 +1,15 @@
 import { parseInitData } from "@telegram-apps/sdk-react";
-import { IUserTg } from "../UserManager/UserManager";
+import { IUserTg } from "src/Type";
+import IUserParser from "./IUserParser";
 
-export interface IUserParser {
-  userParser(user: string): IUserTg;
-}
-export class UserParser implements IUserParser {
+class UserParser implements IUserParser {
   userParser(user: string): IUserTg {
     const userData = parseInitData(user) as Partial<IUserTg>;
     if (!userData.user) {
-      throw new Error("Invalid user data"); 
+      throw new Error("Invalid user data");
     }
-  
+
     return userData as IUserTg;
   }
 }
+export default UserParser;

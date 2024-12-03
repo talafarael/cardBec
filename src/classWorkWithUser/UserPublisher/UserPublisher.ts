@@ -1,11 +1,8 @@
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory/ResponseFactory";
-import { IPlayers } from "../../Room";
-import { IUserManager } from "../UserManager/UserManager";
+import { IPlayerPublisher, IPlayers } from "src/Type";
+import IUserManager from "../UserManager/IUserManager";
+import IUserPublisher from "./IUserPublisher";
 
-export interface IUserPublisher {
-  mapPlayersToPublish(users: IPlayers[]): IPlayerPublisher[];
-}
-export class UserPublisher {
+class UserPublisher implements IUserPublisher {
   readonly #userManager: IUserManager;
 
   constructor(userManager: IUserManager) {
@@ -19,3 +16,4 @@ export class UserPublisher {
     return userPublish;
   }
 }
+export default UserPublisher;

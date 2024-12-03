@@ -1,10 +1,7 @@
-import { IPlayers, IRoom } from "../../Room";
+import { IPlayers, IRoom } from "src/Type";
+import { IUserFindRoom } from "./IUserFindRoom";
 
-export interface IUserFindRoom {
-  findPlayerIndexInRoom(Room: IRoom, id: number): number;
-}
-
-export class UserFindRoom implements IUserFindRoom {
+class UserFindRoom implements IUserFindRoom {
   findPlayerIndexInRoom(Room: IRoom, id: number) {
     const playerIndex = Room.players.findIndex(
       (elem: IPlayers) => elem.user.id == id
@@ -13,3 +10,4 @@ export class UserFindRoom implements IUserFindRoom {
     return playerIndex;
   }
 }
+export default UserFindRoom;

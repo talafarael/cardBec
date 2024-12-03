@@ -1,7 +1,6 @@
-import { ICard, ICardInGame, IPlayers } from "../../Room";
-import IPlayerPublisher from "../IPlayerPublisher/IPlayerPublisher";
+import { IPlayerPublisher, IPlayers, ICard, ICardInGame } from "src/Type/";
 
-export interface ITemplateMessage {
+interface ITemplateMessage {
   session: string;
   action: string;
   players: IPlayerPublisher[];
@@ -13,3 +12,4 @@ export interface ITemplateMessage {
   passState: boolean;
   cardsOnTableCount: number;
 }
+export default ITemplateMessage;

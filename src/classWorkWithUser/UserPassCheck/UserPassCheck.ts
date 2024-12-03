@@ -1,10 +1,7 @@
-import { IPlayers } from "../../Room";
+import { IPlayers } from "src/Type";
+import IUserPassCheck from "./IUserPassCheck";
 
-export interface IUserPassCheck {
-  UserPassCheck(users: IPlayers[]): boolean;
-}
-
-export class UserPassCheck {
+export class UserPassCheck implements IUserPassCheck {
   UserPassCheck(users: IPlayers[]) {
     let statePass = true;
     users.forEach((elem) => {
@@ -15,3 +12,4 @@ export class UserPassCheck {
     return statePass;
   }
 }
+export default UserPassCheck;

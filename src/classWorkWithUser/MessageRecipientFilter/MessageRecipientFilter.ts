@@ -1,4 +1,4 @@
-import IPlayerPublisher from "../../Type/IPlayerPublisher/IPlayerPublisher";
+import { IPlayerPublisher } from "src/Type";
 import { IMessageRecipientFilter } from "./IMessageRecipientFilter";
 
 class MessageRecipientFilter implements IMessageRecipientFilter {

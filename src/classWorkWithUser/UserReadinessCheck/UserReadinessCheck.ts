@@ -1,10 +1,7 @@
-import { IPlayers } from "../../Room";
+import { IPlayers } from "src/Type";
+import IUserReadinessCheck from "./IUserReadinessCheck";
 
-export interface IUserReadinessCheck {
-  UserReadinessCheck(users: IPlayers[]): boolean;
-}
-
-export class UserReadinessCheck implements IUserReadinessCheck {
+class UserReadinessCheck implements IUserReadinessCheck {
   UserReadinessCheck(users: IPlayers[]) {
     let stateGame = true;
     users.forEach((elem) => {
@@ -15,3 +12,4 @@ export class UserReadinessCheck implements IUserReadinessCheck {
     return stateGame;
   }
 }
+export default UserReadinessCheck;

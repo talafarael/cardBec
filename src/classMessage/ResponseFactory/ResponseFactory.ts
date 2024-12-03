@@ -1,5 +1,5 @@
-import IResponseMessage from "../../Type/IResponseMessage/IResponseMessage";
-import { ITemplateMessage } from "../../Type/ITemplateMessage/ITemplateMessage";
+import IResponseMessage from "../../Type/MessageType/IResponseMessage/IResponseMessage";
+import { ITemplateMessage } from "../../Type/MessageType/ITemplateMessage/ITemplateMessage";
 import IResponseFactory from "./IResponseFactory";
 
 class ResponseFactory implements IResponseFactory {

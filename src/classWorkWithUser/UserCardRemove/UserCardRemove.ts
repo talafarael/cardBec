@@ -1,4 +1,4 @@
-import { ICard } from "../../Room";
+import { ICard } from "src/Type";
 import IUserCardRemove from "./IUserCardRemove";
 
 class UserCardRemove implements IUserCardRemove {

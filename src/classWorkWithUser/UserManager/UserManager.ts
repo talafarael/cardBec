@@ -1,14 +1,8 @@
-import { IPlayers, IUser } from "../../Room";
+import { IPlayerPublisher, IPlayers, IUser, IUserTg } from "src/Type";
 import WebSocket from "ws";
-import { IPlayerPublisher } from "../../classMessage/ResponseFactory/ResponseFactory";
+import IUserManager from "./IUserManager";
 
-export interface IUserManager {
-  transformUserForRoom(userData: IUserTg, session: string): IUser;
-  transformedPlayerPublisher(user: IPlayers): IPlayerPublisher;
-  transformedPlayer(user: IUser, ws: WebSocket): IPlayers;
-}
-
-export class UserManager implements IUserManager {
+class UserManager implements IUserManager {
   transformUserForRoom(userData: IUserTg, session: string) {
     const user: IUser = {
       session: session,
@@ -32,7 +26,7 @@ export class UserManager implements IUserManager {
     return player;
   }
   transformedPlayer(user: IUser, ws: WebSocket) {
-    const player = {
+    const player: IPlayers = {
       state: "",
       startGameState: false,
       user: user,
@@ -43,12 +37,5 @@ export class UserManager implements IUserManager {
     return player;
   }
 }
-export interface IUserTg {
-  hash: string;
-  user: {
-    id: number;
-    allowsWriteToPm: boolean;
-    username: string;
-    firstName: string;
-  };
-}
+
+export default UserManager;

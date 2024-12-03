@@ -1,4 +1,4 @@
-import { ICard } from "../../Room";
+import { ICard } from "src/Type";
 
 interface IUserCardRemove {
   CardRemove(card: ICard[], index: number): ICard[];
