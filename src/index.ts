@@ -336,11 +336,10 @@ const token = "7448678561:AAFtynJEawxUtbGlnBtibcLpeFwmVdw57jQ";
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
 
-// Matches "/echo [whatever]"
+
 bot.onText(/\/echo (.+)/, (msg: any, match: any) => {});
 
-// Listen for any kind of message. There are different kinds of
-// messages.
+
 bot.on("message", (msg: any) => {
   const chatId = msg.chat.id;
 
@@ -349,14 +348,15 @@ bot.on("message", (msg: any) => {
 });
 bot.onText(/\/start/, (msg: any) => {
   const chatId = msg.chat.id;
-  const uuid = uuidv4(); // Уникальный идентификатор
+  const uuid = uuidv4();
   const miniAppLink = `https://t.me/CardFaraBot/card?startapp=${uuid}`;
-
+  const chrome = `https://telegram-mini-card-vpcz-talafaraels-projects.vercel.app/?token=${uuid}`;
   bot.sendMessage(chatId, `Откройте Mini App по ссылке: ${miniAppLink}`);
+  bot.sendMessage(chatId, `Откройте Mini App по ссылке: ${chrome}`);
 });
 bot.onText(/\/start (.+)/, (msg: any, match: any) => {
   const chatId = msg.chat.id;
-  const startParam = match[1]; // Извлекаем значение параметра `start`
+  const startParam = match[1]; 
 
   bot.sendMessage(chatId, `Получен параметр: ${startParam}`);
 });
