@@ -94,7 +94,6 @@ const res: IResponseMessage = {
   you: players[1],
   trump: null,
   pass: [],
-
   cardsOnTable: [],
   passState: false,
   cardsOnTableCount: 0,
