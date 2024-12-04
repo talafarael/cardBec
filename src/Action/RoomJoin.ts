@@ -41,11 +41,12 @@ class RoomJoin {
   joinRoom(data: IData) {
     if (!data.roomId) {
       const session = uuidv4();
+      const roomId = uuidv4();
       const parserUser: IUserTg = this.#userParser.userParser(data.userData);
 
       const Room: IRoom = this.#managerRoom.createRoom(
         parserUser.user.id.toString(),
-        uuidv4.toString()
+        roomId
       );
       const user = this.#userManager.transformUserForRoom(parserUser, session);
 
