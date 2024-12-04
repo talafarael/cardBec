@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserParser_1 = require("./UserParser");
 const sdk_react_1 = require("@telegram-apps/sdk-react");
+const UserParser_1 = __importDefault(require("./UserParser"));
 jest.mock("@telegram-apps/sdk-react", () => ({
     parseInitData: jest.fn(),
 }));
@@ -22,7 +25,7 @@ const hashUser = "AAHdF6IQAAAAAN0XohDhrOrc&user=%7B%22id%22%3A1%2C%22first_name%
 describe("UserParser", () => {
     it("should correctly parse valid user data", () => {
         sdk_react_1.parseInitData.mockReturnValue(parserUser);
-        const userParser = new UserParser_1.UserParser();
+        const userParser = new UserParser_1.default();
         const res = userParser.userParser(hashUser);
         expect(res).toEqual(parserUser);
         expect(sdk_react_1.parseInitData).toHaveBeenCalledTimes(1);
@@ -30,7 +33,7 @@ describe("UserParser", () => {
     });
     it("should throw an error for invalid user data", () => {
         sdk_react_1.parseInitData.mockReturnValue({});
-        const userParser = new UserParser_1.UserParser();
+        const userParser = new UserParser_1.default();
         expect(() => userParser.userParser(hashUser)).toThrow("Invalid user data");
         expect(sdk_react_1.parseInitData).toHaveBeenCalledTimes(1);
     });

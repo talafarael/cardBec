@@ -1,5 +1,5 @@
-import { ICard } from "../../Room";
-import { UserCardRemove } from "./UserCardRemove";
+import { ICard } from "src/Type";
+import UserCardRemove from "./UserCardRemove";
 
 describe("UserCardRemove ", () => {
   it("must remove", () => {

@@ -1,5 +1,5 @@
-import { UserParser } from "./UserParser";
 import { parseInitData } from "@telegram-apps/sdk-react";
+import UserParser from "./UserParser";
 
 jest.mock("@telegram-apps/sdk-react", () => ({
   parseInitData: jest.fn(),

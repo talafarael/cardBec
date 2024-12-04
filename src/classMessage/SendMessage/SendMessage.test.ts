@@ -1,7 +1,6 @@
 import { WebSocket } from "ws";
-import { IPlayers, IUser } from "../../Room";
-import { IResponseMessage } from "../../Type/messageSend";
 import SendMessage from "./SendMessage";
+import { IPlayers, IResponseMessage, IUser } from "src/Type";
 describe("JoinMessage", () => {
   it("should send a properly formatted message via WebSocket", () => {
     const mockWebSocket = {

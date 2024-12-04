@@ -1,6 +1,8 @@
+import { ICard, IRoom } from "src/Type";
 import { WebSocket } from "ws";
-import { ICard, IRoom } from "../../Room";
-import { UserFindRoom } from "./UserFindRoom";
+import UserFindRoom from "./UserFindRoom";
+
+
 
 const testRoom = {
   players: [

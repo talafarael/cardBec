@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserReadinessCheck_1 = require("./UserReadinessCheck");
+const UserReadinessCheck_1 = __importDefault(require("./UserReadinessCheck"));
 const user = {
     session: "1234",
     hash: "c501b71e775f74ce10e377dea85a7ea24ecd640b223ea86dfe453e0eaed2e2b2",
@@ -29,7 +32,7 @@ describe("UserReadinessCheck", () => {
                 passState: false,
             },
         ];
-        const userReadinessCheck = new UserReadinessCheck_1.UserReadinessCheck();
+        const userReadinessCheck = new UserReadinessCheck_1.default();
         expect(userReadinessCheck.UserReadinessCheck(players)).toBe(true);
     });
     it("must return false", () => {
@@ -51,7 +54,7 @@ describe("UserReadinessCheck", () => {
                 passState: false,
             },
         ];
-        const userReadinessCheck = new UserReadinessCheck_1.UserReadinessCheck();
+        const userReadinessCheck = new UserReadinessCheck_1.default();
         expect(userReadinessCheck.UserReadinessCheck(players)).toBe(false);
     });
 });

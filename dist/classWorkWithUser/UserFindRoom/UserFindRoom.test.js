@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserFindRoom_1 = require("./UserFindRoom");
+const UserFindRoom_1 = __importDefault(require("./UserFindRoom"));
 const testRoom = {
     players: [
         {
@@ -55,11 +58,11 @@ const testRoom = {
 };
 describe("findPlayerIndexInRoom", () => {
     it("I should get index player", () => {
-        const userFindIndexInRoom = new UserFindRoom_1.UserFindRoom();
+        const userFindIndexInRoom = new UserFindRoom_1.default();
         expect(userFindIndexInRoom.findPlayerIndexInRoom(testRoom, 1)).toEqual(0);
     });
     it("I should get index -1 index (player is not in the room", () => {
-        const userFindIndexInRoom = new UserFindRoom_1.UserFindRoom();
+        const userFindIndexInRoom = new UserFindRoom_1.default();
         expect(userFindIndexInRoom.findPlayerIndexInRoom(testRoom, 3)).toEqual(-1);
     });
 });

@@ -1,5 +1,5 @@
-import { IPlayers } from "../../Room";
-import { UserPass } from "./UserPass";
+import { IPlayers } from "src/Type";
+import UserPass from "./UserPass";
 
 describe("UserPass", () => {
   it("should be retrun true with user", () => {

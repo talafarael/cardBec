@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const UserPublisher_1 = require("./UserPublisher");
+const UserPublisher_1 = __importDefault(require("./UserPublisher"));
 const user = {
     session: "1234",
     hash: "c501b71e775f74ce10e377dea85a7ea24ecd640b223ea86dfe453e0eaed2e2b2",
@@ -30,7 +33,7 @@ describe("mapPlayersToPublish", () => {
                 passState: false,
             },
         ];
-        const userPublisher = new UserPublisher_1.UserPublisher(mockUserManager);
+        const userPublisher = new UserPublisher_1.default(mockUserManager);
         expect(userPublisher.mapPlayersToPublish(players)).toEqual([userPublish]);
     });
 });

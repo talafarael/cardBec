@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 
 import ISendMessage from "./ISendMessage";
-import IResponseMessage from "../../Type/MessageType/IResponseMessage/IResponseMessage";
+import { IResponseMessage } from "src/Type";
 
 class SendMessage implements ISendMessage {
   JoinMessage(message: IResponseMessage, ws: WebSocket) {

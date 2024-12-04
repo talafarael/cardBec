@@ -1,4 +1,4 @@
-import { IPlayers } from "../../Room";
+import { IPlayers } from "src/Type";
 import { UserPassCheck } from "./UserPassCheck";
 
 describe("UserPassCheck", () => {
