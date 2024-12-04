@@ -63,6 +63,10 @@ class RoomJoin {
         parserUser.user.id.toString(),
         data.roomId.toString()
       );
+      const session = uuidv4();
+      const user = this.#userManager.transformUserForRoom(parserUser, session);
+      Room.players.push(this.#userManager.transformedPlayer(user, this.#ws));
+      console.log("new room");
     }
     if (Room.players.length == 0) {
       return;
@@ -78,6 +82,7 @@ class RoomJoin {
     const session = uuidv4();
     if (playerIndex != -1) {
       Room.players[playerIndex].ws = this.#ws;
+
       this.#rooms.saveRoom(data.roomId, Room);
     } else {
       const user = this.#userManager.transformUserForRoom(parserUser, session);

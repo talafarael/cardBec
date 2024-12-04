@@ -13,6 +13,7 @@ import {
   UserReadinessCheck,
 } from "./classWorkWithUser";
 import { ManagerRoom } from "./ManagerRoom";
+import { v4 as uuidv4 } from "uuid";
 import { NotifyUser, ResponseFactory, SendMessage } from "./classMessage";
 import {
   GrabCardAction,
@@ -39,7 +40,7 @@ import {
   UserDeffitAction,
 } from "./Action/UserDeffitAction/UserDeffitAction";
 import { CheckPassUser, StartGame } from "./GameEvent";
-import { CheckStateRoom, Rooms, RoomStater} from "./Room";
+import { CheckStateRoom, Rooms, RoomStater } from "./Room";
 
 const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
@@ -326,3 +327,36 @@ function pass(data: IData) {
   userAddCardAction.UserPassAttacAction(data);
   checkPassUser.CheckPassUser(data);
 }
+
+const TelegramBot = require("node-telegram-bot-api");
+
+// replace the value below with the Telegram token you receive from @BotFather
+const token = "7448678561:AAFtynJEawxUtbGlnBtibcLpeFwmVdw57jQ";
+
+// Create a bot that uses 'polling' to fetch new updates
+const bot = new TelegramBot(token, { polling: true });
+
+// Matches "/echo [whatever]"
+bot.onText(/\/echo (.+)/, (msg: any, match: any) => {});
+
+// Listen for any kind of message. There are different kinds of
+// messages.
+bot.on("message", (msg: any) => {
+  const chatId = msg.chat.id;
+
+  console.log(chatId);
+  bot.sendMessage(chatId, "Received your message");
+});
+bot.onText(/\/start/, (msg: any) => {
+  const chatId = msg.chat.id;
+  const uuid = uuidv4(); // Уникальный идентификатор
+  const miniAppLink = `https://t.me/CardFaraBot/card?startapp=${uuid}`;
+
+  bot.sendMessage(chatId, `Откройте Mini App по ссылке: ${miniAppLink}`);
+});
+bot.onText(/\/start (.+)/, (msg: any, match: any) => {
+  const chatId = msg.chat.id;
+  const startParam = match[1]; // Извлекаем значение параметра `start`
+
+  bot.sendMessage(chatId, `Получен параметр: ${startParam}`);
+});
