@@ -1,14 +1,13 @@
 import { cardData } from "./card.data";
-import { v4 as uuidv4 } from "uuid";
 import { IRoom } from "./Type";
 export interface IManagerRoom {
-  createRoom(owner: string): IRoom;
+  createRoom(owner: string,id:string): IRoom;
 }
 export class ManagerRoom implements IManagerRoom {
-  createRoom(owner: string) {
+  createRoom(owner: string, id: string) {
     const Room: IRoom = {
       players: [],
-      roomId: uuidv4(),
+      roomId: id,
       isGameActive: false,
       card: cardData,
       owner: owner,

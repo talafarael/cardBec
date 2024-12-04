@@ -44,7 +44,8 @@ class RoomJoin {
       const parserUser: IUserTg = this.#userParser.userParser(data.userData);
 
       const Room: IRoom = this.#managerRoom.createRoom(
-        parserUser.user.id.toString()
+        parserUser.user.id.toString(),
+        uuidv4.toString()
       );
       const user = this.#userManager.transformUserForRoom(parserUser, session);
 
@@ -55,16 +56,17 @@ class RoomJoin {
     }
 
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
-
+    const parserUser = this.#userParser.userParser(data.userData);
     if (!Room) {
-      this.#ws.send(JSON.stringify(this.sendError("room is not dei")));
-      return;
+      Room = this.#managerRoom.createRoom(
+        parserUser.user.id.toString(),
+        data.roomId.toString()
+      );
     }
     if (Room.players.length == 0) {
       return;
     }
 
-    const parserUser = this.#userParser.userParser(data.userData);
     const playerIndex = this.#userFindIndexInRoom.findPlayerIndexInRoom(
       Room,
       parserUser.user.id
