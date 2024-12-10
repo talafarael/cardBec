@@ -1,5 +1,4 @@
 import { IUserReadinessCheck } from "src/classWorkWithUser";
-import { IRoleAssigner } from "../../Role/RoleAssigner/RoleAssigner";
 import { IRoomStater } from "../../Room/RoomStater/RoomStater";
 import { IMixCards } from "src/Card";
 import ISimpleCardDealer from "src/Card/SimpleCardDealer/ISimpleCardDealer";
@@ -7,6 +6,7 @@ import { INotifyUser } from "src/classMessage";
 import { IData, IRoom } from "src/Type";
 import { ICheckStateRoom } from "src/Room/CheckStateRoom/ICheckStateRoom";
 import { IRooms } from "src/Room/Room/Room";
+import { IRoleAssigner } from "src/Role";
 
 export interface IStartGameConfig {
   userReadinessCheck: IUserReadinessCheck;

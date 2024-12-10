@@ -8,6 +8,8 @@ import {
   IUserPass,
 } from "src/classWorkWithUser";
 import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
+import { IRoleAssigner } from "src/Role";
+
 import { IRooms } from "src/Room/Room/Room";
 import { ICard, ICardInGame, IData, IRoom, IUserTg } from "src/Type";
 
@@ -21,6 +23,8 @@ export interface IGrabCardActionConfig {
   cardOnTable: ICardOnTable;
   simpleCardDealer: ISimpleCardDealer;
   userPass: IUserPass;
+
+  roleAssigner: IRoleAssigner;
 }
 
 class GrabCardAction {
@@ -33,7 +37,7 @@ class GrabCardAction {
   readonly #cardOnTable: ICardOnTable;
   readonly #simpleCardDealer: ISimpleCardDealer;
   readonly #userPass: IUserPass;
-
+  readonly #roleAssigner: IRoleAssigner;
   constructor(config: IGrabCardActionConfig) {
     this.#rooms = config.rooms;
     this.#userParser = config.userParser;
@@ -44,6 +48,7 @@ class GrabCardAction {
     this.#cardOnTable = config.cardOnTable;
     this.#simpleCardDealer = config.simpleCardDealer;
     this.#userPass = config.userPass;
+    this.#roleAssigner = config.roleAssigner;
   }
   grabAll(data: IData) {
     if (!data.roomId) {
@@ -71,7 +76,7 @@ class GrabCardAction {
         card: ICard[];
       });
     this.#simpleCardDealer.startGame(Room);
-
+    Room = this.#roleAssigner.SkiAssignRole(Room);
     Room.players = this.#userPass.UpdateAllUserPass(Room.players);
     this.#rooms.saveRoom(data.roomId, Room);
     this.#notifyUser.sendNotification(Room, "grab");

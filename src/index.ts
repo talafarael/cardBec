@@ -187,6 +187,7 @@ function Grad(data: IData) {
     cardOnTable: new CardOnTable(),
     simpleCardDealer: new SimpleCardDealer(distributingCardsToUser),
     userPass: new UserPass(),
+    roleAssigner: new RoleAssigner(),
   });
   userAddCardAction.grabAll(data);
 }
@@ -336,9 +337,7 @@ const token = "7448678561:AAFtynJEawxUtbGlnBtibcLpeFwmVdw57jQ";
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
 
-
 bot.onText(/\/echo (.+)/, (msg: any, match: any) => {});
-
 
 bot.on("message", (msg: any) => {
   const chatId = msg.chat.id;
@@ -356,7 +355,7 @@ bot.onText(/\/start/, (msg: any) => {
 });
 bot.onText(/\/start (.+)/, (msg: any, match: any) => {
   const chatId = msg.chat.id;
-  const startParam = match[1]; 
+  const startParam = match[1];
 
   bot.sendMessage(chatId, `Получен параметр: ${startParam}`);
 });

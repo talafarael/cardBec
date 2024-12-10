@@ -7,10 +7,10 @@ import {
 import { INotifyUser } from "src/classMessage";
 import ICardOnTable from "src/Card/CardOnTable/ICardOnTable";
 import ISimpleCardDealer from "src/Card/SimpleCardDealer/ISimpleCardDealer";
-import { IRoleAssigner } from "src/Role/RoleAssigner/RoleAssigner";
 import { ICardInGame, IData, IRoom } from "src/Type";
 import { ICheckStateRoom } from "src/Room/CheckStateRoom/ICheckStateRoom";
 import { IRooms } from "src/Room/Room/Room";
+import { IRoleAssigner } from "src/Role";
 
 export interface ICheckPassUserConfig {
   rooms: IRooms;
