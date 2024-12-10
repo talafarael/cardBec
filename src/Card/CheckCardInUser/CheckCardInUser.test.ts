@@ -1,4 +1,4 @@
-import { ICard, IPlayers } from "src/Type";
+import { ICard, ICardInGame, IPlayers } from "src/Type";
 import CheckCardInUser from "./CheckCardInUser";
 
 const cards: ICard[] = [
@@ -28,5 +28,24 @@ describe("CheckCardInUser", () => {
         suit: "Ace of Spades",
       } as unknown as ICard)
     ).toBe(-1);
+  });
+});
+describe("IsDefenseCardEmpty", () => {
+  it("should return true", () => {
+    const checkCardInUser = new CheckCardInUser();
+    const cardOnTable: ICardInGame = {
+      attack: { rank: "1", suit: "Ace of Spades", level: 1 },
+      deffit: null,
+    };
+    expect(checkCardInUser.IsDefenseCardEmpty(cardOnTable)).toBe(true);
+  });
+
+  it("should return false", () => {
+    const checkCardInUser = new CheckCardInUser();
+    const cardOnTable: ICardInGame = {
+      attack: { rank: "1", suit: "Ace of Spades", level: 1 },
+      deffit: { rank: "1", suit: "Ace of Spades", level: 1 },
+    };
+    expect(checkCardInUser.IsDefenseCardEmpty(cardOnTable)).toBe(false);
   });
 });

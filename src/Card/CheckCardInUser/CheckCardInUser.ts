@@ -1,7 +1,6 @@
 import { ICard, ICardInGame, IPlayers } from "src/Type";
 import ICheckCardInUser from "./IChekCardInUser";
 
-
 class CheckCardInUser implements ICheckCardInUser {
   CheckCardInUser(user: IPlayers, card: ICard) {
     const index = user.card.findIndex(
@@ -9,11 +8,17 @@ class CheckCardInUser implements ICheckCardInUser {
     );
     return index;
   }
-  CheckCardInAtackTable(cardsOnTable: ICardInGame[], card: ICard) {
+  FindCardInAtackTable(cardsOnTable: ICardInGame[], card: ICard) {
     const index = cardsOnTable.findIndex(
       (elem) => elem.attack.rank === card.rank && elem.attack.suit === card.suit
     );
     return index;
+  }
+  IsDefenseCardEmpty(cardOntable: ICardInGame) {
+    if (cardOntable.deffit) {
+      return false;
+    }
+    return true;
   }
 }
 export default CheckCardInUser;

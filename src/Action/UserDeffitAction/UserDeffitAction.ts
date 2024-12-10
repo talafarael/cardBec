@@ -82,7 +82,7 @@ export class UserDeffitAction {
     if (indexCard == -1) {
       return;
     }
-    const indexTable = this.#checkCardInUser.CheckCardInAtackTable(
+    const indexTable = this.#checkCardInUser.FindCardInAtackTable(
       Room.cardsOnTable,
       data.attacCard
     );
@@ -100,7 +100,11 @@ export class UserDeffitAction {
     ) {
       return;
     }
-    console.log(3);
+    if (
+      !this.#checkCardInUser.IsDefenseCardEmpty(Room.cardsOnTable[indexTable])
+    ) {
+      return;
+    }
     Room.cardsOnTable = this.#cardOnTable.PutCardDeff(
       data.card,
       Room.cardsOnTable,
