@@ -1,4 +1,5 @@
 type IPlayerPublisher = {
+  photoUrl: string;
   id: number;
   cardCount: number;
   firstName: string | null;

@@ -5,6 +5,7 @@ import IUserManager from "./IUserManager";
 class UserManager implements IUserManager {
   transformUserForRoom(userData: IUserTg, session: string) {
     const user: IUser = {
+      photoUrl: userData.user.photoUrl ?? "",
       session: session,
       hash: userData.hash,
       id: userData.user.id,
@@ -16,6 +17,8 @@ class UserManager implements IUserManager {
   }
   transformedPlayerPublisher(user: IPlayers) {
     const player: IPlayerPublisher = {
+      photoUrl: userData.user.photoUrl ?? "",
+
       id: user.user.id,
       cardCount: user.card.length,
       firstName: user.user.firstName,
