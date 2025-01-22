@@ -5,6 +5,7 @@ import IUserParser from "./IUserParser";
 class UserParser implements IUserParser {
   userParser(user: string): IUserTg {
     const userData = parseInitData(user) as Partial<IUserTg>;
+    console.log(userData);
     if (!userData.user) {
       throw new Error("Invalid user data");
     }
