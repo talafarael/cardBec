@@ -9,6 +9,7 @@ const testUsersPublish: IPlayerPublisher[] = [
     startGame: false,
     state: "",
     passState: false,
+    photoUrl: "test",
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ const testUsersPublish: IPlayerPublisher[] = [
     startGame: false,
     state: "",
     passState: false,
+    photoUrl: "test",
   },
 ];
 
@@ -28,13 +30,14 @@ const resultUsersPublish: IPlayerPublisher[] = [
     startGame: false,
     state: "",
     passState: false,
+    photoUrl: "test",
   },
 ];
 describe("filterMessageToUsersExcept", () => {
   it("user with id  2 shoulb be remove with arr", () => {
     const messageRecipientFilter = new MessageRecipientFilter();
     expect(
-      messageRecipientFilter.filterMessageToUsersExcept(testUsersPublish, 2)
+      messageRecipientFilter.filterMessageToUsersExcept(testUsersPublish, 2),
     ).toEqual(resultUsersPublish);
   });
 });

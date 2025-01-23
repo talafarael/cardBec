@@ -8,6 +8,7 @@ const user: IUser = {
   allowsWriteToPm: true,
   username: "tst",
   firstName: "Test",
+  photoUrl: "test",
 };
 describe("UserReadinessCheck", () => {
   it("must return true", () => {

@@ -13,6 +13,7 @@ describe("JoinMessage", () => {
       allowsWriteToPm: true,
       username: "tst",
       firstName: "Test",
+      photoUrl: "test",
     };
     const player: IPlayers = {
       user: user,
