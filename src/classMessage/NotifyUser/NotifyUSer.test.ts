@@ -24,6 +24,7 @@ const user1: IUser = {
   allowsWriteToPm: true,
   username: "tst",
   firstName: "Test",
+  photoUrl: "test",
 };
 const user2: IUser = {
   session: "1234",
@@ -32,6 +33,7 @@ const user2: IUser = {
   allowsWriteToPm: true,
   username: "tst",
   firstName: "Test",
+  photoUrl: "test",
 };
 const players: IPlayers[] = [
   {
@@ -70,12 +72,14 @@ const userPublish = [
     cardCount: 0,
     firstName: "Test",
     startGame: false,
+    photoUrl: "test",
   },
   {
     id: 2,
     cardCount: 0,
     firstName: "Test",
     startGame: false,
+    photoUrl: "test",
   },
 ];
 const userPublishWithOutYou: IPlayerPublisher[] = [
@@ -84,6 +88,7 @@ const userPublishWithOutYou: IPlayerPublisher[] = [
     cardCount: 0,
     firstName: "Test",
     startGame: false,
+    photoUrl: "test",
   },
 ] as unknown as IPlayerPublisher[];
 const res: IResponseMessage = {
@@ -123,16 +128,16 @@ describe("NotifyUserJoined", () => {
       mockResponseFactory,
       mockUserPublisher,
       mockMessageRecipientFilter,
-      mockSendMessage
+      mockSendMessage,
     );
 
     notifyUser.sendNotification(testRoom, "join");
 
     expect(mockUserPublisher.mapPlayersToPublish).toHaveBeenCalledWith(
-      testRoom.players
+      testRoom.players,
     );
     expect(
-      mockMessageRecipientFilter.filterMessageToUsersExcept
+      mockMessageRecipientFilter.filterMessageToUsersExcept,
     ).toHaveBeenCalledWith(userPublish, 1);
     expect(mockResponseFactory.templateMessage).toHaveBeenCalledWith({
       session: "1234",
@@ -148,7 +153,7 @@ describe("NotifyUserJoined", () => {
     });
     expect(mockSendMessage.JoinMessage).toHaveBeenCalledWith(
       res,
-      mockWebSocket
+      mockWebSocket,
     );
   });
 });

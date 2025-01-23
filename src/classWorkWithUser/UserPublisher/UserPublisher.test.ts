@@ -10,12 +10,14 @@ const user: IUser = {
   allowsWriteToPm: true,
   username: "tst",
   firstName: "Test",
+  photoUrl: "test",
 };
 
 const userPublish = {
   id: 1,
   cardCount: 0,
   firstName: "Test",
+  photoUrl: "test",
   startGame: false,
 };
 

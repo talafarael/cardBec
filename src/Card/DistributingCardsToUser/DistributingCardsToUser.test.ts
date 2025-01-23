@@ -9,6 +9,7 @@ const user: IUser = {
   allowsWriteToPm: true,
   username: "tst",
   firstName: "Test",
+  photoUrl: "test",
 };
 const cards: ICard[] = [
   { rank: "6", suit: "hearts" },

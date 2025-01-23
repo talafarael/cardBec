@@ -17,8 +17,7 @@ class UserManager implements IUserManager {
   }
   transformedPlayerPublisher(user: IPlayers) {
     const player: IPlayerPublisher = {
-      photoUrl: userData.user.photoUrl ?? "",
-
+      photoUrl: user.user.photoUrl ? user.user.photoUrl : "",
       id: user.user.id,
       cardCount: user.card.length,
       firstName: user.user.firstName,

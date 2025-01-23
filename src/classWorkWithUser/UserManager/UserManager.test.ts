@@ -9,6 +9,7 @@ const user: IUser = {
   allowsWriteToPm: true,
   username: "tst",
   firstName: "Test",
+  photoUrl: "test",
 };
 const mockWebSocket = {
   send: jest.fn(),
@@ -22,6 +23,7 @@ describe("transformUserForRoom", () => {
         id: 1,
         allowsWriteToPm: true,
         username: "tst",
+        photoUrl: "test",
       },
     };
     const session = "1234";
@@ -49,10 +51,11 @@ describe("transformedPlayerPublisher", () => {
       startGame: false,
       state: "",
       passState: false,
+      photoUrl: "test",
     };
     const userManager = new UserManager();
     expect(userManager.transformedPlayerPublisher(player)).toEqual(
-      palyerPublisher
+      palyerPublisher,
     );
   });
 
@@ -67,7 +70,7 @@ describe("transformedPlayerPublisher", () => {
       passState: false,
     };
     expect(userManager.transformedPlayer(user, mockWebSocket)).toEqual(
-      resultPlayerTransform
+      resultPlayerTransform,
     );
   });
 });
