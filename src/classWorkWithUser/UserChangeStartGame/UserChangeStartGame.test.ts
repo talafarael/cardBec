@@ -8,6 +8,7 @@ const user: IUser = {
   allowsWriteToPm: true,
   username: "tst",
   firstName: "Test",
+  photoUrl: "test",
 };
 
 const player: IPlayers[] = [
@@ -17,7 +18,7 @@ const player: IPlayers[] = [
     ws: {} as WebSocket,
     state: "",
     startGameState: false,
-    passState:false,
+    passState: false,
   },
   {
     user: user,
@@ -25,7 +26,7 @@ const player: IPlayers[] = [
     ws: {} as WebSocket,
     state: "",
     startGameState: false,
-    passState:false,
+    passState: false,
   },
 ];
 const resultPlayer: IPlayers[] = [
