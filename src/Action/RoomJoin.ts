@@ -3,7 +3,7 @@ import { IUserFindRoom, IUserManager } from "src/classWorkWithUser";
 import IUserParser from "src/classWorkWithUser/UserParser/IUserParser";
 import { IManagerRoom } from "src/ManagerRoom";
 
-import { IData, IRoom, IUserTg } from "src/Type";
+import { IData, IDataUserJoinWeb, IRoom, IUserTg } from "src/Type";
 import { WebSocket } from "ws";
 import { v4 as uuidv4 } from "uuid";
 import { IRooms } from "src/Room/Room/Room";
@@ -38,11 +38,23 @@ class RoomJoin {
     this.#notifyUser = config.notifyUser;
     this.#checkState = config.checkStateRoom;
   }
-  joinRoom(data: IData) {
+  joinRoomToTg(data: IDataUserJoinWeb) {
     if (!data.roomId) {
       const session = uuidv4();
       const roomId = uuidv4();
-      const parserUser: IUserTg = this.#userParser.userParser(data.userData);
+    }
+  }
+  joinRoom(data: IData | IDataUserJoinWeb) {
+    let parserUser;
+    if (typeof data.userData == "string") {
+      parserUser = this.#userParser.userParser(data.userData);
+    } else {
+      parserUser = data.userData
+
+    }
+    if (!data.roomId) {
+      const session = uuidv4();
+      const roomId = uuidv4();
 
       const Room: IRoom = this.#managerRoom.createRoom(
         parserUser.user.id.toString(),
@@ -57,7 +69,6 @@ class RoomJoin {
     }
 
     let Room = this.#rooms.getRoom(data.roomId) as IRoom;
-    const parserUser = this.#userParser.userParser(data.userData);
     if (!Room) {
       Room = this.#managerRoom.createRoom(
         parserUser.user.id.toString(),

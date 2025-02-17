@@ -4,6 +4,7 @@ export { default as IPlayers } from "./UserType/IPlayers/IPlayers";
 export { default as IUser } from "./UserType/IUser/IUser";
 export { default as IUserTg } from "./UserType/IUserTg/IUserTg";
 export { default as IData } from "./UserType/IData/IData";
+export { default as IDataUserJoinWeb } from "./UserType/DataUserJoinWeb"
 
 //RoomType
 export { default as IRoom } from "./RoomType/IRoom/IRoom";

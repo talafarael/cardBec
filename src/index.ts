@@ -337,7 +337,7 @@ const token = "7448678561:AAFtynJEawxUtbGlnBtibcLpeFwmVdw57jQ";
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
 
-bot.onText(/\/echo (.+)/, (msg: any, match: any) => {});
+bot.onText(/\/echo (.+)/, (msg: any, match: any) => { });
 
 bot.on("message", (msg: any) => {
   const chatId = msg.chat.id;
