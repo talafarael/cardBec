@@ -54,6 +54,7 @@ wss.on("connection", (ws: WebSocket) => {
     const data = JSON.parse(message);
     switch (data.action) {
       case "join": {
+
         console.log("Join");
         const managerRoom = new ManagerRoom();
         const userManager = new UserManager();
@@ -82,7 +83,7 @@ wss.on("connection", (ws: WebSocket) => {
           notifyUser,
           checkStateRoom,
         });
-
+        console.log(data)
         room.joinRoom(data);
 
         break;
