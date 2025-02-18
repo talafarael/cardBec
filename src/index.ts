@@ -13,6 +13,7 @@ import {
   UserReadinessCheck,
 } from "./classWorkWithUser";
 import { ManagerRoom } from "./ManagerRoom";
+import * as http from "http"
 import { v4 as uuidv4 } from "uuid";
 import { NotifyUser, ResponseFactory, SendMessage } from "./classMessage";
 import {
@@ -359,3 +360,10 @@ bot.onText(/\/start (.+)/, (msg: any, match: any) => {
 
   bot.sendMessage(chatId, `Получен параметр: ${startParam}`);
 });
+
+
+
+http.createServer(function (req, res) {
+  res.write('Hello World!'); //write a response to the client
+  res.end(); //end the response
+}).listen(8081); 
