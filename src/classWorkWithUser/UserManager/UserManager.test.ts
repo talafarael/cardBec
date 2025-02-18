@@ -23,7 +23,7 @@ describe("transformUserForRoom", () => {
         id: 1,
         allowsWriteToPm: true,
         username: "tst",
-        photoUrl: "test",
+        photo_url: "test",
       },
     };
     const session = "1234";
