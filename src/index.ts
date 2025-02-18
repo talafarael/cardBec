@@ -47,7 +47,19 @@ const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
 };
+const server = http.createServer((req, res) => {
+  if (req.method === "GET" && req.url === "/rooms") {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(rooms)); // Send the rooms data as JSON
+  } else {
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Not Found");
+  }
+});
 
+server.listen(3000, () => {
+  console.log("HTTP server running on port 3000");
+});
 // const roo-ms: { [key: string]: IRoom | {} } = {};
 let rooms = new Rooms();
 wss.on("connection", (ws: WebSocket) => {
@@ -363,17 +375,4 @@ bot.onText(/\/start (.+)/, (msg: any, match: any) => {
 
 
 
-const server = http.createServer((req, res) => {
-  if (req.url === '/hello') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello, World!');
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not Found');
-  }
-});
 
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-});
