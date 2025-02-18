@@ -364,6 +364,9 @@ bot.onText(/\/start (.+)/, (msg: any, match: any) => {
 
 
 http.createServer(function (req, res) {
-  res.write('Hello World!'); //write a response to the client
-  res.end(); //end the response
-}).listen(8081); 
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.write('Hello World!');
+  res.end();
+}).listen(8081, () => {
+  console.log('Server running at http://localhost:8081/');
+});
