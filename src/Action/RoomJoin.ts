@@ -49,8 +49,8 @@ class RoomJoin {
     if (typeof data.userData == "string") {
       parserUser = this.#userParser.userParser(data.userData);
     } else {
+      console.log(data.userData)
       parserUser = data.userData
-
     }
     if (!data.roomId) {
       const session = uuidv4();
