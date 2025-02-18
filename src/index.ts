@@ -13,7 +13,6 @@ import {
   UserReadinessCheck,
 } from "./classWorkWithUser";
 import { ManagerRoom } from "./ManagerRoom";
-import * as http from "http"
 import { v4 as uuidv4 } from "uuid";
 import { NotifyUser, ResponseFactory, SendMessage } from "./classMessage";
 import {
@@ -47,19 +46,7 @@ const wss = new WebSocket.Server({ port: 8080 });
 const messageError = (message: string) => {
   return { status: "error", message: message };
 };
-const server = http.createServer((req, res) => {
-  if (req.method === "GET" && req.url === "/rooms") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(rooms)); // Send the rooms data as JSON
-  } else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not Found");
-  }
-});
 
-server.listen(3000, () => {
-  console.log("HTTP server running on port 3000");
-});
 // const roo-ms: { [key: string]: IRoom | {} } = {};
 let rooms = new Rooms();
 wss.on("connection", (ws: WebSocket) => {
@@ -372,7 +359,6 @@ bot.onText(/\/start (.+)/, (msg: any, match: any) => {
 
   bot.sendMessage(chatId, `Получен параметр: ${startParam}`);
 });
-
 
 
 
